@@ -1,7 +1,3 @@
-![DER_tierra_uno_comic](https://github.com/user-attachments/assets/0dc4cf1f-110e-48de-8d40-d1aa7d48bc39)
-
-![DER-Tierra_uno_comic](https://github.com/user-attachments/assets/a6193793-5e79-4354-a74b-3a1986258013)
-
 Proyecto "Tierra-uno-comics"
 
 El siguiente esquema, se encuentra diseñado con la finalidad de gestionar toda la información de una tienda de cómics. Permite organizar los cómics, clientes, pedidos, pagos, proveedores, inventario, reseñas y envíos, cubriendo desde la compra hasta el seguimiento de cada pedido. Además, ayuda a mantener el stock en orden y facilita el manejo de cada aspecto del negocio.
