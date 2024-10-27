@@ -1,7 +1,7 @@
 ![DER_tierra_uno_comic](https://github.com/user-attachments/assets/f3df4661-9c2c-4509-bf4e-77c9b303c4b1)
 ![DER-Tierra_uno_comic](https://github.com/user-attachments/assets/093f18c2-61e7-4af3-860c-8a601e5b8ff5)
 
-# Proyecto "Tierra_uno_comics"
+# Proyecto "Tierra-uno-comics"
 
 El siguiente esquema de base de datos está diseñado para gestionar toda la información de una tienda de cómics.
 Permite organizar los cómics, clientes, pedidos, pagos, proveedores, inventario, reseñas y envíos, cubriendo desde la compra
