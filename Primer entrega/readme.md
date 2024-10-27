@@ -2,7 +2,7 @@ Proyecto "Tierra-uno-comics"
 
 El siguiente esquema, se encuentra diseñado con la finalidad de gestionar toda la información de una tienda de cómics. Permite organizar los cómics, clientes, pedidos, pagos, proveedores, inventario, reseñas y envíos, cubriendo desde la compra hasta el seguimiento de cada pedido. Además, ayuda a mantener el stock en orden y facilita el manejo de cada aspecto del negocio.
 
-Tablas y Descripción de Campos
+Tablas y Descripción de los Campos
 
 Tabla Autor
 
