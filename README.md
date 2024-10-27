@@ -3,7 +3,7 @@
 
 # Proyecto "Tierra-uno-comics"
 
-El siguiente esquema de base de datos está diseñado para gestionar toda la información de una tienda de cómics.
+El siguiente esquema, se encuentra diseñado con la finalidad de gestionar toda la información de una tienda de cómics.
 Permite organizar los cómics, clientes, pedidos, pagos, proveedores, inventario, reseñas y envíos, cubriendo desde la compra
 hasta el seguimiento de cada pedido. Además, ayuda a mantener el stock en orden y facilita el manejo de cada aspecto del negocio.
 
@@ -112,7 +112,7 @@ hasta el seguimiento de cada pedido. Además, ayuda a mantener el stock en orden
 1. **Relación Cliente-Pedido-Pago**: Un cliente puede realizar múltiples pedidos, y cada pedido puede tener un pago asociado. Esta estructura permite rastrear la actividad de cada cliente y sus pagos.
 2. **Relación Cómic-Inventario-Detalle Pedido**: Permite el control del stock de cómics en la tienda, facilitando la reposición y el control de ventas.
 3. **Relación Cómic-Reseña-Cliente**: Permite que los clientes dejen reseñas y calificaciones de los cómics, mejorando la interacción y aportando valor informativo a futuros compradores.
-4. **Relación Cómic-Ofertas**: Facilita el establecimiento de descuentos y promociones temporales, proporcionando flexibilidad en la estrategia de ventas.
+4. **Relación Cómic-Ofertas**: Facilita el establecimiento de descuentos y promociones, proporcionando flexibilidad en la estrategia de ventas.
 5. **Relación Pedido-Envío-Tarifa Envío**: Gestiona el envío de los pedidos, incluyendo costos y zonas geográficas, lo que permite una logística de envíos más organizada y detallada.
 
 Este modelo permite administrar de manera completa una tienda de cómics. Facilita el seguimiento de los productos, la gestión del inventario, y la interacción con los clientes, 
