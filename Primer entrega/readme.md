@@ -1,3 +1,16 @@
+
+![logo](https://github.com/user-attachments/assets/69425ae8-f58c-42ad-9c96-b8e37c6992bd)
+
+Alumno: Pablo José Carey
+
+Curso: SQL
+
+Comision: 59430
+
+Docente: Anderson Michel Torres
+
+Tutor: Hugo Gonzaléz
+
 Proyecto "Tierra-uno-comics"
 
 El siguiente esquema, se encuentra diseñado con la finalidad de gestionar toda la información de una tienda de cómics. Permite organizar los cómics, clientes, pedidos, pagos, proveedores, inventario, reseñas y envíos, cubriendo desde la compra hasta el seguimiento de cada pedido. Además, ayuda a mantener el stock en orden y facilita el manejo de cada aspecto del negocio.
