@@ -12,7 +12,7 @@
 
 ---
 
-Introducción
+**Introducción**
 
 En un mundo lleno de historias increíbles, **Tierra Uno Comics** es un lugar donde los fanáticos encuentran mucho más que cómics: encuentran momentos, personajes y mundos que alimentan su imaginación. Para seguir ofreciendo esta experiencia única, la propuesta de base de datos busca ser el motor detrás de cada venta, pedido y oferta que la tienda ofrece.
 
@@ -20,7 +20,7 @@ Este sistema estará diseñado para que "Tierra Uno Comics" pueda organizar y ge
 
 ---
 
-Situación Problema
+**Situación Problema**
 
 Actualmente, **Tierra Uno Comics** enfrenta varios desafíos en la gestión de sus ventas y pedidos. Con el aumento de la demanda, se ha vuelto difícil hacer un seguimiento preciso de cada venta, verificar el estado de cada pedido y coordinar los envíos a tiempo. Además, la falta de una estructura unificada para almacenar información sobre productos, precios, referencias y promociones genera inconsistencias en la atención al cliente, afectando la experiencia de los compradores y complicando el proceso de ofrecer descuentos especiales o promociones.
 
@@ -28,7 +28,7 @@ En este contexto, los empleados de "Tierra Uno Comics" pierden tiempo valioso bu
 
 ---
 
-Solución Propuesta
+**Solución Propuesta**
 
 La implementación de una base de datos optimizada y unificada permitirá a **Tierra Uno Comics** tener un control detallado de cada venta y pedido desde un solo sistema. Con esta estructura, el equipo podrá:
 
@@ -39,19 +39,19 @@ La implementación de una base de datos optimizada y unificada permitirá a **Ti
 
 ---
 
-Diagrama de entidad relación
+**Diagrama de entidad relación**
 
-DER - Notación de CHEN
+**DER - Notación de CHEN**
 ![imagen](https://github.com/user-attachments/assets/13f076b7-d277-4242-b6ce-f082d69f2bcc)
 
 ---
 
-DER - MySQL Workbench
+**DER - MySQL Workbench**
 ![DER-Tierra_uno_comic_MySQL_Workbench](https://github.com/user-attachments/assets/1c20c526-6250-4793-af6a-3c71b8863249)
 
 ---
 
-Tablas y Descripción de los Campos - ~~Ver estructura_proyecto.sql~~
+**Tablas y Descripción de los Campos** - Ver estructura_proyecto.sql
 
 Tabla Autor
 
