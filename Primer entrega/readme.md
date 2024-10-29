@@ -44,8 +44,9 @@ DER - Notación de CHEN
 ![imagen](https://github.com/user-attachments/assets/13f076b7-d277-4242-b6ce-f082d69f2bcc)
 
 DER - MySQL Workbench
+![DER-Tierra_uno_comic_MySQL_Workbench](https://github.com/user-attachments/assets/1c20c526-6250-4793-af6a-3c71b8863249)
 
-
+---
 
 Tablas y Descripción de los Campos
 
