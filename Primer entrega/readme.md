@@ -1,6 +1,4 @@
-
-![logo](https://github.com/user-attachments/assets/69425ae8-f58c-42ad-9c96-b8e37c6992bd)
-
+![Captura](https://github.com/user-attachments/assets/39053a63-21fd-477e-be66-45ec73e7129a)
 
 # Proyecto: Tierra Uno Comics
 
