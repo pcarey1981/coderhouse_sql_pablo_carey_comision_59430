@@ -174,7 +174,10 @@ Relaciones y Problemáticas Resueltas
     Relación Pedido-Envío-Tarifa Envío: Gestiona el envío de los pedidos, incluyendo costos y zonas geográficas, lo que permite una logística de envíos más organizada y detallada.
 
 
+
 # Muchas gracias por haber llegado hasta aca 
+
+
 
 ![1f44b-1f3fb](https://github.com/user-attachments/assets/fd0981ee-c142-41dd-a632-096c378880a9)
 
