@@ -37,6 +37,9 @@ La implementación de una base de datos optimizada y unificada permitirá a **Ti
 - Ofrecer promociones y descuentos de manera ágil y sin errores, logrando que el sistema refleje de inmediato las ofertas disponibles, mejorando la experiencia de compra y atrayendo a nuevos clientes.
 
 ---
+![imagen](https://github.com/user-attachments/assets/13f076b7-d277-4242-b6ce-f082d69f2bcc)
+
+
 
 Tablas y Descripción de los Campos
 
