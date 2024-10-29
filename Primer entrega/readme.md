@@ -51,7 +51,7 @@ DER - MySQL Workbench
 
 ---
 
-Tablas y Descripción de los Campos - Ver estructura_proyecto.sql
+Tablas y Descripción de los Campos - ~~Ver estructura_proyecto.sql~~
 
 Tabla Autor
 
@@ -173,6 +173,5 @@ Relaciones y Problemáticas Resueltas
     Relación Cómic-Ofertas: Facilita el establecimiento de descuentos y promociones, proporcionando flexibilidad en la estrategia de ventas.
     Relación Pedido-Envío-Tarifa Envío: Gestiona el envío de los pedidos, incluyendo costos y zonas geográficas, lo que permite una logística de envíos más organizada y detallada.
 
-Este modelo permite administrar de manera completa una tienda de cómics. Facilita el seguimiento de los productos, la gestión del inventario, y la interacción con los clientes, logrando que las ventas y los envíos se lleven a cabo de forma sencilla y organizada.
 
-Muchas gracias.
+Muchas gracias por haber llegado hasta aca 
