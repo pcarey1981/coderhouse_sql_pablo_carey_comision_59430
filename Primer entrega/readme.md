@@ -51,7 +51,7 @@ DER - MySQL Workbench
 
 ---
 
-Tablas y Descripción de los Campos - Ver estructura_proyecto.sql 
+Tablas y Descripción de los Campos - Ver estructura_proyecto.sql
 
 Tabla Autor
 
