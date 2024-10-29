@@ -1,6 +1,7 @@
 
 ![logo](https://github.com/user-attachments/assets/69425ae8-f58c-42ad-9c96-b8e37c6992bd)
 
+
 # Proyecto: Tierra Uno Comics
 
 **Alumno:** Pablo José Carey  
