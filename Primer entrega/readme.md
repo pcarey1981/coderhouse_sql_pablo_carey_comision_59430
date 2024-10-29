@@ -175,7 +175,7 @@ Relaciones y Problemáticas Resueltas
 
 
 
-# Muchas gracias por haber llegado hasta aca 
+                                                                         # ¡Muchas gracias por haber llegado hasta acá! 
 
 
 
