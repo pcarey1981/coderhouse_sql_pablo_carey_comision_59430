@@ -1,4 +1,4 @@
-![Captura](https://github.com/user-attachments/assets/39053a63-21fd-477e-be66-45ec73e7129a)
+![Captura](https://github.com/user-attachments/assets/08d7453c-4bb8-4014-997c-f05ed6dd9ed5)
 
 # Proyecto: Tierra Uno Comics
 
