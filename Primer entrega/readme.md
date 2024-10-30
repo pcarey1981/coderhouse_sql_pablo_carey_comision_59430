@@ -37,7 +37,7 @@ La implementación de una base de datos optimizada y unificada permitirá a **Ti
 
 ---
 
-**Diagrama de entidad relación**
+**Diagrama Entidad Relación**
 
 **DER - Notación de CHEN**
 ![imagen](https://github.com/user-attachments/assets/13f076b7-d277-4242-b6ce-f082d69f2bcc)
