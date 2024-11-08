@@ -89,9 +89,10 @@ CREATE TABLE Proveedor (
 CREATE TABLE Inventario (
     inventario_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     comic_id INT NOT NULL,
-    proveedor_id INT NOT NULL,
-    fecha_recepcion DATE NOT NULL,
-    cantidad INT NOT NULL CHECK (cantidad > 0),
+    proveedor_id INT, 
+    fecha_movimiento DATE NOT NULL,
+    cantidad INT NOT NULL CHECK (cantidad <> 0), -- Cantidad positiva para recepciones, negativa para ventas
+    tipo_movimiento ENUM('recepcion', 'venta') NOT NULL, -- Define si es un ingreso o egreso de stock
     FOREIGN KEY (comic_id) REFERENCES Comic(comic_id),
     FOREIGN KEY (proveedor_id) REFERENCES Proveedor(proveedor_id)
 );
