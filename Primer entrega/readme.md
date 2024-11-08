@@ -45,7 +45,7 @@ La implementación de una base de datos optimizada y unificada permitirá a **Ti
 ---
 
 **DER - MySQL Workbench**
-![DER-Tierra_uno_comic_MySQL_Workbench](https://github.com/user-attachments/assets/1c20c526-6250-4793-af6a-3c71b8863249)
+![DER-Tierra_uno_comic_MySQL_Workbench](https://github.com/user-attachments/assets/3ee56d24-de62-4381-891d-12ef7a401ff3)
 
 ---
 
