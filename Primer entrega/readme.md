@@ -127,8 +127,9 @@ Tabla Inventario
     inventario_id (INT, NOT NULL, PRIMARY KEY, AUTO_INCREMENT): Identificador único del registro de inventario.
     comic_id (INT, NOT NULL, FOREIGN KEY): Relación con el cómic.
     proveedor_id (INT, NOT NULL, FOREIGN KEY): Relación con el proveedor.
-    fecha_recepcion (DATE, NOT NULL): Fecha de recepción del cómic en inventario.
-    cantidad (INT, NOT NULL, CHECK(cantidad > 0)): Cantidad de cómics recibidos.
+    fecha_movimiento (DATE, NOT NULL): Fecha en la que se realizó el moviento en el inventario. (Ya sea una recepción o una venta)
+    cantidad (INT, NOT NULL, CHECK(cantidad > 0)): Cantidad de cómics en el movimiento. Positiva para recepciones, negativas para ventas.
+    tipo_movimiento (ENUM('recepcion', 'venta'), NOT NULL): Indica el tipo de movimiento de inventario. Puede ser "recepcion" (ingreso de stock) o "venta" (egreso de stock).
 
 Tabla Reseña
 
