@@ -40,7 +40,7 @@ La implementación de una base de datos optimizada y unificada permitirá a **Ti
 **Diagrama Entidad Relación**
 
 **DER - Notación de CHEN**
-![imagen](https://github.com/user-attachments/assets/13f076b7-d277-4242-b6ce-f082d69f2bcc)
+![DER_tierra_uno_comic_CHEN](https://github.com/user-attachments/assets/115df062-8c23-43ed-99ac-5f870ca00627)
 
 ---
 
