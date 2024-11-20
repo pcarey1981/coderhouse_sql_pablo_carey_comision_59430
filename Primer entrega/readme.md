@@ -40,12 +40,12 @@ La implementación de una base de datos optimizada y unificada permitirá a **Ti
 **Diagrama Entidad Relación**
 
 **DER - Notación de CHEN**
-![DER_tierra_uno_comic_CHEN](https://github.com/user-attachments/assets/115df062-8c23-43ed-99ac-5f870ca00627)
+![DER_tierra_uno_comic_CHEN](https://github.com/user-attachments/assets/e50a9c6d-8c23-4dae-a84c-f4d3c04d9872)
 
 ---
 
 **DER - MySQL Workbench**
-![DER-Tierra_uno_comic_MySQL_Workbench](https://github.com/user-attachments/assets/3ee56d24-de62-4381-891d-12ef7a401ff3)
+![DER-Tierra_uno_comic_MySQL_Workbench](https://github.com/user-attachments/assets/0367ea17-1120-4ca3-b4a4-04c5a7515b01)
 
 ---
 
@@ -97,14 +97,15 @@ Tabla Pedido
     cliente_id (INT, NOT NULL, FOREIGN KEY): Relación con el cliente que realizó el pedido.
     fecha_pedido (DATE, NOT NULL): Fecha en que se realizó el pedido.
     estado (VARCHAR(50), NOT NULL): Estado actual del pedido.
-    total (DECIMAL(10, 2), NOT NULL): Total de la compra.
+    total (DECIMAL(10, 2), NOT NULL): Total de la compra (incluirá el costo de envío)
+    tarifa_envio DECIMAL(10, 2) NOT NULL, Especifica el costo de envío
 
 Tabla Pago
 
     pago_id (INT, NOT NULL, PRIMARY KEY, AUTO_INCREMENT): Identificador único del pago.
     pedido_id (INT, NOT NULL, FOREIGN KEY): Relación con el pedido asociado.
     fecha_pago (DATE, NOT NULL): Fecha del pago.
-    monto (DECIMAL(10, 2), NOT NULL): Monto del pago.
+    monto (DECIMAL(10, 2), NOT NULL): Monto del pago (incluirá el costo de envío).
     metodo_pago (VARCHAR(50), NOT NULL): Método de pago utilizado.
 
 Tabla Detalle Pedido
