@@ -46,34 +46,35 @@ CREATE TABLE Comic (
     FOREIGN KEY (genero_id) REFERENCES Genero(genero_id)
 );
 
--- Tabla Pedido (modificada)
+-- Tabla Pedido 
 CREATE TABLE Pedido (
     pedido_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     cliente_id INT NOT NULL,
     fecha_pedido DATE NOT NULL,
     estado VARCHAR(50) NOT NULL,
-    total DECIMAL(10, 2) NOT NULL, -- El total ya incluirá el costo de envío
+    total DECIMAL(10, 2) NOT NULL, -- El total ya incluirá el costo de envío y el descuento
     tarifa_envio DECIMAL(10, 2) NOT NULL, -- Se añade la columna tarifa_envio para especificar el costo de envío
     FOREIGN KEY (cliente_id) REFERENCES Cliente(cliente_id)
 );
 
--- Tabla Pago (modificada)
+-- Tabla Pago 
 CREATE TABLE Pago (
     pago_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     pedido_id INT NOT NULL,
     fecha_pago DATE NOT NULL,
-    monto DECIMAL(10, 2) NOT NULL, -- El monto ahora reflejará el total incluyendo envío
+    monto DECIMAL(10, 2) NOT NULL, -- El monto ahora reflejará el total incluyendo envío y descuento
     metodo_pago VARCHAR(50) NOT NULL,
     FOREIGN KEY (pedido_id) REFERENCES Pedido(pedido_id)
 );
 
--- Tabla DetallePedido
+-- Tabla DetallePedido 
 CREATE TABLE DetallePedido (
     detalle_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     pedido_id INT NOT NULL,
     comic_id INT NOT NULL,
     cantidad INT NOT NULL CHECK (cantidad > 0),
     precio_unitario DECIMAL(10, 2) NOT NULL,
+    descuento DECIMAL(5, 2) DEFAULT 0, -- Nuevo campo para descuento aplicado
     FOREIGN KEY (pedido_id) REFERENCES Pedido(pedido_id),
     FOREIGN KEY (comic_id) REFERENCES Comic(comic_id)
 );
