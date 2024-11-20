@@ -46,22 +46,23 @@ CREATE TABLE Comic (
     FOREIGN KEY (genero_id) REFERENCES Genero(genero_id)
 );
 
--- Tabla Pedido
+-- Tabla Pedido (modificada)
 CREATE TABLE Pedido (
     pedido_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     cliente_id INT NOT NULL,
     fecha_pedido DATE NOT NULL,
     estado VARCHAR(50) NOT NULL,
-    total DECIMAL(10, 2) NOT NULL,
+    total DECIMAL(10, 2) NOT NULL, -- El total ya incluirá el costo de envío
+    tarifa_envio DECIMAL(10, 2) NOT NULL, -- Se añade la columna tarifa_envio para especificar el costo de envío
     FOREIGN KEY (cliente_id) REFERENCES Cliente(cliente_id)
 );
 
--- Tabla Pago
+-- Tabla Pago (modificada)
 CREATE TABLE Pago (
     pago_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     pedido_id INT NOT NULL,
     fecha_pago DATE NOT NULL,
-    monto DECIMAL(10, 2) NOT NULL,
+    monto DECIMAL(10, 2) NOT NULL, -- El monto ahora reflejará el total incluyendo envío
     metodo_pago VARCHAR(50) NOT NULL,
     FOREIGN KEY (pedido_id) REFERENCES Pedido(pedido_id)
 );
@@ -89,7 +90,7 @@ CREATE TABLE Proveedor (
 CREATE TABLE Inventario (
     inventario_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     comic_id INT NOT NULL,
-    proveedor_id INT, 
+    proveedor_id INT, -- Ahora opcional, solo requerido para recepciones
     fecha_movimiento DATE NOT NULL,
     cantidad INT NOT NULL CHECK (cantidad <> 0), -- Cantidad positiva para recepciones, negativa para ventas
     tipo_movimiento ENUM('recepcion', 'venta') NOT NULL, -- Define si es un ingreso o egreso de stock
