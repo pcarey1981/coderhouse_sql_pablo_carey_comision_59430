@@ -40,12 +40,12 @@ La implementación de una base de datos optimizada y unificada permitirá a **Ti
 **Diagrama Entidad Relación**
 
 **DER - Notación de CHEN**
-![DER_tierra_uno_comic_CHEN](https://github.com/user-attachments/assets/e50a9c6d-8c23-4dae-a84c-f4d3c04d9872)
+![DER_tierra_uno_comic_CHEN](https://github.com/user-attachments/assets/271680ab-780a-409c-9c4c-27d92d0ac3f5)
 
 ---
 
 **DER - MySQL Workbench**
-![DER-Tierra_uno_comic_MySQL_Workbench](https://github.com/user-attachments/assets/0367ea17-1120-4ca3-b4a4-04c5a7515b01)
+![DER-Tierra_uno_comic_MySQL_Workbench](https://github.com/user-attachments/assets/4b27796a-ea01-470e-809b-41aec42576d8)
 
 ---
 
@@ -115,6 +115,7 @@ Tabla Detalle Pedido
     comic_id (INT, NOT NULL, FOREIGN KEY): Relación con el cómic.
     cantidad (INT, NOT NULL, CHECK(cantidad > 0)): Cantidad de cómics en el pedido.
     precio_unitario (DECIMAL(10, 2), NOT NULL): Precio unitario en el momento del pedido.
+    descuento DECIMAL(5, 2) DEFAULT 0, campo para descuento aplicado
 
 Tabla Proveedor
 
