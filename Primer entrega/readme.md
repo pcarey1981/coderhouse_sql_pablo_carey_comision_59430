@@ -219,15 +219,15 @@ Las vistas en bases de datos son consultas predefinidas que simplifican el acces
 
 ## Vistas Aplicadas
 
-- **Vista_Comic_Detalles**: Listado de cómics con sus autores, editoriales y género.
-- **Vista_Historial_Pedidos**: Historial de pedidos, con detalles de los cómics comprados, su cantidad, precio y el estado del pedido.
-- **Vista_Pagos_Pedidos**: Pagos realizados por cada pedido, con su método de pago.
-- **Vista_Inventario_Actual**: Inventario actual, con detalles de las recepciones y ventas de cómics.
-- **Vista_Resenas**: Reseñas de cómics por cliente, con las calificaciones y comentarios.
-- **Vista_Ofertas_Activas**: Ofertas activas de cómics con su descuento y fechas de vigencia.
-- **Vista_Envios**: Información de los envíos, incluyendo el estado y el número de seguimiento.
-- **PedidosPendientesDeEnvio**: Listado de pedidos pendientes de envío.
-- **ComicsMasVendidos**: Cómics más vendidos.
+- Listado de cómics con sus autores, editoriales y género *(Vista: `Vista_Comic_Detalles`)*
+- Historial de pedidos, con detalles de los cómics comprados, su cantidad, precio y el estado del pedido: *(Vista: `Vista_Historial_Pedidos`)*
+- Pagos realizados por cada pedido, con su método de pago: *(Vista: `Vista_Pagos_Pedidos`)*
+- Inventario actual, con detalles de las recepciones y ventas de cómics: *(Vista: `Vista_Inventario_Actual`)*
+- Reseñas de cómics por cliente, con las calificaciones y comentarios: *(Vista: `Vista_Resenas`)*
+- Ofertas activas de cómics con su descuento y fechas de vigencia: *(Vista: `Vista_Ofertas_Activas`)*
+- Información de los envíos, incluyendo el estado y el número de seguimiento: *(Vista: `Vista_Envios`)*
+- Listado de pedidos pendientes de envío: *(Vista: `PedidosPendientesDeEnvio`)*
+- Cómics más vendidos: *(Vista: `ComicsMasVendidos`)*
 
 ---
 
