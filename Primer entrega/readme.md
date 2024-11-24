@@ -660,17 +660,38 @@ Las funciones definidas por el usuario se utilizan para realizar operaciones esp
 ### Descripción de la Función:
 La función CalcularStockTotal toma como parámetro el comic_id (identificador del cómic) y realiza lo siguiente:
 
-#### 1.	Declara una variable total_stock de tipo INT para almacenar el resultado de la suma de los movimientos de inventario.
+### 1.	Declara una variable total_stock de tipo INT para almacenar el resultado de la suma de los movimientos de inventario.
 --
-#### 2.	Realiza una consulta SELECT que:
-• #### Suma la cantidad de cómics en la tabla Inventario para el cómic correspondiente al comic_id dado.
-• #### Utiliza la función COALESCE para garantizar que, si no existen registros para ese cómic, se devuelva 0 en lugar de NULL.
+### 2.	Realiza una consulta SELECT que:
+#### • Suma la cantidad de cómics en la tabla Inventario para el cómic correspondiente al comic_id dado.
+#### • Utiliza la función COALESCE para garantizar que, si no existen registros para ese cómic, se devuelva 0 en lugar de NULL.
 --
-#### 3.	La función devuelve el valor de total_stock, que es el stock total disponible del cómic.
+### 3.	La función devuelve el valor de total_stock, que es el stock total disponible del cómic.
+```sql
+DELIMITER $$
 
+CREATE FUNCTION CalcularStockTotal(comic INT)
+RETURNS INT
+DETERMINISTIC
+BEGIN
+    DECLARE total_stock INT;
+    
+    -- Sumar las cantidades de los movimientos de inventario para ese cómic
+    SELECT COALESCE(SUM(cantidad), 0)
+    INTO total_stock
+    FROM Inventario
+    WHERE comic_id = comic;
+    
+    -- Retornar el total de stock calculado
+    RETURN total_stock;
+END$$
 
+DELIMITER ;
+```
+### Explicación de la Función:
 
-
+•	*`COALESCE(SUM(cantidad), 0)`*: La función SUM suma la cantidad de cómics en los movimientos de inventario, y COALESCE asegura que, si no hay movimientos para ese cómic, se devuelva 0.
+•	*`RETURNS INT`*: La función devuelve un valor de tipo INT, que representa el total de unidades disponibles para el cómic.
 
 
 
