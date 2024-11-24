@@ -1340,7 +1340,8 @@ CALL ActualizarEstadoEnvio(
     'ABC123456789'           -- p_numero_seguimiento (número de seguimiento)
 );
 ```
-#### Resultado esperado: El procedimiento actualizará el estado y el número de seguimiento del envío con ID 1. Tras ejecutar el procedimiento, la fila correspondiente en la tabla Envio tendrá los siguientes valores:
+#### Resultado esperado: 
+El procedimiento actualizará el estado y el número de seguimiento del envío con ID 1. Tras ejecutar el procedimiento, la fila correspondiente en la tabla Envio tendrá los siguientes valores:
 - estado_envio = 'En tránsito'
 - numero_seguimiento = 'ABC123456789'
 
