@@ -251,11 +251,9 @@ SELECT * FROM Vista_Comic_Detalles;
 ---
 ## 2. Vista_Historial_Pedidos
 
-**Propósito**: 
-Facilitar la consulta de los detalles completos de cada pedido sin necesidad de realizar uniones complejas entre varias tablas.
+*`Propósito`*: Facilitar la consulta de los detalles completos de cada pedido sin necesidad de realizar uniones complejas entre varias tablas.
 
-**Objetivo**: 
-Ofrecer una visión clara del historial de pedidos, incluyendo detalles de los cómics adquiridos, su cantidad, precio y el estado del pedido.
+*`Objetivo`*: Ofrecer una visión clara del historial de pedidos, incluyendo detalles de los cómics adquiridos, su cantidad, precio y el estado del pedido.
 
 **Tablas que componen la Vista**:
 
@@ -270,13 +268,11 @@ SELECT * FROM Vista_Historial_Pedidos;
 ---
 ## 3. Vista_Pagos_Pedidos
 
-Propósito:
-Facilitar la consulta de los pagos asociados a cada pedido sin necesidad de realizar uniones complejas entre tablas.
+*`Propósito`*: Facilitar la consulta de los pagos asociados a cada pedido sin necesidad de realizar uniones complejas entre tablas.
 
-Objetivo:
-Mostrar los pagos realizados para cada pedido, incluyendo el método de pago y monto.
+*`Objetivo`*: Mostrar los pagos realizados para cada pedido, incluyendo el método de pago y monto.
 
-Tablas que componen la Vista:
+**Tablas que componen la Vista**:
 
     Pago: Información sobre los pagos (ID, fecha, monto, método de pago).
     Pedido: Información del pedido (ID y total del pedido).
@@ -288,13 +284,11 @@ SELECT * FROM Vista_Pagos_Pedidos;
 ---
 ## 4. Vista_Inventario_Actual
 
-Propósito:
-Facilitar la gestión y el seguimiento del inventario.
+*`Propósito`*: Facilitar la gestión y el seguimiento del inventario.
 
-Objetivo:
-Proveer una visión clara del estado del inventario, mostrando la cantidad recibida, vendida y disponible de cada cómic.
+*`Objetivo`*: Proveer una visión clara del estado del inventario, mostrando la cantidad recibida, vendida y disponible de cada cómic.
 
-Tablas que componen la Vista:
+**Tablas que componen la Vista**:
 
     Inventario: Registros de transacciones de inventario (recepciones y ventas).
     Comic: Información básica sobre los cómics.
@@ -306,13 +300,11 @@ SELECT * FROM Vista_Inventario_Actual;
 ---
 ## 5. Vista_Resenas
 
-Propósito:
-Facilitar el acceso a las reseñas de cómics.
+*`Propósito`*: Facilitar el acceso a las reseñas de cómics.
 
-Objetivo:
-Mostrar las reseñas de cómics por cliente, incluyendo calificación y comentarios.
+*`Objetivo`*: Mostrar las reseñas de cómics por cliente, incluyendo calificación y comentarios.
 
-Tablas que componen la Vista:
+**Tablas que componen la Vista**:
 
     Resena: Registros de reseñas (ID, cliente_id, comic_id, calificación, comentario).
     Cliente: Información del cliente (ID, nombre, apellido, email).
@@ -325,13 +317,11 @@ SELECT * FROM Vista_Resenas;
 ---
 ## 6. Vista_Ofertas_Activas
 
-Propósito:
-Facilitar la consulta de ofertas vigentes de cómics.
+*`Propósito`*: Facilitar la consulta de ofertas vigentes de cómics.
 
-Objetivo:
-Mostrar las ofertas activas, con detalles del descuento y periodo de vigencia.
+*`Objetivo`*: Mostrar las ofertas activas, con detalles del descuento y periodo de vigencia.
 
-Tablas que componen la Vista:
+**Tablas que componen la Vista**:
 
     Ofertas: Información sobre las ofertas (ID, comic_id, descuento, fechas de inicio y fin).
     Comic: Información sobre los cómics (ID y título).
@@ -343,13 +333,11 @@ SELECT * FROM Vista_Ofertas_Activas;
 ---
 ## 7. Vista_Envios
 
-Propósito:
-Facilitar la consulta de los envíos sin uniones complejas.
+*`Propósito`*: Facilitar la consulta de los envíos sin uniones complejas.
 
-Objetivo:
-Proveer información sobre los envíos, incluyendo el estado y número de seguimiento.
+*`Objetivo`*: Proveer información sobre los envíos, incluyendo el estado y número de seguimiento.
 
-Tablas que componen la Vista:
+**Tablas que componen la Vista**:
 
     Envio: Información de los envíos (ID, fecha, estado, número de seguimiento).
     TarifaEnvio: Detalles sobre las tarifas de envío (zona, método de envío).
@@ -361,13 +349,11 @@ SELECT * FROM Vista_Envios;
 ---
 ## 8. PedidosPendientesDeEnvio
 
-Propósito:
-Gestionar los pedidos pendientes de envío.
+*`Propósito`*: Gestionar los pedidos pendientes de envío.
 
-Objetivo:
-Mostrar los pedidos que aún no han sido enviados.
+*`Objetivo`*: Mostrar los pedidos que aún no han sido enviados.
 
-Tablas que componen la Vista:
+**Tablas que componen la Vista**:
 
     Pedido: Información sobre los pedidos (ID, fecha, estado).
     Cliente: Información del cliente (ID, nombre, apellido).
@@ -380,13 +366,11 @@ SELECT * FROM PedidosPendientesDeEnvio;
 ---
 ## 9. ComicsMasVendidos
 
-Propósito:
-Facilitar el análisis de los cómics más vendidos.
+*`Propósito`*: Facilitar el análisis de los cómics más vendidos.
 
-Objetivo:
-Mostrar los cómics con mayor volumen de ventas.
+*`Objetivo`*: Mostrar los cómics con mayor volumen de ventas.
 
-Tablas que componen la Vista:
+**Tablas que componen la Vista**:
 
     DetallePedido: Detalles de cada transacción (comic_id, cantidad vendida).
     Comic: Información sobre los cómics (ID, título).
