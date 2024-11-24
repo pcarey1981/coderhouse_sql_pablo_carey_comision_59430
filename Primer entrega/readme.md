@@ -208,6 +208,17 @@ Los datos fueron representados en consultas SQL estándar con el formato:
 ```sql
 INSERT INTO <nombre_tabla> (<columnas>) VALUES (<valores>);
 
+Estas consultas aseguran que los registros se inserten con precisión y rapidez en sus tablas correspondientes.
+Ejemplo de Consulta Utilizada
+
+Un ejemplo representativo de las consultas realizadas es el siguiente, correspondiente a la tabla Autor:
+
+INSERT INTO Autor (nombre, apellido, nacionalidad) VALUES
+('Alan', 'Moore', 'Británica'),
+('Frank', 'Miller', 'Estadounidense'),
+('Neil', 'Gaiman', 'Británica'),
+('Grant', 'Morrison', 'Escocesa'),
+('Brian', 'K. Vaughan', 'Estadounidense');
 
 
 
