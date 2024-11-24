@@ -158,7 +158,7 @@ Tabla *`Tarifa Envío`*
     costo (DECIMAL(10, 2), NOT NULL): Costo del envío.
     metodo_envio (VARCHAR(100), NOT NULL): Método de envío.
 
-Tabla *`*Envío`*
+Tabla *`Envío`* 
 
     envio_id (INT, NOT NULL, PRIMARY KEY, AUTO_INCREMENT): Identificador único del envío.
     pedido_id (INT, NOT NULL, FOREIGN KEY): Relación con el pedido asociado.
@@ -169,11 +169,11 @@ Tabla *`*Envío`*
 
 Relaciones y Problemáticas Resueltas
 
-    Relación Cliente-Pedido-Pago: Un cliente puede realizar múltiples pedidos, y cada pedido puede tener un pago asociado. Esta estructura permite rastrear la actividad de cada cliente y sus pagos.
-    Relación Cómic-Inventario-Detalle Pedido: Permite el control del stock de cómics en la tienda, facilitando la reposición y el control de ventas.
-    Relación Cómic-Reseña-Cliente: Permite que los clientes dejen reseñas y calificaciones de los cómics, mejorando la interacción y aportando valor informativo a futuros compradores.
-    Relación Cómic-Ofertas: Facilita el establecimiento de descuentos y promociones, proporcionando flexibilidad en la estrategia de ventas.
-    Relación Pedido-Envío-Tarifa Envío: Gestiona el envío de los pedidos, incluyendo costos y zonas geográficas, lo que permite una logística de envíos más organizada y detallada.
+Relación *`Cliente-Pedido-Pago`* : Un cliente puede realizar múltiples pedidos, y cada pedido puede tener un pago asociado. Esta estructura permite rastrear la actividad de cada cliente y sus pagos.
+Relación *`Cómic-Inventario-Detalle Pedido`* : Permite el control del stock de cómics en la tienda, facilitando la reposición y el control de ventas.
+Relación *`Cómic-Reseña-Cliente`* : Permite que los clientes dejen reseñas y calificaciones de los cómics, mejorando la interacción y aportando valor informativo a futuros compradores.
+Relación *`Cómic-Ofertas`* : Facilita el establecimiento de descuentos y promociones, proporcionando flexibilidad en la estrategia de ventas.
+Relación *`Pedido-Envío-Tarifa Envío`* : Gestiona el envío de los pedidos, incluyendo costos y zonas geográficas, lo que permite una logística de envíos más organizada y detallada.
 
 ---
 
