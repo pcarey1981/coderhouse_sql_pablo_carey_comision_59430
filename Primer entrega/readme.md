@@ -234,7 +234,7 @@ Las vistas en bases de datos son consultas predefinidas que simplifican el acces
 
 ## 1. Vista_Comic_Detalles
 
-**Propósito**: Facilita la consulta de los detalles de los cómics sin necesidad de realizar múltiples uniones entre tablas.
+**Propósito**  *`Propósito`* : Facilita la consulta de los detalles de los cómics sin necesidad de realizar múltiples uniones entre tablas.
 
 **Objetivo**: Permitir a los usuarios obtener rápidamente una lista completa de los cómics junto con información clave sobre los autores, las editoriales y los géneros.
 
