@@ -589,9 +589,9 @@ VALUES (8, 3, 1, 2000.00, 0);  -- No se aplicará descuento ya que la oferta no 
 *`Propósito`*: Actualizar automáticamente el estado del pedido a "Pagado" cuando se registra un pago en la base de datos. Esto asegura que, después de recibir un pago, el sistema mantenga la consistencia del estado del pedido sin necesidad de intervención manual, garantizando que los pedidos con pago confirmado se identifiquen rápidamente como "Pagados".
 
 *`Objetivo`*: Automatizar el cambio de estado de los pedidos una vez que se haya registrado un pago. Esto ayuda a:
-•	Mantener la integridad de los datos: El estado del pedido se actualiza automáticamente para reflejar su situación actual después del pago.
-•	Mejorar la eficiencia operativa: Se evita la necesidad de actualizar manualmente el estado de cada pedido.
-•	Facilitar la gestión de pedidos: Permite a los usuarios ver rápidamente qué pedidos han sido pagados, sin la necesidad de realizar consultas adicionales.
+#### • Mantener la integridad de los datos: El estado del pedido se actualiza automáticamente para reflejar su situación actual después del pago.
+#### • Mejorar la eficiencia operativa: Se evita la necesidad de actualizar manualmente el estado de cada pedido.
+#### • Facilitar la gestión de pedidos: Permite a los usuarios ver rápidamente qué pedidos han sido pagados, sin la necesidad de realizar consultas adicionales.
 
 **Tablas que interactuan con el trigger**:
 
