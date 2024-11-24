@@ -1,3 +1,4 @@
+
 --Calcular Stock Total de un Cómic
 --Devuelve el stock actual de un cómic considerando los movimientos en el inventario.
 DELIMITER $$
