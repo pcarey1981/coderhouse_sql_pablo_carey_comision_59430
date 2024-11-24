@@ -210,7 +210,7 @@ Este enfoque permitió la inserción eficiente de múltiples registros en un sol
 
 ---
 
-### Objetos en la Base de datos
+# Objetos en la Base de datos
 ---
 
 # Vistas 
@@ -233,7 +233,7 @@ Las vistas en bases de datos son consultas predefinidas que simplifican el acces
 
 ## Descripción de las Vistas
 
-### 1. Vista_Comic_Detalles
+## 1. Vista_Comic_Detalles
 
 **Propósito**:  
 Facilita la consulta de los detalles de los cómics sin necesidad de realizar múltiples uniones entre tablas.
@@ -252,7 +252,7 @@ Permitir a los usuarios obtener rápidamente una lista completa de los cómics j
 SELECT * FROM Vista_Comic_Detalles;
 ```
 
-2. Vista_Historial_Pedidos
+## 2. Vista_Historial_Pedidos
 
 Propósito:
 Facilitar la consulta de los detalles completos de cada pedido sin necesidad de realizar uniones complejas entre varias tablas.
@@ -271,7 +271,7 @@ Ejemplo de consulta:
 SELECT * FROM Vista_Historial_Pedidos;
 ```
 ---
-3. Vista_Pagos_Pedidos
+## 3. Vista_Pagos_Pedidos
 
 Propósito:
 Facilitar la consulta de los pagos asociados a cada pedido sin necesidad de realizar uniones complejas entre tablas.
@@ -289,7 +289,7 @@ Ejemplo de consulta:
 SELECT * FROM Vista_Pagos_Pedidos;
 ```
 ---
-4. Vista_Inventario_Actual
+## 4. Vista_Inventario_Actual
 
 Propósito:
 Facilitar la gestión y el seguimiento del inventario.
@@ -306,7 +306,7 @@ Ejemplo de consulta:
 
 SELECT * FROM Vista_Inventario_Actual;
 
-5. Vista_Resenas
+## 5. Vista_Resenas
 
 Propósito:
 Facilitar el acceso a las reseñas de cómics.
@@ -321,10 +321,11 @@ Tablas que componen la Vista:
     Comic: Información sobre los cómics (ID y título).
 
 Ejemplo de consulta:
-
+```sql
 SELECT * FROM Vista_Resenas;
+```
 
-6. Vista_Ofertas_Activas
+## 6. Vista_Ofertas_Activas
 
 Propósito:
 Facilitar la consulta de ofertas vigentes de cómics.
@@ -341,7 +342,7 @@ Ejemplo de consulta:
 
 SELECT * FROM Vista_Ofertas_Activas;
 
-7. Vista_Envios
+## 7. Vista_Envios
 
 Propósito:
 Facilitar la consulta de los envíos sin uniones complejas.
@@ -355,10 +356,11 @@ Tablas que componen la Vista:
     TarifaEnvio: Detalles sobre las tarifas de envío (zona, método de envío).
 
 Ejemplo de consulta:
-
+```sql
 SELECT * FROM Vista_Envios;
+```
 
-8. PedidosPendientesDeEnvio
+## 8. PedidosPendientesDeEnvio
 
 Propósito:
 Gestionar los pedidos pendientes de envío.
@@ -373,10 +375,11 @@ Tablas que componen la Vista:
     Envio: Información sobre los envíos (ID y estado).
 
 Ejemplo de consulta:
-
+```sql
 SELECT * FROM PedidosPendientesDeEnvio;
+```
 
-9. ComicsMasVendidos
+## 9. ComicsMasVendidos
 
 Propósito:
 Facilitar el análisis de los cómics más vendidos.
@@ -390,9 +393,9 @@ Tablas que componen la Vista:
     Comic: Información sobre los cómics (ID, título).
 
 Ejemplo de consulta:
-
+```sql
 SELECT * FROM ComicsMasVendidos;
-
+```
 
 
 
