@@ -37,7 +37,7 @@ La implementación de una base de datos optimizada y unificada permitirá a **Ti
 
 ---
 
-**Diagrama Entidad Relación**
+## Diagrama Entidad Relación
 
 **DER - Notación de CHEN**
 ![DER_tierra_uno_comic_CHEN](https://github.com/user-attachments/assets/271680ab-780a-409c-9c4c-27d92d0ac3f5)
@@ -49,7 +49,7 @@ La implementación de una base de datos optimizada y unificada permitirá a **Ti
 
 ---
 
-**Tablas y Descripción de los Campos** - Ver estructura_proyecto.sql
+## Tablas y Descripción de los Campos - Ver estructura_proyecto.sql
 
 Tabla *`Autor`*
 
