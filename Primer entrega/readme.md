@@ -493,9 +493,9 @@ VALUES (999, NULL, CURDATE(), -10, 'venta');
 
 ## 3. calcular_total_pedido
 
-*`Propósito`*: • Automatizar el cálculo del total del pedido al agregar productos a su detalle.• Garantizar que la tabla Pedido refleje siempre el valor actualizado del pedido, incluyendo el impacto de los descuentos y la tarifa de envío.
+*`Propósito`*: Automatizar el cálculo del total del pedido al agregar productos a su detalle. Garantizar que la tabla Pedido refleje siempre el valor actualizado del pedido, incluyendo el impacto de los descuentos y la tarifa de envío.
 
-*`Objetivo`*: •	Simplificar la gestión de los totales de los pedidos evitando cálculos manuales. Mantener la consistencia y precisión en los registros de la tabla Pedido.
+*`Objetivo`*: Simplificar la gestión de los totales de los pedidos evitando cálculos manuales. Mantener la consistencia y precisión en los registros de la tabla Pedido.
 
 **Tablas que interactuan con el trigger**:
 
@@ -511,7 +511,7 @@ VALUES (999, NULL, CURDATE(), -10, 'venta');
 INSERT INTO DetallePedido (pedido_id, comic_id, cantidad, precio_unitario, descuento) 
 VALUES (1, 1, 1, 1500.00, 0);
 ```
-### Cálculo del total:
+#### Cálculo del total:
 #### •	Total del pedido = (1500 * 1) - (1500 * 1 * 0%) + Tarifa de Envío
 #### •	Total del pedido = 1500 + 150 = 1650.00 (Este valor ya está insertado en la tabla Pedido).
 ---
@@ -522,7 +522,7 @@ VALUES (1, 1, 1, 1500.00, 0);
 INSERT INTO DetallePedido (pedido_id, comic_id, cantidad, precio_unitario, descuento) 
 VALUES (3, 5, 1, 1000.00, 50);
 ```
-### Cálculo del total:
+#### Cálculo del total:
 #### •	Total del pedido = (1000 * 1) - (1000 * 1 * 50%) = 1000 - 500 = 500
 #### •	Total del pedido con tarifa de envío = 500 + 250 (Tarifa de Envío) = 750.00 (Este valor se debe actualizar en la tabla Pedido).
 ---
@@ -533,13 +533,70 @@ VALUES (3, 5, 1, 1000.00, 50);
 INSERT INTO DetallePedido (pedido_id, comic_id, cantidad, precio_unitario, descuento) 
 VALUES (5, 4, 1, 1200.00, 0);
 ```
-### Cálculo del total: 
+#### Cálculo del total: 
 #### Total del pedido = (1200 * 1) - (1200 * 1 * 0%) + Tarifa de Envío = 1200 + 100 = 1300.00 (El total debe ser actualizado en la tabla Pedido para el pedido con ID 5).
 
+---
 
+## 4. aplicar_descuento_oferta
 
+*`Propósito`*: Automatizar la aplicación de descuentos cuando un cómic tiene una oferta vigente. Esto evita que el descuento se aplique manualmente y garantiza que el pedido refleje siempre los descuentos actuales.
 
+*`Objetivo`*: Asegurarse de que los descuentos sean aplicados de manera precisa y eficiente cuando un cómic con una oferta activa es agregado a un pedido. Si no hay oferta activa para el cómic, el descuento será 0, es decir, no se aplicará ningún descuento.
 
+**Tablas que interactuan con el trigger**:
+
+- *`DetallePedido`*: Almacena los detalles de los productos dentro de cada pedido, incluyendo la cantidad, precio unitario y el descuento aplicado.
+- *`Ofertas`*: Contiene información sobre las ofertas vigentes, específicamente el descuento y las fechas de inicio y fin de la oferta para cada cómic.
+
+### Ejemplos:
+
+#### Ej.1 - Agregar un cómic con oferta vigente
+Acción: Insertar un cómic que tiene una oferta activa en el momento de la inserción.
+•	Cómic: Watchmen (comic_id 1)
+•	Oferta vigente: 10% de descuento, válida entre '2024-11-01' y '2024-11-10'.
+```sql
+INSERT INTO DetallePedido (pedido_id, comic_id, cantidad, precio_unitario, descuento)
+VALUES (6, 1, 1, 1500.00, 0);  -- El descuento se aplicará automáticamente debido a la oferta activa
+```
+#### Resultado esperado: El descuento del 10% se aplicará automáticamente, actualizando el campo descuento a 10.00.
+---
+#### Ej.2 - Agregar un cómic con oferta vigente
+Acción: Insertar un cómic con una oferta activa que da un 15% de descuento.
+•	Cómic: The Dark Knight Returns (comic_id 2)
+•	Oferta vigente: 15% de descuento, válida entre '2024-11-05' y '2024-11-15'.
+```sql
+INSERT INTO DetallePedido (pedido_id, comic_id, cantidad, precio_unitario, descuento)
+VALUES (7, 2, 2, 1800.00, 0);  -- El descuento del 15% se aplicará automáticamente
+```
+#### Resultado esperado: El descuento del 15% se aplicará, actualizando el campo descuento a 15.00.
+---
+#### Ej.3 - Agregar un cómic con una oferta que no está activa
+Acción: Insertar un cómic con una oferta que no está vigente aún.
+•	Cómic: Sandman (comic_id 3)
+•	Oferta vigente: 20% de descuento, válida entre '2024-11-10' y '2024-11-20'.
+•	Fecha de inserción: '2024-11-09' (antes de la fecha de inicio de la oferta).
+```sql
+INSERT INTO DetallePedido (pedido_id, comic_id, cantidad, precio_unitario, descuento)
+VALUES (8, 3, 1, 2000.00, 0);  -- No se aplicará descuento ya que la oferta no está activa
+```
+#### Resultado esperado: El campo descuento permanecerá en 0.00, ya que la oferta no está activa en la fecha de la inserción.
+
+---
+
+## 5 - actualizar_estado_pedido
+
+*`Propósito`*: Actualizar automáticamente el estado del pedido a "Pagado" cuando se registra un pago en la base de datos. Esto asegura que, después de recibir un pago, el sistema mantenga la consistencia del estado del pedido sin necesidad de intervención manual, garantizando que los pedidos con pago confirmado se identifiquen rápidamente como "Pagados".
+
+*`Objetivo`*: Automatizar el cambio de estado de los pedidos una vez que se haya registrado un pago. Esto ayuda a:
+•	Mantener la integridad de los datos: El estado del pedido se actualiza automáticamente para reflejar su situación actual después del pago.
+•	Mejorar la eficiencia operativa: Se evita la necesidad de actualizar manualmente el estado de cada pedido.
+•	Facilitar la gestión de pedidos: Permite a los usuarios ver rápidamente qué pedidos han sido pagados, sin la necesidad de realizar consultas adicionales.
+
+**Tablas que interactuan con el trigger**:
+
+- *`Pago`*: Esta tabla almacena los registros de pagos realizados para los pedidos. El trigger se activa cuando se inserta un nuevo pago en esta tabla.
+- *`Pedido`*: El trigger actualizará el estado del pedido a "Pagado" en esta tabla cuando se registre un pago en la tabla Pago.
 
 
 
