@@ -702,6 +702,7 @@ Supongamos que tenemos el comic_id = 1. Queremos saber el stock total de este c�
 -- Consultar el stock total del cómic con id 1
 SELECT CalcularStockTotal(1) AS stock_total;
 ```
+
 ---
 
 ## 2 - CalcularTotalPedido
@@ -714,7 +715,7 @@ SELECT CalcularStockTotal(1) AS stock_total;
 
 - *`DetallePedido`*: Esta tabla almacena los detalles de los pedidos, incluyendo el precio unitario, cantidad y descuento aplicado a cada cómic.
 ---
-### Explicación de la Función:
+### Descripción de la Función:
 La función CalcularTotalPedido toma como parámetro el pedido_id (identificador del pedido) y realiza lo siguiente:
 
 #### 1.	Declara una variable total de tipo DECIMAL(10, 2) para almacenar el total calculado.
@@ -746,13 +747,52 @@ END$$
 
 DELIMITER ;
 ```
----
 ### Explicación de la Función:
 - (precio_unitario - (precio_unitario * (descuento / 100))) * cantidad: Esta fórmula calcula el precio total de un detalle considerando el descuento aplicado sobre el precio unitario y multiplicando por la cantidad.
 - SUM: Suma el total de los detalles del pedido.
 - RETURNS DECIMAL(10, 2): La función devuelve un valor de tipo decimal, con dos decimales, que representa el total calculado del pedido.
 ---
 ### Ejemplo de uso:
+
+#### Consultar el total de un pedido específico
+Supongamos que tenemos un pedido con pedido_id = 1. Queremos saber el total de este pedido, considerando los descuentos.
+```sql
+-- Consultar el total del pedido con id 1
+SELECT CalcularTotalPedido(1) AS total_pedido;
+```
+
+---
+
+## 3 - CalificacionPromedio
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
