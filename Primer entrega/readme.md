@@ -423,8 +423,8 @@ VALUES (1, 1, CURDATE(), 20, 'recepcion');
 SELECT * FROM Comic WHERE comic_id = 1;
 ```
 Resultado esperado: El stock del cómic "Watchmen" aumenta de 50 a 70.
-
 --
+
 Ej.2 - Registrar una Venta de un Cómic Existente
 Restamos unidades al stock del cómic "The Dark Knight Returns" (comic_id = 2) por una venta.
 
