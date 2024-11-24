@@ -1030,10 +1030,73 @@ SELECT VerificarStock(1) AS stock_suficiente;
 
 ---
 
+# Store Procedure
 
+Un stored procedure (procedimiento almacenado) es un bloque de código SQL predefinido y almacenado en la base de datos, diseñado para realizar una tarea específica. Puede incluir consultas, cálculos y lógica condicional, y se ejecuta cuando se invoca por su nombre. A diferencia de las funciones, los procedimientos almacenados pueden realizar acciones como insertar, actualizar o eliminar datos, y no siempre devuelven un valor. Son útiles para automatizar tareas repetitivas, mejorar el rendimiento y garantizar la seguridad al limitar el acceso directo a las consultas SQL.
 
+## Store Procedure aplicados
 
+- *`RegistrarCliente`*: Registrar un nuevo cliente. 
+- *`RegistrarPedido`*: Registrar un nuevo pedido.
+- *`RegistrarPago`*: Registrar un pago para un pedido.
+- *`RegistrarRecepcion`*: Registrar una recepción de cómics (movimiento de inventario). 
+- *`AplicarOferta`*: Aplicar un descuento a un cómic en una oferta.
+- *`ActualizarEstadoEnvio`*: •	Actualizar estado de envío.
+- *`ObtenerDetallePedido`*: Obtener detalles del pedido con los cómics asociados.
+- *`ActualizarStock`*: Procedimiento para Actualizar el Stock al Registrar una Venta. 
 
+---
+
+## 1. RegistrarCliente
+
+*`Propósito`*: Permite insertar nuevos clientes en la base de datos, simplificando el proceso de registro y asegurando que todos los datos necesarios se capturen correctamente.
+
+*`Objetivo`*: Facilitar la inserción de nuevos registros en la tabla Cliente, evitando repeticiones en el código SQL y promoviendo una gestión centralizada del registro de clientes.
+
+**Tablas Involucradas**:
+
+- *`Cliente`*: Recibe los datos proporcionados como parámetros en el procedimiento.
+
+---
+
+### Descripción del Procedimiento:
+El procedimiento almacenado RegistrarCliente recibe los siguientes parámetros:
+•	p_nombre: El nombre del cliente.
+•	p_apellido: El apellido del cliente.
+•	p_email: El correo electrónico del cliente.
+•	p_direccion: La dirección física del cliente.
+•	p_telefono: El número de teléfono del cliente.
+
+### Lógica Interna:
+
+#### 1. INSERT INTO Cliente: Inserta los valores proporcionados por los parámetros en la tabla Cliente.
+
+#### 2. Los datos son insertados directamente, sin validación adicional en este ejemplo básico.
+
+---
+### Ejemplo de uso:
+
+### Registrar un cliente válido
+Supongamos que deseas registrar un nuevo cliente llamado "Pedro Suárez" con los siguientes datos:
+- Email: pedro.suarez@example.com
+- Dirección: Av. del Libertador 5000, Buenos Aires
+- Teléfono: 6612345678
+```sql
+CALL RegistrarCliente(
+    'Pedro',
+    'Suárez',
+    'pedro.suarez@example.com',
+    'Av. del Libertador 5000, Buenos Aires',
+    '6612345678'
+);
+```
+#### Resultado esperado: El procedimiento inserta un nuevo registro en la tabla Cliente con los datos proporcionados.
+
+---
+#### Validación: Consulta para verificar que el cliente fue registrado correctamente:
+```sql
+SELECT * FROM Cliente WHERE email = 'pedro.suarez@example.com';
+```
 
 
 
