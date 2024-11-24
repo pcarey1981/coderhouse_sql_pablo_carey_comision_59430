@@ -1090,10 +1090,12 @@ CALL RegistrarCliente(
     '6612345678'
 );
 ```
-#### Resultado esperado: El procedimiento inserta un nuevo registro en la tabla Cliente con los datos proporcionados.
+#### Resultado esperado: 
+El procedimiento inserta un nuevo registro en la tabla Cliente con los datos proporcionados.
 
 ---
-#### Validación: Consulta para verificar que el cliente fue registrado correctamente:
+#### Validación: 
+Consulta para verificar que el cliente fue registrado correctamente:
 ```sql
 SELECT * FROM Cliente WHERE email = 'pedro.suarez@example.com';
 ```
@@ -1137,7 +1139,8 @@ CALL RegistrarPedido(
 );
 
 ```
-#### Resultado esperado: El procedimiento insertará un nuevo registro en la tabla Pedido, con los siguientes valores:
+#### Resultado esperado: 
+El procedimiento insertará un nuevo registro en la tabla Pedido, con los siguientes valores:
 - cliente_id = 3
 - fecha_pedido = CURDATE() (fecha actual)
 - estado = 'Pendiente'
@@ -1145,7 +1148,8 @@ CALL RegistrarPedido(
 - tarifa_envio = 200.00
 
 ---
-#### Validación: Consulta para verificar que el pedido fue registrado correctamente:
+#### Validación: 
+Consulta para verificar que el pedido fue registrado correctamente:
 ```sql
 SELECT * FROM Pedido WHERE cliente_id = 3 AND total = 1850.00;
 ```
@@ -1186,14 +1190,16 @@ CALL RegistrarPago(
     'PayPal'         -- p_metodo_pago
 );
 ```
-#### Resultado esperado: El procedimiento insertará un nuevo registro en la tabla Pago, con los siguientes valores:
+#### Resultado esperado: 
+El procedimiento insertará un nuevo registro en la tabla Pago, con los siguientes valores:
 - pedido_id = 4
 - fecha_pago = CURDATE() (fecha actual)
 - monto = 2000.00
 - metodo_pago = 'PayPal'
 
 ---
-#### Validación: Consulta para verificar que el pago fue registrado correctamente:
+#### Validación: 
+Consulta para verificar que el pago fue registrado correctamente:
 ```sql
 SELECT * FROM Pago WHERE pedido_id = 4 AND monto = 2000.00;
 ```
@@ -1235,7 +1241,8 @@ CALL RegistrarRecepcion(
     50  -- p_cantidad
 );
 ```
-#### Resultado esperado: El procedimiento insertará un nuevo registro en la tabla Inventario, con los siguientes valores:
+#### Resultado esperado: 
+El procedimiento insertará un nuevo registro en la tabla Inventario, con los siguientes valores:
 - comic_id = 1
 - proveedor_id = 1
 - fecha_movimiento = CURDATE() (fecha actual)
@@ -1291,7 +1298,8 @@ CALL AplicarOferta(
     '2024-11-30'  -- p_fecha_fin (fecha de fin)
 );
 ```
-#### Resultado esperado: El procedimiento insertará un nuevo registro en la tabla Ofertas, con los siguientes valores:
+#### Resultado esperado: 
+El procedimiento insertará un nuevo registro en la tabla Ofertas, con los siguientes valores:
 - comic_id = 1
 - descuento = 20.00 (representando un 20% de descuento)
 - fecha_inicio = '2024-11-01'
