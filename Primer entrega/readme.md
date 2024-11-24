@@ -1154,7 +1154,7 @@ SELECT * FROM Pedido WHERE cliente_id = 3 AND total = 1850.00;
 
 ## 3. RegistrarPago
 
-*`Propósito`*: Permite registrar los pagos realizados para un pedido, asegurando que los detalles del pago (monto, fecha y método) se almacenen correctamente en la base de datos..
+*`Propósito`*: Permite registrar los pagos realizados para un pedido, asegurando que los detalles del pago (monto, fecha y método) se almacenen correctamente en la base de datos.
 
 *`Objetivo`*: Facilitar la inserción de nuevos pagos asociados a pedidos existentes, promoviendo una gestión centralizada de los pagos y asegurando que el monto pagado se registre con el método de pago correspondiente.
 
@@ -1193,13 +1193,66 @@ CALL RegistrarPago(
 - metodo_pago = 'PayPal'
 
 ---
-#### Consulta para verificar que el pago fue registrado correctamente:
+#### Validación: Consulta para verificar que el pago fue registrado correctamente:
 ```sql
 SELECT * FROM Pago WHERE pedido_id = 4 AND monto = 2000.00;
 ```
 
 ---
 
+## 4. RegistrarRecepcion
+
+*`Propósito`*: Permite registrar la recepción de cómics en el inventario, actualizando tanto el registro del movimiento de inventario como el stock disponible de los cómics en la tabla correspondiente.
+
+*`Objetivo`*: Facilitar la gestión del inventario mediante la automatización de la actualización de stock al recibir cómics, asegurando que se mantenga un registro de los movimientos y el stock actual de cada cómic.
+
+**Tablas Involucradas**:
+
+- *`Inventario`*: Recibe los datos de la recepción del cómic, incluyendo el proveedor, la cantidad y el tipo de movimiento (en este caso, 'recepcion').
+- - *`Comic`*: Se actualiza el stock del cómic recibido en el inventario, incrementando la cantidad de stock disponible.
+
+---
+
+### Descripción del Procedimiento:
+El procedimiento almacenado RegistrarRecepcion recibe los siguientes parámetros:
+•	p_comic_id: El ID del cómic recibido.
+•	p_proveedor_id: El ID del proveedor que está entregando el cómic.
+•	p_cantidad: La cantidad de cómics recibidos.
+
+### Lógica Interna:
+
+#### 1 - INSERT INTO Inventario: Registra el movimiento en la tabla Inventario, indicando que se ha recibido una cantidad de cómics (tipo_movimiento = 'recepcion'). Se incluye la fecha del movimiento, que se obtiene con CURDATE().
+
+#### 2 - UPDATE Comic: Actualiza el stock del cómic recibido, sumando la cantidad recibida a la cantidad actual de stock del cómic en la tabla Comic.
+
+---
+### Ejemplo de uso:
+Registrar la recepción de 50 cómics del cómic con ID 1 de un proveedor con ID 1
+```sql
+CALL RegistrarRecepcion(
+    1,  -- p_comic_id
+    1,  -- p_proveedor_id
+    50  -- p_cantidad
+);
+```
+#### Resultado esperado: El procedimiento insertará un nuevo registro en la tabla Inventario, con los siguientes valores:
+- comic_id = 1
+- proveedor_id = 1
+- fecha_movimiento = CURDATE() (fecha actual)
+- cantidad = 50
+- tipo_movimiento = 'recepcion'
+
+Y también actualizará el stock del cómic en la tabla Comic, sumando la cantidad de 50 al stock actual del cómic con ID 1.
+
+---
+#### Validación: Consulta para verificar que el pago fue registrado correctamente:
+```sql
+SELECT * FROM Inventario WHERE comic_id = 1 AND tipo_movimiento = 'recepcion';
+```
+Consulta para verificar que el stock del cómic fue actualizado correctamente:
+```sql
+SELECT * FROM Inventario WHERE comic_id = 1 AND tipo_movimiento = 'recepcion';
+```
 
 
 
