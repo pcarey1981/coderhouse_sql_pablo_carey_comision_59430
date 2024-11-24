@@ -167,7 +167,7 @@ Tabla *`Envío`*
     estado_envio (VARCHAR(50), NOT NULL): Estado actual del envío.
     numero_seguimiento (VARCHAR(100)): Número de seguimiento del envío.
 
-Relaciones y Problemáticas Resueltas
+## Relaciones y Problemáticas Resueltas
 
 Relación *`Cliente-Pedido-Pago`* : Un cliente puede realizar múltiples pedidos, y cada pedido puede tener un pago asociado. Esta estructura permite rastrear la actividad de cada cliente y sus pagos.
 Relación *`Cómic-Inventario-Detalle Pedido`* : Permite el control del stock de cómics en la tienda, facilitando la reposición y el control de ventas.
