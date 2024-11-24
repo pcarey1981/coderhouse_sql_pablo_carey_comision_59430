@@ -10,7 +10,7 @@
 
 ---
 
-**Introducción**
+## Introducción
 
 En un mundo lleno de historias increíbles, **Tierra Uno Comics** es un lugar donde los fanáticos encuentran mucho más que cómics: encuentran momentos, personajes y mundos que alimentan su imaginación. Para seguir ofreciendo esta experiencia única, la propuesta de base de datos busca ser el motor detrás de cada venta, pedido y oferta que la tienda ofrece.
 
@@ -179,8 +179,6 @@ Relación *`Pedido-Envío-Tarifa Envío`* : Gestiona el envío de los pedidos, i
 
 
 # Inserción de Datos en la Base de Datos `tierra_uno_comics`
-
-## Introducción
 
 Para garantizar una gestión eficiente de la información en la base de datos `tierra_uno_comics`, se llevó a cabo un proceso de inserción de datos mediante consultas SQL `INSERT INTO` utilizando MySQL Workbench. Este enfoque sistemático permitió cargar información en las tablas relacionadas, asegurando la consistencia y disponibilidad de los datos para la administración de ventas, inventarios, pedidos, y más.
 
