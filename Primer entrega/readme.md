@@ -450,13 +450,9 @@ Resultado esperado: La operación falla debido a que el trigger no permitirá qu
 
 ## 2 - validar_stock_comic
 
-*`Propósito`*: 
-•	Garantizar la integridad de los datos en la tabla Comic al evitar movimientos de ventas que excedan el stock disponible.
-•	Prevenir errores operativos o pérdidas de información al intentar registrar ventas imposibles de cumplir.
+*`Propósito`*: Prevenir errores operativos o pérdidas de información al intentar registrar ventas imposibles de cumplir.
 
-*`Objetivo`*:
-•	Validar que el stock de un cómic sea suficiente antes de registrar una venta en la tabla Inventario.
-•	Detener cualquier inserción que resulte en stock negativo, mejorando la gestión y confiabilidad del inventario.
+*`Objetivo`*: Validar que el stock de un cómic sea suficiente antes de registrar una venta en la tabla Inventario.
 
 **Tablas que interactuan con el trigger**:
 
