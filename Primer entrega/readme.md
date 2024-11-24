@@ -656,7 +656,7 @@ Las funciones definidas por el usuario se utilizan para realizar operaciones esp
 **Tablas Involucradas**:
 
 - *`Inventario`*: La tabla que almacena los movimientos de inventario, con las cantidades recibidas o vendidas de un cómic.
-
+---
 ### Descripción de la Función:
 La función CalcularStockTotal toma como parámetro el comic_id (identificador del cómic) y realiza lo siguiente:
 
@@ -698,6 +698,42 @@ DELIMITER ;
 
 #### Consultar el stock total de un cómic específico
 Supongamos que tenemos el comic_id = 1. Queremos saber el stock total de este cómic.
+```sql
+-- Consultar el stock total del cómic con id 1
+SELECT CalcularStockTotal(1) AS stock_total;
+```
+---
+
+## 2 - CalcularTotalPedido
+
+*`Propósito`*: Calcula el total de un pedido, sumando el valor de cada detalle (cómic comprado), considerando el precio unitario, cantidad y aplicando el descuento si existe.
+
+*`Objetivo`*: Calcular el total de un pedido a partir de los detalles registrados en la tabla DetallePedido, teniendo en cuenta los descuentos aplicados (si existen).
+
+**Tablas Involucradas**:
+
+- *`DetallePedido`*: Esta tabla almacena los detalles de los pedidos, incluyendo el precio unitario, cantidad y descuento aplicado a cada cómic.
+---
+### Explicación de la Función:
+La función CalcularTotalPedido toma como parámetro el pedido_id (identificador del pedido) y realiza lo siguiente:
+
+#### 1.	Declara una variable total de tipo DECIMAL(10, 2) para almacenar el total calculado.
+
+#### 2.	Realiza una consulta SELECT que:
+- Calcula el total de cada cómic en el detalle del pedido considerando el precio unitario, la cantidad y el descuento (si existe) con la fórmula:
+(precio_unitario - (precio_unitario * (descuento / 100))) * cantidad
+ - Suma los totales de cada detalle del pedido.
+
+#### 3. La función devuelve el valor de total, que es el total calculado para el pedido.
+
+
+
+
+
+
+
+
+
 
 
 
