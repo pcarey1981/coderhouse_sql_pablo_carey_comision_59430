@@ -259,9 +259,9 @@ Ofrecer una visión clara del historial de pedidos, incluyendo detalles de los c
 
 **Tablas que componen la Vista**:
 
-    Pedido: Información del pedido (ID, fecha, estado, total).
-    DetallePedido: Detalles de los ítems en el pedido (ID del cómic, cantidad, precio unitario, descuento).
-    Comic: Información sobre los cómics (ID y título).
+- *`Pedido`*: Información del pedido (ID, fecha, estado, total).
+- *`DetallePedido`*: Detalles de los ítems en el pedido (ID del cómic, cantidad, precio unitario, descuento).
+- *`Comic`*: Información sobre los cómics (ID y título).
 
 Ejemplo de consulta:
 ```sql
