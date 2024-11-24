@@ -1098,9 +1098,59 @@ CALL RegistrarCliente(
 SELECT * FROM Cliente WHERE email = 'pedro.suarez@example.com';
 ```
 
+--
 
+## 2. RegistrarPedido
 
+*`Propósito`*: Permite insertar nuevos pedidos en la base de datos, simplificando el proceso de registro y asegurando que todos los datos necesarios se capturen correctamente, además de registrar la fecha del pedido automáticamente.
 
+*`Objetivo`*: Facilitar la inserción de nuevos registros en la tabla Pedido, evitando repeticiones en el código SQL y promoviendo una gestión centralizada de los pedidos, además de asegurar que la fecha del pedido se registre de manera consistente.
+
+**Tablas Involucradas**:
+
+- *`Pedido`*: Recibe los datos proporcionados como parámetros en el procedimiento (cliente_id, estado, total, tarifa_envio).
+
+---
+
+### Descripción del Procedimiento:
+El procedimiento almacenado RegistrarPedido recibe los siguientes parámetros:
+•	p_cliente_id: El ID del cliente que realiza el pedido.
+•	p_estado: El estado del pedido (por ejemplo, 'Pendiente', 'Completado').
+•	p_total: El total del pedido, que incluye los costos de los cómics, descuentos y tarifas de envío.
+•	p_tarifa_envio: El costo del envío del pedido.
+
+### Lógica Interna:
+
+#### 1. INSERT INTO Pedido: Inserta los valores proporcionados por los parámetros en la tabla Pedido. La fecha del pedido se obtiene automáticamente mediante la función CURDATE(), lo que asegura que se registre la fecha actual.
+
+#### 2. Datos insertados: Los datos son insertados directamente sin validaciones adicionales en este ejemplo básico. Esto asegura que el pedido se registre correctamente con los valores proporcionados.
+
+---
+### Ejemplo de uso:
+Registrar un nuevo pedido para el cliente con cliente_id = 3, cuyo estado es 'Pendiente', el total del pedido es 1850.00 y la tarifa de envío es 200.00.
+```sql
+CALL RegistrarPedido(
+    3,               -- p_cliente_id
+    'Pendiente',     -- p_estado
+    1850.00,         -- p_total
+    200.00           -- p_tarifa_envio
+);
+
+```
+#### Resultado esperado: El procedimiento insertará un nuevo registro en la tabla Pedido, con los siguientes valores:
+•	cliente_id = 3
+•	fecha_pedido = CURDATE() (fecha actual)
+•	estado = 'Pendiente'
+•	total = 1850.00
+•	tarifa_envio = 200.00
+
+---
+#### Validación: Consulta para verificar que el pedido fue registrado correctamente:
+```sql
+SELECT * FROM Pedido WHERE cliente_id = 3 AND total = 1850.00;
+```
+
+--
 
 
 
