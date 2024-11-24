@@ -400,15 +400,14 @@ Son útiles para mantener consistencia en los datos y aplicar reglas de negocio 
 
 ## 1. actualizar_stock_comic
 
-### Propósito:
-Asegurar que los datos del inventario estén siempre consistentes con las operaciones realizadas.
+*`Propósito`*: Asegurar que los datos del inventario estén siempre consistentes con las operaciones realizadas.
 
-### Objetivo:
-Automatizar la actualización del campo `stock` en la tabla `Comic` según el tipo de movimiento registrado en `Inventario`. Si el movimiento es una recepción, el stock aumenta; si es una venta, el stock disminuye.
+*`Objetivo`*: Automatizar la actualización del campo `stock` en la tabla `Comic` según el tipo de movimiento registrado en `Inventario`. Si el movimiento es una recepción, el stock aumenta; si es una venta, el stock disminuye.
 
-### Tablas que Interactúan:
-- **Inventario**: Almacena los movimientos relacionados con los cómics, como recepciones y ventas.
-- **Comic**: Contiene el campo `stock`, que se actualiza según el movimiento registrado.
+**Tablas que componen la Vista**:
+
+- *`Inventario`*: Esta tabla almacena los movimientos relacionados con los cómics, como recepciones y ventas. Al insertar un nuevo registro en esta tabla, el trigger se activa.
+- *`Comic`*: Contiene el campo stock que representa la cantidad disponible de cada cómic. El trigger actualiza este campo según el movimiento registrado.
 
 ### Ejemplos:
 
