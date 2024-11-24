@@ -1121,9 +1121,9 @@ El procedimiento almacenado RegistrarPedido recibe los siguientes parámetros:
 
 ### Lógica Interna:
 
-#### 1. INSERT INTO Pedido: Inserta los valores proporcionados por los parámetros en la tabla Pedido. La fecha del pedido se obtiene automáticamente mediante la función CURDATE(), lo que asegura que se registre la fecha actual.
+#### 1 - INSERT INTO Pedido: Inserta los valores proporcionados por los parámetros en la tabla Pedido. La fecha del pedido se obtiene automáticamente mediante la función CURDATE(), lo que asegura que se registre la fecha actual.
 
-#### 2. Datos insertados: Los datos son insertados directamente sin validaciones adicionales en este ejemplo básico. Esto asegura que el pedido se registre correctamente con los valores proporcionados.
+#### 2 - Datos insertados: Los datos son insertados directamente sin validaciones adicionales en este ejemplo básico. Esto asegura que el pedido se registre correctamente con los valores proporcionados.
 
 ---
 ### Ejemplo de uso:
@@ -1172,11 +1172,11 @@ El procedimiento almacenado RegistrarPago recibe los siguientes parámetros:
 
 ### Lógica Interna:
 
-#### 1. INSERT INTO Pago: Inserta los valores proporcionados por los parámetros en la tabla Pago. La fecha del pago se obtiene automáticamente mediante la función CURDATE(), lo que asegura que se registre la fecha actual del pago.
+#### 1 - INSERT INTO Pago: Inserta los valores proporcionados por los parámetros en la tabla Pago. La fecha del pago se obtiene automáticamente mediante la función CURDATE(), lo que asegura que se registre la fecha actual del pago.
 
-#### 2. Datos insertados: Los datos son insertados directamente en la tabla Pago sin validaciones adicionales en este ejemplo básico.
+#### 2 - Datos insertados: Los datos son insertados directamente en la tabla Pago sin validaciones adicionales en este ejemplo básico.
 
---
+---
 ### Ejemplo de uso:
 Registrar un pago para el pedido con ID 4, cuyo monto es 2000.00 y el método de pago es 'PayPal'.
 ```sql
