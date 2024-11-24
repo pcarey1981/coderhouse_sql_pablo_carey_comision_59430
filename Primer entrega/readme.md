@@ -1255,6 +1255,67 @@ Consulta para verificar que el stock del cómic fue actualizado correctamente:
 SELECT * FROM Inventario WHERE comic_id = 1 AND tipo_movimiento = 'recepcion';
 ```
 
+---
+
+## 5. AplicarOferta
+
+*`Propósito`*: Permite aplicar un descuento a un cómic durante un período determinado, registrando la oferta en la tabla correspondiente.
+
+*`Objetivo`*: Facilitar el registro de descuentos para cómics específicos, permitiendo que estos descuentos sean activos durante un rango de fechas definido, y mejorando la gestión de promociones y ofertas para los clientes.
+
+**Tablas Involucradas**:
+
+- *`Ofertas`*: Registra los descuentos aplicados a los cómics, especificando el cómic, el descuento, las fechas de inicio y fin de la oferta.
+
+---
+
+### Descripción del Procedimiento:
+El procedimiento almacenado AplicarOferta recibe los siguientes parámetros:
+•	p_comic_id: El ID del cómic al que se le aplicará el descuento.
+•	p_descuento: El porcentaje de descuento a aplicar (en formato decimal, por ejemplo, 20.00 para un 20%).
+•	p_fecha_inicio: La fecha de inicio de la oferta.
+•	p_fecha_fin: La fecha de finalización de la oferta.
+
+### Lógica Interna:
+
+#### 1 - INSERT INTO Ofertas: Inserta un nuevo registro en la tabla Ofertas, con los valores proporcionados para el cómic, descuento, fecha de inicio y fecha de fin.
+
+--
+### Ejemplo de uso:
+Aplicar un descuento del 20% al cómic con ID 1 en el rango de fechas desde el 1 de noviembre de 2024 hasta el 30 de noviembre de 2024.
+```sql
+CALL AplicarOferta(
+    1,          -- p_comic_id (ID del cómic)
+    20.00,      -- p_descuento (20% de descuento)
+    '2024-11-01', -- p_fecha_inicio (fecha de inicio)
+    '2024-11-30'  -- p_fecha_fin (fecha de fin)
+);
+```
+#### Resultado esperado: El procedimiento insertará un nuevo registro en la tabla Ofertas, con los siguientes valores:
+- comic_id = 1
+- descuento = 20.00 (representando un 20% de descuento)
+- fecha_inicio = '2024-11-01'
+- fecha_fin = '2024-11-30'
+
+Este registro indicará que el cómic con ID 1 estará en oferta con un descuento del 20% entre el 1 y el 30 de noviembre de 2024.
+
+---
+#### Validación: 
+Consulta para verificar que la oferta fue registrada correctamente:
+```sql
+SELECT * FROM Ofertas WHERE comic_id = 1 AND fecha_inicio = '2024-11-01';
+```
+
+---
+
+
+
+
+
+
+
+
+
 
 
 
