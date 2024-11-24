@@ -823,8 +823,57 @@ Supongamos que tenemos un cómic con comic_id = 2. Queremos saber cuál es su ca
 SELECT CalificacionPromedio(2) AS calificacion_promedio;
 ```
 
+---
 
+## 4 - ObtenerDescuento
 
+*`Propósito`*: Verificar si un cómic tiene una oferta activa en una fecha dada y, si es así, devolver el porcentaje de descuento aplicado. Si no hay una oferta activa en esa fecha, devuelve un valor de 0.
+
+*`Objetivo`*: Permitir a los usuarios o al sistema verificar si un cómic específico tiene un descuento activo en una fecha concreta. Esto es útil para aplicar descuentos en el proceso de ventas o cuando se visualizan las ofertas disponibles.
+
+**Tablas Involucradas**:
+
+- *`Ofertas`*: Esta tabla almacena las ofertas activas para los cómics, incluyendo el descuento, las fechas de inicio y fin de la oferta, y el comic_id correspondiente.
+  
+---
+
+### Descripción de la Función:
+La función ObtenerDescuento recibe dos parámetros:
+•	comic_id: El identificador del cómic.
+•	fecha: La fecha en la que se quiere verificar si el cómic tiene una oferta activa.
+
+#### La función realiza los siguientes pasos:
+
+#### 1. Declara una variable descuento de tipo DECIMAL(5, 2) para almacenar el descuento de la oferta.
+
+#### 2.	Realiza una consulta SELECT que:
+- Obtiene el descuento de la tabla Ofertas para el cómic específico comic_id y verifica si la fecha proporcionada está dentro del rango de la oferta (utilizando BETWEEN fecha_inicio AND fecha_fin).
+- Si no se encuentra ninguna oferta activa, la consulta no devuelve ningún valor.
+
+#### 3. La función devuelve el valor de descuento, que es el porcentaje de descuento de la oferta activa. Si no se encuentra una oferta, se devuelve 0.
+```sql
+DELIMITER $$
+
+CREATE FUNCTION ObtenerDescuento(comic INT, fecha DATE)
+RETURNS DECIMAL(5, 2)
+DETERMINISTIC
+BEGIN
+    DECLARE descuento DECIMAL(5, 2);
+    
+    -- Verificar si hay una oferta activa para el cómic en la fecha dada
+    SELECT descuento
+    INTO descuento
+    FROM Ofertas
+    WHERE comic_id = comic
+      AND fecha BETWEEN fecha_inicio AND fecha_fin
+    LIMIT 1;
+
+    -- Si no hay oferta activa, se devuelve 0
+    RETURN COALESCE(descuento, 0);
+END$$
+
+DELIMITER ;
+```
 
 
 
