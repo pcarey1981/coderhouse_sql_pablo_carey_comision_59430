@@ -1,3 +1,4 @@
+
 --Registrar un nuevo cliente
 DELIMITER //
 CREATE PROCEDURE RegistrarCliente (
