@@ -953,9 +953,82 @@ SELECT CalcularCostoEnvio('Capital Federal', 'Estandar') AS costo_envio;
 
 ---
 
+## 6 - VerificarStock
 
+*`Propósito`*: Verifica si existe suficiente stock en el inventario para cubrir las cantidades solicitadas de cómics en un pedido.
 
+*`Objetivo`*: Permitir al sistema validar los pedidos antes de procesarlos, asegurándose de que todos los cómics en el pedido tengan suficiente stock disponible.
 
+**Tablas Involucradas**:
+
+- *`DetallePedido`*: Contiene las cantidades de cómics solicitados en cada pedido.
+- *`Comic`*: Relaciona los cómics con sus detalles principales (aunque no directamente con el stock).
+- *`Inventario`*: Proporciona el stock total de cada cómic utilizando la función CalcularStockTotal previamente creada.
+  
+---
+
+### Descripción de la Función:
+La función VerificarStock recibe un parámetro:
+- pedido: El ID del pedido que se desea verificar.
+
+### La lógica de la función es:
+
+#### 1. Inicializa la variable stock_suficiente en TRUE.
+
+#### 2. Realiza una consulta para verificar si existe al menos un cómic en el pedido cuya cantidad requerida sea mayor al stock disponible (calculado con CalcularStockTotal).
+  
+#### 3. Si la consulta encuentra cómics con stock insuficiente, actualiza stock_suficiente a FALSE.
+
+#### 4.	Devuelve el valor de stock_suficiente:
+- TRUE (1): Hay suficiente stock para todos los cómics del pedido.
+- FALSE (0): Hay al menos un cómic sin stock suficiente.
+```sql
+DELIMITER $$
+
+CREATE FUNCTION VerificarStock(pedido INT)
+RETURNS BOOLEAN
+DETERMINISTIC
+BEGIN
+    DECLARE stock_suficiente BOOLEAN;
+    SET stock_suficiente = TRUE;
+
+    -- Verificar si hay algún cómic en el pedido con stock insuficiente
+    IF EXISTS (
+        SELECT 1
+        FROM DetallePedido dp
+        JOIN Comic c ON dp.comic_id = c.comic_id
+        WHERE dp.pedido_id = pedido
+          AND dp.cantidad > CalcularStockTotal(dp.comic_id)
+    ) THEN
+        SET stock_suficiente = FALSE;
+    END IF;
+
+    -- Retornar el resultado de la verificación
+    RETURN stock_suficiente;
+END$$
+
+DELIMITER ;
+```
+### Explicación de la Función:
+- SELECT 1 FROM DetallePedido ... WHERE dp.cantidad > CalcularStockTotal(dp.comic_id): Encuentra si hay algún cómic en el pedido con cantidad requerida mayor al stock disponible.
+
+- EXISTS: Comprueba si la consulta devuelve al menos un resultado.
+
+- SET stock_suficiente = FALSE: Actualiza la variable si se detecta stock insuficiente.
+
+- RETURN stock_suficiente: Devuelve el resultado de la verificación.
+
+---
+### Ejemplo de uso:
+
+#### Verificar stock para un pedido con stock suficiente
+Supongamos que quieres verificar el stock para el pedido con ID 1, y todos los cómics de este pedido tienen suficiente stock.
+```sql
+-- Verificar si hay suficiente stock para el pedido con ID 1
+SELECT VerificarStock(1) AS stock_suficiente;
+```
+
+---
 
 
 
