@@ -1,3 +1,4 @@
+
 --Actualizar Stock en la Tabla Comic al Registrar un Movimiento en el Inventario
 --Este trigger ajusta automáticamente el stock del cómic al insertar un registro en la tabla Inventario.
 DELIMITER $$
