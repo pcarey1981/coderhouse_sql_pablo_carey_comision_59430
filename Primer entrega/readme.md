@@ -421,6 +421,8 @@ VALUES (1, 1, CURDATE(), 20, 'recepcion');
 -- Verificar el stock actualizado del cómic
 SELECT * FROM Comic WHERE comic_id = 1;
 ```
+Resultado esperado: El stock del cómic "Watchmen" aumenta de 50 a 70.
+
 
 
 
