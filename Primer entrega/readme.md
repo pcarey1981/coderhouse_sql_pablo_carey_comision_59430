@@ -176,30 +176,15 @@ Relaciones y Problemáticas Resueltas
 
 ---
 
-# Inserción de Datos en la Base de Datos `tierra_uno_comics`
+# Inserción de Datos en la Base de Datos tierra_uno_comics
 
-Para garantizar una gestión eficiente de la información en la base de datos `tierra_uno_comics`, se llevó a cabo un proceso de inserción de datos mediante consultas SQL `INSERT INTO` utilizando **MySQL Workbench**. Este enfoque sistemático permitió cargar información en las tablas relacionadas, asegurando la consistencia y disponibilidad de los datos para la administración de ventas, inventarios, pedidos y más.
+Para garantizar una gestión eficiente de la información en la base de datos **tierra_uno_comics**, se llevó a cabo un proceso de inserción de datos mediante consultas **SQL INSERT INTO** utilizando MySQL Workbench. Este enfoque sistemático permitió cargar información en las tablas relacionadas, asegurando la consistencia y disponibilidad de los datos para la administración de ventas, inventarios, pedidos, y más.
 
 ## Proceso de Inserción
 
 ### 1. Preparación de Datos
 
-Se recopilaron y organizaron datos relevantes, abarcando los siguientes elementos: 
-
-- Autores
-- Editoriales
-- Géneros
-- Clientes
-- Cómics
-- Pedidos
-- Pagos
-- Inventarios
-- Reseñas
-- Ofertas
-- Tarifas de envío
-- Envíos
-
-Esta información se estructuró para facilitar su incorporación en la base de datos.
+Se recopilaron y organizaron datos relevantes, abarcando autores, editoriales, géneros, clientes, cómics, pedidos, pagos, inventarios, reseñas, ofertas, tarifas de envío y envíos. Esta información se estructuró para facilitar su incorporación en la base de datos.
 
 ### 2. Estructuración en Consultas SQL
 
@@ -207,41 +192,24 @@ Los datos fueron representados en consultas SQL estándar con el formato:
 
 ```sql
 INSERT INTO <nombre_tabla> (<columnas>) VALUES (<valores>);
+```
 
 Estas consultas aseguran que los registros se inserten con precisión y rapidez en sus tablas correspondientes.
-Ejemplo de Consulta Utilizada
 
-Un ejemplo representativo de las consultas realizadas es el siguiente, correspondiente a la tabla Autor:
+### Ejemplo de Consulta Utilizada
 
+Un ejemplo representativo de las consultas realizadas es el siguiente, correspondiente a la tabla **Autor**:
+
+```sql
 INSERT INTO Autor (nombre, apellido, nacionalidad) VALUES
 ('Alan', 'Moore', 'Británica'),
 ('Frank', 'Miller', 'Estadounidense'),
 ('Neil', 'Gaiman', 'Británica'),
 ('Grant', 'Morrison', 'Escocesa'),
 ('Brian', 'K. Vaughan', 'Estadounidense');
+```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Este enfoque permitió la inserción eficiente de múltiples registros en un solo paso, optimizando tiempos y reduciendo la posibilidad de errores.
 
 
 
