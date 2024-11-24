@@ -1098,7 +1098,7 @@ CALL RegistrarCliente(
 SELECT * FROM Cliente WHERE email = 'pedro.suarez@example.com';
 ```
 
---
+---
 
 ## 2. RegistrarPedido
 
