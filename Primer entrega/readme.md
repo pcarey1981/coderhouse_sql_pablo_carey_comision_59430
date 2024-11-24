@@ -218,15 +218,15 @@ Las vistas en bases de datos son consultas predefinidas que simplifican el acces
 
 ## Vistas Aplicadas
 
-- Listado de cómics con sus autores, editoriales y género *Vista: `Vista_Comic_Detalles`*
-- Historial de pedidos, con detalles de los cómics comprados, su cantidad, precio y el estado del pedido: *Vista: `Vista_Historial_Pedidos`*
-- Pagos realizados por cada pedido, con su método de pago: *Vista: `Vista_Pagos_Pedidos`*
-- Inventario actual, con detalles de las recepciones y ventas de cómics: *Vista: `Vista_Inventario_Actual`*
-- Reseñas de cómics por cliente, con las calificaciones y comentarios: *Vista: `Vista_Resenas`*
-- Ofertas activas de cómics con su descuento y fechas de vigencia: *Vista: `Vista_Ofertas_Activas`*
-- Información de los envíos, incluyendo el estado y el número de seguimiento: *Vista: `Vista_Envios`*
-- Listado de pedidos pendientes de envío: *Vista: `PedidosPendientesDeEnvio`*
-- Cómics más vendidos: *Vista: `ComicsMasVendidos`*
+- Listado de cómics con sus autores, editoriales y género *`Vista_Comic_Detalles`*
+- Historial de pedidos, con detalles de los cómics comprados, su cantidad, precio y el estado del pedido: *`Vista_Historial_Pedidos`*
+- Pagos realizados por cada pedido, con su método de pago: *`Vista_Pagos_Pedidos`*
+- Inventario actual, con detalles de las recepciones y ventas de cómics: *`Vista_Inventario_Actual`*
+- Reseñas de cómics por cliente, con las calificaciones y comentarios: *`Vista_Resenas`*
+- Ofertas activas de cómics con su descuento y fechas de vigencia: *`Vista_Ofertas_Activas`*
+- Información de los envíos, incluyendo el estado y el número de seguimiento: *`Vista_Envios`*
+- Listado de pedidos pendientes de envío: *`PedidosPendientesDeEnvio`*
+- Cómics más vendidos: *`ComicsMasVendidos`*
 
 ---
 
@@ -390,11 +390,11 @@ Son útiles para mantener consistencia en los datos y aplicar reglas de negocio 
 
 ## Triggers Aplicados
 
-- **Actualizar Stock en la Tabla Comic al Registrar un Movimiento en el Inventario**: Ajusta automáticamente el stock del cómic al insertar un registro en la tabla Inventario. *(Trigger: `actualizar_stock_comic`)*
+- **Actualizar Stock en la Tabla Comic al Registrar un Movimiento en el Inventario**: Ajusta automáticamente el stock del cómic al insertar un registro en la tabla Inventario. *Trigger: `actualizar_stock_comic`*
 - **Validar Stock Disponible Antes de Registrar una Venta**: Evita que se registre un movimiento de venta si no hay suficiente stock disponible. *Trigger: `validar_stock_comic`*
-- **Calcular Total del Pedido en la Tabla Pedido**: Calcula automáticamente el total del pedido al insertar un registro en la tabla DetallePedido. *(Trigger: `calcular_total_pedido`)*
-- **Aplicar Descuento de Ofertas Automáticamente en DetallePedido**: Ajusta automáticamente el descuento al agregar un cómic en un pedido si hay una oferta vigente. *(Trigger: `aplicar_descuento_oferta`)*
-- **Actualizar Estado de Pedido al Confirmar Pago**: Actualiza el estado de un pedido a "Pagado" después de registrar un pago. *(Trigger: `actualizar_estado_pedido`)*
+- **Calcular Total del Pedido en la Tabla Pedido**: Calcula automáticamente el total del pedido al insertar un registro en la tabla DetallePedido. *Trigger: `calcular_total_pedido`*
+- **Aplicar Descuento de Ofertas Automáticamente en DetallePedido**: Ajusta automáticamente el descuento al agregar un cómic en un pedido si hay una oferta vigente. *Trigger: `aplicar_descuento_oferta`*
+- **Actualizar Estado de Pedido al Confirmar Pago**: Actualiza el estado de un pedido a "Pagado" después de registrar un pago. *Trigger: `actualizar_estado_pedido`*
 
 ---
 
