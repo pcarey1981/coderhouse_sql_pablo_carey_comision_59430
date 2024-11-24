@@ -174,6 +174,69 @@ Relaciones y Problemáticas Resueltas
     Relación Cómic-Ofertas: Facilita el establecimiento de descuentos y promociones, proporcionando flexibilidad en la estrategia de ventas.
     Relación Pedido-Envío-Tarifa Envío: Gestiona el envío de los pedidos, incluyendo costos y zonas geográficas, lo que permite una logística de envíos más organizada y detallada.
 
+---
+
+# Inserción de Datos en la Base de Datos `tierra_uno_comics`
+
+Para garantizar una gestión eficiente de la información en la base de datos `tierra_uno_comics`, se llevó a cabo un proceso de inserción de datos mediante consultas SQL `INSERT INTO` utilizando **MySQL Workbench**. Este enfoque sistemático permitió cargar información en las tablas relacionadas, asegurando la consistencia y disponibilidad de los datos para la administración de ventas, inventarios, pedidos y más.
+
+## Proceso de Inserción
+
+### 1. Preparación de Datos
+
+Se recopilaron y organizaron datos relevantes, abarcando los siguientes elementos: 
+
+- Autores
+- Editoriales
+- Géneros
+- Clientes
+- Cómics
+- Pedidos
+- Pagos
+- Inventarios
+- Reseñas
+- Ofertas
+- Tarifas de envío
+- Envíos
+
+Esta información se estructuró para facilitar su incorporación en la base de datos.
+
+### 2. Estructuración en Consultas SQL
+
+Los datos fueron representados en consultas SQL estándar con el formato:
+
+```sql
+INSERT INTO <nombre_tabla> (<columnas>) VALUES (<valores>);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
