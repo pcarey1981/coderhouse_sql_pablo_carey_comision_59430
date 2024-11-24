@@ -598,14 +598,37 @@ VALUES (8, 3, 1, 2000.00, 0);  -- No se aplicará descuento ya que la oferta no 
 - *`Pago`*: Esta tabla almacena los registros de pagos realizados para los pedidos. El trigger se activa cuando se inserta un nuevo pago en esta tabla.
 - *`Pedido`*: El trigger actualizará el estado del pedido a "Pagado" en esta tabla cuando se registre un pago en la tabla Pago.
 
+### Ejemplo:
 
+#### Insertar un pago y verificar la actualización del estado del pedido
 
+####  P.1 - Estado inicial de la tabla Pedido
+Antes de insertar un pago, los pedidos tienen diferentes estados, como "Completado", "Pendiente", "Enviado", etc. Verificamos el estado actual de la tabla Pedido.
+```sql
+-- Verificando los registros actuales en la tabla Pedido
+SELECT * FROM Pedido;
+```
+#### Resultado:
 
+![imagen](https://github.com/user-attachments/assets/245f34bb-42fb-4ca1-9115-17fa4d8d0ed9)
 
+#### P.2 - Insertar un pago para un pedido y activar el trigger
+Ahora insertamos un pago para el pedido_id 2. Según el trigger, esto debe actualizar el estado de este pedido a "Pagado".
+```sql
+-- Insertar un pago para el pedido con id 2
+INSERT INTO Pago (pedido_id, fecha_pago, monto, metodo_pago) 
+VALUES (2, '2024-11-02', 1850.00, 'Transferencia Bancaria');
+```
 
+#### P.3 - Verificar la tabla Pedido después de insertar el pago
+Verificamos si el estado del pedido 2 ha sido actualizado a "Pagado".
+```sql
+-- Verificando el estado de la tabla Pedido después del pago
+SELECT * FROM Pedido;
+```
+#### Resultado:
 
-
-
+![imagen](https://github.com/user-attachments/assets/f3376710-7b05-4667-804b-d438a1caa8f3)
 
 
 
