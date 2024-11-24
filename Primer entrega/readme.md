@@ -1061,11 +1061,11 @@ Un stored procedure (procedimiento almacenado) es un bloque de código SQL prede
 
 ### Descripción del Procedimiento:
 El procedimiento almacenado RegistrarCliente recibe los siguientes parámetros:
-•	p_nombre: El nombre del cliente.
-•	p_apellido: El apellido del cliente.
-•	p_email: El correo electrónico del cliente.
-•	p_direccion: La dirección física del cliente.
-•	p_telefono: El número de teléfono del cliente.
+- p_nombre: El nombre del cliente.
+- p_apellido: El apellido del cliente.
+- p_email: El correo electrónico del cliente.
+- p_direccion: La dirección física del cliente.
+- p_telefono: El número de teléfono del cliente.
 
 ### Lógica Interna:
 
@@ -1114,10 +1114,10 @@ SELECT * FROM Cliente WHERE email = 'pedro.suarez@example.com';
 
 ### Descripción del Procedimiento:
 El procedimiento almacenado RegistrarPedido recibe los siguientes parámetros:
-•	p_cliente_id: El ID del cliente que realiza el pedido.
-•	p_estado: El estado del pedido (por ejemplo, 'Pendiente', 'Completado').
-•	p_total: El total del pedido, que incluye los costos de los cómics, descuentos y tarifas de envío.
-•	p_tarifa_envio: El costo del envío del pedido.
+- p_cliente_id: El ID del cliente que realiza el pedido.
+- p_estado: El estado del pedido (por ejemplo, 'Pendiente', 'Completado').
+- p_total: El total del pedido, que incluye los costos de los cómics, descuentos y tarifas de envío.
+- p_tarifa_envio: El costo del envío del pedido.
 
 ### Lógica Interna:
 
@@ -1166,9 +1166,9 @@ SELECT * FROM Pedido WHERE cliente_id = 3 AND total = 1850.00;
 
 ### Descripción del Procedimiento:
 El procedimiento almacenado RegistrarPago recibe los siguientes parámetros:
-•	p_pedido_id: El ID del pedido asociado al pago.
-•	p_monto: El monto del pago realizado.
-•	p_metodo_pago: El método de pago utilizado (por ejemplo, 'Tarjeta de Crédito', 'Transferencia', etc.).
+- p_pedido_id: El ID del pedido asociado al pago.
+- p_monto: El monto del pago realizado.
+- p_metodo_pago: El método de pago utilizado (por ejemplo, 'Tarjeta de Crédito', 'Transferencia', etc.).
 
 ### Lógica Interna:
 
@@ -1215,9 +1215,9 @@ SELECT * FROM Pago WHERE pedido_id = 4 AND monto = 2000.00;
 
 ### Descripción del Procedimiento:
 El procedimiento almacenado RegistrarRecepcion recibe los siguientes parámetros:
-•	p_comic_id: El ID del cómic recibido.
-•	p_proveedor_id: El ID del proveedor que está entregando el cómic.
-•	p_cantidad: La cantidad de cómics recibidos.
+- p_comic_id: El ID del cómic recibido.
+- p_proveedor_id: El ID del proveedor que está entregando el cómic.
+- p_cantidad: La cantidad de cómics recibidos.
 
 ### Lógica Interna:
 
@@ -1271,10 +1271,10 @@ SELECT * FROM Inventario WHERE comic_id = 1 AND tipo_movimiento = 'recepcion';
 
 ### Descripción del Procedimiento:
 El procedimiento almacenado AplicarOferta recibe los siguientes parámetros:
-•	p_comic_id: El ID del cómic al que se le aplicará el descuento.
-•	p_descuento: El porcentaje de descuento a aplicar (en formato decimal, por ejemplo, 20.00 para un 20%).
-•	p_fecha_inicio: La fecha de inicio de la oferta.
-•	p_fecha_fin: La fecha de finalización de la oferta.
+- p_comic_id: El ID del cómic al que se le aplicará el descuento.
+- p_descuento: El porcentaje de descuento a aplicar (en formato decimal, por ejemplo, 20.00 para un 20%).
+- p_fecha_inicio: La fecha de inicio de la oferta.
+- p_fecha_fin: La fecha de finalización de la oferta.
 
 ### Lógica Interna:
 
