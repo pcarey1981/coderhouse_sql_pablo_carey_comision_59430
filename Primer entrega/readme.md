@@ -211,11 +211,11 @@ INSERT INTO Autor (nombre, apellido, nacionalidad) VALUES
 
 Este enfoque permitió la inserción eficiente de múltiples registros en un solo paso, optimizando tiempos y reduciendo la posibilidad de errores.
 
---
+---
 
 # Objetos de la base de datos
 
---
+---
 
 # Vistas
 
