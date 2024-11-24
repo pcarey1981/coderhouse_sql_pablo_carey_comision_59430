@@ -1138,11 +1138,11 @@ CALL RegistrarPedido(
 
 ```
 #### Resultado esperado: El procedimiento insertará un nuevo registro en la tabla Pedido, con los siguientes valores:
-•	cliente_id = 3
-•	fecha_pedido = CURDATE() (fecha actual)
-•	estado = 'Pendiente'
-•	total = 1850.00
-•	tarifa_envio = 200.00
+- cliente_id = 3
+- fecha_pedido = CURDATE() (fecha actual)
+- estado = 'Pendiente'
+- total = 1850.00
+- tarifa_envio = 200.00
 
 ---
 #### Validación: Consulta para verificar que el pedido fue registrado correctamente:
