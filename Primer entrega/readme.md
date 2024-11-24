@@ -1150,9 +1150,55 @@ CALL RegistrarPedido(
 SELECT * FROM Pedido WHERE cliente_id = 3 AND total = 1850.00;
 ```
 
+---
+
+## 3. RegistrarPago
+
+*`Propósito`*: Permite registrar los pagos realizados para un pedido, asegurando que los detalles del pago (monto, fecha y método) se almacenen correctamente en la base de datos..
+
+*`Objetivo`*: Facilitar la inserción de nuevos pagos asociados a pedidos existentes, promoviendo una gestión centralizada de los pagos y asegurando que el monto pagado se registre con el método de pago correspondiente.
+
+**Tablas Involucradas**:
+
+- *`Pago`*: Recibe los datos proporcionados como parámetros en el procedimiento (pedido_id, monto, metodo_pago).
+
+---
+
+### Descripción del Procedimiento:
+El procedimiento almacenado RegistrarPago recibe los siguientes parámetros:
+•	p_pedido_id: El ID del pedido asociado al pago.
+•	p_monto: El monto del pago realizado.
+•	p_metodo_pago: El método de pago utilizado (por ejemplo, 'Tarjeta de Crédito', 'Transferencia', etc.).
+
+### Lógica Interna:
+
+#### 1. INSERT INTO Pago: Inserta los valores proporcionados por los parámetros en la tabla Pago. La fecha del pago se obtiene automáticamente mediante la función CURDATE(), lo que asegura que se registre la fecha actual del pago.
+
+#### 2. Datos insertados: Los datos son insertados directamente en la tabla Pago sin validaciones adicionales en este ejemplo básico.
+
 --
+### Ejemplo de uso:
+Registrar un pago para el pedido con ID 4, cuyo monto es 2000.00 y el método de pago es 'PayPal'.
+```sql
+CALL RegistrarPago(
+    4,               -- p_pedido_id
+    2000.00,         -- p_monto
+    'PayPal'         -- p_metodo_pago
+);
+```
+#### Resultado esperado: El procedimiento insertará un nuevo registro en la tabla Pago, con los siguientes valores:
+- pedido_id = 4
+- fecha_pago = CURDATE() (fecha actual)
+- monto = 2000.00
+- metodo_pago = 'PayPal'
 
+---
+#### Consulta para verificar que el pago fue registrado correctamente:
+```sql
+SELECT * FROM Pago WHERE pedido_id = 4 AND monto = 2000.00;
+```
 
+---
 
 
 
