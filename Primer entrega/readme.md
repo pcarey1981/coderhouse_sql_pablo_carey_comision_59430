@@ -725,9 +725,34 @@ La función CalcularTotalPedido toma como parámetro el pedido_id (identificador
  - Suma los totales de cada detalle del pedido.
 
 #### 3. La función devuelve el valor de total, que es el total calculado para el pedido.
+```sql
+DELIMITER $$
 
+CREATE FUNCTION CalcularTotalPedido(pedido INT)
+RETURNS DECIMAL(10, 2)
+DETERMINISTIC
+BEGIN
+    DECLARE total DECIMAL(10, 2);
+    
+    -- Calcular el total del pedido considerando el precio, cantidad y descuento
+    SELECT SUM((precio_unitario - (precio_unitario * (descuento / 100))) * cantidad)
+    INTO total
+    FROM DetallePedido
+    WHERE pedido_id = pedido;
+    
+    -- Retornar el total calculado
+    RETURN total;
+END$$
 
-
+DELIMITER ;
+```
+---
+### Explicación de la Función:
+- (precio_unitario - (precio_unitario * (descuento / 100))) * cantidad: Esta fórmula calcula el precio total de un detalle considerando el descuento aplicado sobre el precio unitario y multiplicando por la cantidad.
+- SUM: Suma el total de los detalles del pedido.
+- RETURNS DECIMAL(10, 2): La función devuelve un valor de tipo decimal, con dos decimales, que representa el total calculado del pedido.
+---
+### Ejemplo de uso:
 
 
 
