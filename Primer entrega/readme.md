@@ -472,10 +472,15 @@ VALUES (1, NULL, CURDATE(), -10, 'venta');
 SELECT comic_id, stock FROM Comic WHERE comic_id = 1;
 ```
 Resultado esperado: El movimiento se registra, y el stock del cómic "Watchmen" disminuye de 50 a 40.
-
-
+---
 #### Ej.2 - Venta con Stock Insuficiente
 Intentar registrar una venta de 60 unidades para "The Dark Knight Returns" (comic_id = 2), que tiene un stock actual de 30.
+```sql
+-- Intentar registrar una venta inválida
+INSERT INTO Inventario (comic_id, proveedor_id, fecha_movimiento, cantidad, tipo_movimiento)
+VALUES (2, NULL, CURDATE(), -60, 'venta');
+```
+Resultado esperado: El trigger evita el registro del movimiento y genera el siguiente error: Stock insuficiente para realizar la venta.
 
 
 
