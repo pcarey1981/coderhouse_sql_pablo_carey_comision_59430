@@ -1245,7 +1245,8 @@ CALL RegistrarRecepcion(
 Y también actualizará el stock del cómic en la tabla Comic, sumando la cantidad de 50 al stock actual del cómic con ID 1.
 
 ---
-#### Validación: Consulta para verificar que el pago fue registrado correctamente:
+#### Validación: 
+Consulta para verificar que el pago fue registrado correctamente:
 ```sql
 SELECT * FROM Inventario WHERE comic_id = 1 AND tipo_movimiento = 'recepcion';
 ```
