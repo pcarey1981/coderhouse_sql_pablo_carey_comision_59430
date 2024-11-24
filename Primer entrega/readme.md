@@ -422,11 +422,9 @@ VALUES (1, 1, CURDATE(), 20, 'recepcion');
 SELECT * FROM Comic WHERE comic_id = 1;
 ```
 Resultado espereado: El stock del cómic "Watchmen" aumenta de 50 a 70..
-
 --
-Ej.2 - Registrar una Venta de un Cómic Existente
+#### Ej.2 - Registrar una Venta de un Cómic Existente
 Restamos unidades al stock del cómic "The Dark Knight Returns" (comic_id = 2) por una venta.
-
 ```sql
 -- Registrar una venta de 10 unidades de "The Dark Knight Returns"
 INSERT INTO Inventario (comic_id, proveedor_id, fecha_movimiento, cantidad, tipo_movimiento)
@@ -435,18 +433,16 @@ VALUES (2, NULL, CURDATE(), -10, 'venta');
 -- Verificar el stock actualizado del cómic
 SELECT * FROM Comic WHERE comic_id = 2;
 ```
-Resultado esperado: El stock del cómic "The Dark Knight Returns" disminuye de 30 a 20.
+Resultado espereado: El stock del cómic "The Dark Knight Returns" disminuye de 30 a 20.
 --
-
-Ej.3 - Intentar Registrar una Venta Mayor al Stock Disponible
+####Ej.3 - Intentar Registrar una Venta Mayor al Stock Disponible
 Probamos un caso en el que intentamos vender más unidades de las disponibles para "Sandman" (comic_id = 3).
-
 ```sql
 -- Intentar registrar una venta de 50 unidades para "Sandman"
 INSERT INTO Inventario (comic_id, proveedor_id, fecha_movimiento, cantidad, tipo_movimiento)
 VALUES (3, NULL, CURDATE(), -50, 'venta');
 ```
-Resultado esperado: La operación falla debido a que el trigger no permitirá que el stock del cómic sea negativo.
+Resultado espereado: La operación falla debido a que el trigger no permitirá que el stock del cómic sea negativo.
 
 ---
 
