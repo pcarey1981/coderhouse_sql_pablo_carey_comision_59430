@@ -413,7 +413,6 @@ Son útiles para mantener consistencia en los datos y aplicar reglas de negocio 
 
 #### Ej.1 - Registrar una Recepción para un Cómic Existente
 Añadimos más unidades al stock del cómic "Watchmen" (comic_id = 1).
-
 ```sql
 -- Registrar una recepción de 20 unidades para "Watchmen"
 INSERT INTO Inventario (comic_id, proveedor_id, fecha_movimiento, cantidad, tipo_movimiento)
@@ -422,7 +421,8 @@ VALUES (1, 1, CURDATE(), 20, 'recepcion');
 -- Verificar el stock actualizado del cómic
 SELECT * FROM Comic WHERE comic_id = 1;
 ```
-Resultado esperado: El stock del cómic "Watchmen" aumenta de 50 a 70.
+Resultado espereado: El stock del cómic "Watchmen" aumenta de 50 a 70..
+
 --
 
 Ej.2 - Registrar una Venta de un Cómic Existente
