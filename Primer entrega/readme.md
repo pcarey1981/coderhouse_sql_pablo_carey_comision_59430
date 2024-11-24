@@ -49,7 +49,7 @@ La implementación de una base de datos optimizada y unificada permitirá a **Ti
 
 ---
 
-## Tablas y Descripción de los Campos - Ver estructura_proyecto.sql
+## Tablas y Descripción de los Campos - *Ver estructura_proyecto.sql*
 
 Tabla *`Autor`*
 
