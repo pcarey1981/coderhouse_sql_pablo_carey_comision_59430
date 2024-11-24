@@ -656,7 +656,9 @@ Las funciones definidas por el usuario se utilizan para realizar operaciones esp
 **Tablas Involucradas**:
 
 - *`Inventario`*: La tabla que almacena los movimientos de inventario, con las cantidades recibidas o vendidas de un cómic.
+
 ---
+
 ### Descripción de la Función:
 La función CalcularStockTotal toma como parámetro el comic_id (identificador del cómic) y realiza lo siguiente:
 
@@ -714,7 +716,9 @@ SELECT CalcularStockTotal(1) AS stock_total;
 **Tablas Involucradas**:
 
 - *`DetallePedido`*: Esta tabla almacena los detalles de los pedidos, incluyendo el precio unitario, cantidad y descuento aplicado a cada cómic.
+  
 ---
+
 ### Descripción de la Función:
 La función CalcularTotalPedido toma como parámetro el pedido_id (identificador del pedido) y realiza lo siguiente:
 
@@ -765,11 +769,59 @@ SELECT CalcularTotalPedido(1) AS total_pedido;
 
 ## 3 - CalificacionPromedio
 
+*`Propósito`*: Calcula la calificación promedio de un cómic, considerando las reseñas asociadas a ese cómic.
 
+*`Objetivo`*: Calcular el promedio de las calificaciones de un cómic, basándose en las calificaciones registradas en la tabla de reseñas Resena. Si no existen reseñas para ese cómic, la función debe devolver un valor de 0.
 
+**Tablas Involucradas**:
 
+- *`Resena`*: Esta tabla almacena las reseñas de los cómics, incluyendo la calificación de cada reseña.
+  
+---
 
+### Descripción de la Función:
+La función CalificacionPromedio recibe como parámetro el comic_id (identificador del cómic) y realiza lo siguiente:
 
+#### 1.	Declara una variable promedio de tipo DECIMAL(3, 2) para almacenar el promedio calculado.
+
+#### 2.	Realiza una consulta SELECT que:
+- Calcula el promedio de las calificaciones para el cómic especificado usando la función AVG().
+- Si no existen reseñas para ese cómic, AVG() devolverá NULL. La función COALESCE() se utiliza para devolver 0 en caso de que no haya reseñas.
+
+#### 3.	La función devuelve el valor de promedio, que es la calificación promedio de ese cómic.
+```sql
+DELIMITER $$
+
+CREATE FUNCTION CalificacionPromedio(comic INT)
+RETURNS DECIMAL(3, 2)
+DETERMINISTIC
+BEGIN
+    DECLARE promedio DECIMAL(3, 2);
+    
+    -- Calcular el promedio de las calificaciones para el cómic
+    SELECT AVG(calificacion)
+    INTO promedio
+    FROM Resena
+    WHERE comic_id = comic;
+    
+    -- Devuelve 0 si no hay reseñas (en caso de que el promedio sea NULL)
+    RETURN COALESCE(promedio, 0);
+END$$
+
+DELIMITER ;
+```
+### Explicación de la Función:
+- AVG(calificacion): Calcula el promedio de las calificaciones para el cómic con el comic_id proporcionado.
+- COALESCE(promedio, 0): Si no hay reseñas (es decir, si el promedio es NULL), se devuelve 0, lo que indica que no hay calificaciones disponibles para ese cómic.
+---
+### Ejemplo de uso:
+
+#### Consultar la calificación promedio de un cómic
+Supongamos que tenemos un cómic con comic_id = 2. Queremos saber cuál es su calificación promedio basándonos en las reseñas.
+```sql
+-- Consultar la calificación promedio del cómic con id 2
+SELECT CalificacionPromedio(2) AS calificacion_promedio;
+```
 
 
 
