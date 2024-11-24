@@ -423,7 +423,18 @@ SELECT * FROM Comic WHERE comic_id = 1;
 ```
 Resultado esperado: El stock del cómic "Watchmen" aumenta de 50 a 70.
 
+--
 #### Ej.2 - Registrar una Venta de un Cómic Existente
+Restamos unidades al stock del cómic "The Dark Knight Returns" (comic_id = 2) por una venta.
+```sql
+-- Registrar una venta de 10 unidades de "The Dark Knight Returns"
+INSERT INTO Inventario (comic_id, proveedor_id, fecha_movimiento, cantidad, tipo_movimiento)
+VALUES (2, NULL, CURDATE(), -10, 'venta');
+
+-- Verificar el stock actualizado del cómic
+SELECT * FROM Comic WHERE comic_id = 2;
+```
+Resultado esperado: El stock del cómic "The Dark Knight Returns" disminuye de 30 a 20.
 
 
 
