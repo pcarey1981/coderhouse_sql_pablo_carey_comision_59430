@@ -402,7 +402,7 @@ SELECT * FROM ComicsMasVendidos;
 - **<span style="color: #008000">Vista_Comic_Detalles</span>
 Listado de cómics con sus autores, editoriales y género.
 
-# **<span style="color: #008000">Vista_Historial_Pedidos</span>
+- **<span style="color: #008000">Vista_Historial_Pedidos</span>
 Historial de pedidos, con detalles de los cómics comprados, su cantidad, precio y el estado del pedido.
 
 # **<span style="color: #008000">Vista_Pagos_Pedidos</span>
