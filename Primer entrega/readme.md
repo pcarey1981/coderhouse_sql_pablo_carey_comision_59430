@@ -398,6 +398,35 @@ SELECT * FROM ComicsMasVendidos;
 ```
 
 
+# Vistas en la Base de Datos
+
+### <span style="color: #008000">Vista_Comic_Detalles</span>
+Listado de cómics con sus autores, editoriales y género.
+
+### <span style="color: #008000">Vista_Historial_Pedidos</span>
+Historial de pedidos, con detalles de los cómics comprados, su cantidad, precio y el estado del pedido.
+
+### <span style="color: #008000">Vista_Pagos_Pedidos</span>
+Pagos realizados por cada pedido, con su método de pago.
+
+### <span style="color: #008000">Vista_Inventario_Actual</span>
+Inventario actual, con detalles de las recepciones y ventas de cómics.
+
+### <span style="color: #008000">Vista_Resenas</span>
+Reseñas de cómics por cliente, con las calificaciones y comentarios.
+
+### <span style="color: #008000">Vista_Ofertas_Activas</span>
+Ofertas activas de cómics con su descuento y fechas de vigencia.
+
+### <span style="color: #008000">Vista_Envios</span>
+Información de los envíos, incluyendo el estado y el número de seguimiento.
+
+### <span style="color: #008000">PedidosPendientesDeEnvio</span>
+Listado de pedidos pendientes de envío.
+
+### <span style="color: #008000">ComicsMasVendidos</span>
+Cómics más vendidos.
+
 
 
 
