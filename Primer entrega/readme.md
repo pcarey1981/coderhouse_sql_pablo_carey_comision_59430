@@ -504,6 +504,36 @@ VALUES (999, NULL, CURDATE(), -10, 'venta');
 
 ### Ejemplos:
 
+#### Ej.1 - Insertar un nuevo detalle de pedido sin descuento
+•	Acción: Insertar un nuevo detalle en el pedido con ID 1, para el cómic con ID 1, con una cantidad de 1, precio unitario de 1500.00 y sin descuento (0%).
+•	Esperado: El total del pedido debe ser recalculado y reflejar la suma de los productos más la tarifa de envío.
+```sql
+INSERT INTO DetallePedido (pedido_id, comic_id, cantidad, precio_unitario, descuento) 
+VALUES (1, 1, 1, 1500.00, 0);
+```
+#### Cálculo del total:
+•	Total del pedido = (1500 * 1) - (1500 * 1 * 0%) + Tarifa de Envío
+•	Total del pedido = 1500 + 150 = 1650.00 (Este valor ya está insertado en la tabla Pedido).
+---
+#### Ej.2 - Insertar un nuevo detalle de pedido con descuento
+•	Acción: Insertar un nuevo detalle en el pedido con ID 3, para el cómic con ID 5, con una cantidad de 1, precio unitario de 1000.00 y un descuento del 50%.
+•	Esperado: El total del pedido debe recalcularse correctamente, aplicando el descuento.
+```sql
+INSERT INTO DetallePedido (pedido_id, comic_id, cantidad, precio_unitario, descuento) 
+VALUES (3, 5, 1, 1000.00, 50);
+```
+#### Cálculo del total:
+•	Total del pedido = (1000 * 1) - (1000 * 1 * 50%) = 1000 - 500 = 500
+•	Total del pedido con tarifa de envío = 500 + 250 (Tarifa de Envío) = 750.00 (Este valor se debe actualizar en la tabla Pedido).
+---
+#### Ej.3 - Insertar detalles para un nuevo pedido
+•	Acción: Insertar un detalle en un nuevo pedido con ID 5, para el cómic con ID 4, con una cantidad de 1, precio unitario de 1200.00 y sin descuento (0%).
+•	Esperado: El total del pedido debe recalcularse correctamente.
+```sql
+INSERT INTO DetallePedido (pedido_id, comic_id, cantidad, precio_unitario, descuento) 
+VALUES (5, 4, 1, 1200.00, 0);
+```
+#### Cálculo del total: Total del pedido = (1200 * 1) - (1200 * 1 * 0%) + Tarifa de Envío = 1200 + 100 = 1300.00 (El total debe ser actualizado en la tabla Pedido para el pedido con ID 5).
 
 
 
