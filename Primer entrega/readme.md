@@ -51,26 +51,27 @@ La implementación de una base de datos optimizada y unificada permitirá a **Ti
 
 **Tablas y Descripción de los Campos** - Ver estructura_proyecto.sql
 
-Tabla Autor
+Tabla *`Autor`*
 
     autor_id (INT, NOT NULL, PRIMARY KEY, AUTO_INCREMENT): Identificador único del autor.
     nombre (VARCHAR(100), NOT NULL): Nombre del autor.
     apellido (VARCHAR(100), NOT NULL): Apellido del autor.
     nacionalidad (VARCHAR(100)): Nacionalidad del autor.
 
-Tabla Editorial
+Tabla *`Editorial`*
 
     editorial_id (INT, NOT NULL, PRIMARY KEY, AUTO_INCREMENT): Identificador único de la editorial.
     nombre (VARCHAR(100), NOT NULL): Nombre de la editorial.
     pais (VARCHAR(100)): País de la editorial.
     telefono (VARCHAR(15)): Teléfono de contacto de la editorial.
 
-Tabla Género
+Tabla *`Género`*
 
     genero_id (INT, NOT NULL, PRIMARY KEY, AUTO_INCREMENT): Identificador único del género.
     nombre (VARCHAR(100), NOT NULL): Nombre del género.
 
-Tabla Cliente
+Tabla *`Cliente`*
+
 
     cliente_id (INT, NOT NULL, PRIMARY KEY, AUTO_INCREMENT): Identificador único del cliente.
     nombre (VARCHAR(100), NOT NULL): Nombre del cliente.
@@ -79,7 +80,7 @@ Tabla Cliente
     direccion (VARCHAR(255), NOT NULL): Dirección del cliente.
     telefono (VARCHAR(15)): Teléfono de contacto del cliente.
 
-Tabla Cómic
+Tabla *`Cómic`*
 
     comic_id (INT, NOT NULL, PRIMARY KEY, AUTO_INCREMENT): Identificador único del cómic.
     titulo (VARCHAR(255), NOT NULL): Título del cómic.
@@ -91,7 +92,7 @@ Tabla Cómic
     descripcion (TEXT): Descripción del cómic.
     stock (INT, NOT NULL, CHECK(stock >= 0)): Cantidad disponible en inventario.
 
-Tabla Pedido
+Tabla *`Pedido`*
 
     pedido_id (INT, NOT NULL, PRIMARY KEY, AUTO_INCREMENT): Identificador único del pedido.
     cliente_id (INT, NOT NULL, FOREIGN KEY): Relación con el cliente que realizó el pedido.
@@ -100,7 +101,7 @@ Tabla Pedido
     total (DECIMAL(10, 2), NOT NULL): Total de la compra (incluirá el costo de envío)
     tarifa_envio DECIMAL(10, 2) NOT NULL, Especifica el costo de envío
 
-Tabla Pago
+Tabla *`Pago`*
 
     pago_id (INT, NOT NULL, PRIMARY KEY, AUTO_INCREMENT): Identificador único del pago.
     pedido_id (INT, NOT NULL, FOREIGN KEY): Relación con el pedido asociado.
@@ -108,7 +109,7 @@ Tabla Pago
     monto (DECIMAL(10, 2), NOT NULL): Monto del pago (incluirá el costo de envío).
     metodo_pago (VARCHAR(50), NOT NULL): Método de pago utilizado.
 
-Tabla Detalle Pedido
+Tabla *`Detalle Pedido`*
 
     detalle_id (INT, NOT NULL, PRIMARY KEY, AUTO_INCREMENT): Identificador único del detalle de pedido.
     pedido_id (INT, NOT NULL, FOREIGN KEY): Relación con el pedido correspondiente.
@@ -117,14 +118,14 @@ Tabla Detalle Pedido
     precio_unitario (DECIMAL(10, 2), NOT NULL): Precio unitario en el momento del pedido.
     descuento DECIMAL(5, 2) DEFAULT 0, campo para descuento aplicado
 
-Tabla Proveedor
+Tabla *`Proveedor`*
 
     proveedor_id (INT, NOT NULL, PRIMARY KEY, AUTO_INCREMENT): Identificador único del proveedor.
     nombre (VARCHAR(100), NOT NULL): Nombre del proveedor.
     telefono (VARCHAR(15)): Teléfono de contacto del proveedor.
     direccion (VARCHAR(255)): Dirección del proveedor.
 
-Tabla Inventario
+Tabla *`Inventario`*
 
     inventario_id (INT, NOT NULL, PRIMARY KEY, AUTO_INCREMENT): Identificador único del registro de inventario.
     comic_id (INT, NOT NULL, FOREIGN KEY): Relación con el cómic.
@@ -133,7 +134,7 @@ Tabla Inventario
     cantidad (INT, NOT NULL, CHECK(cantidad > 0)): Cantidad de cómics en el movimiento. Positiva para recepciones, negativas para ventas.
     tipo_movimiento (ENUM('recepcion', 'venta'), NOT NULL): Indica el tipo de movimiento de inventario. Puede ser "recepcion" (ingreso de stock) o "venta" (egreso de stock).
 
-Tabla Reseña
+Tabla *`Reseña`*
 
     resena_id (INT, NOT NULL, PRIMARY KEY, AUTO_INCREMENT): Identificador único de la reseña.
     comic_id (INT, NOT NULL, FOREIGN KEY): Relación con el cómic.
@@ -142,7 +143,7 @@ Tabla Reseña
     calificacion (INT, CHECK(calificacion BETWEEN 1 AND 5)): Calificación dada al cómic.
     comentario (TEXT): Comentario del cliente sobre el cómic.
 
-Tabla Ofertas
+Tabla *`Ofertas`*
 
     oferta_id (INT, NOT NULL, PRIMARY KEY, AUTO_INCREMENT): Identificador único de la oferta.
     comic_id (INT, NOT NULL, FOREIGN KEY): Relación con el cómic en oferta.
@@ -150,14 +151,14 @@ Tabla Ofertas
     fecha_inicio (DATE, NOT NULL): Fecha de inicio de la oferta.
     fecha_fin (DATE, NOT NULL): Fecha de fin de la oferta.
 
-Tabla Tarifa Envío
+Tabla *`Tarifa Envío`*
 
     tarifa_id (INT, NOT NULL, PRIMARY KEY, AUTO_INCREMENT): Identificador único de la tarifa de envío.
     zona (VARCHAR(100), NOT NULL): Zona geográfica de envío.
     costo (DECIMAL(10, 2), NOT NULL): Costo del envío.
     metodo_envio (VARCHAR(100), NOT NULL): Método de envío.
 
-Tabla Envío
+Tabla *`*Envío`*
 
     envio_id (INT, NOT NULL, PRIMARY KEY, AUTO_INCREMENT): Identificador único del envío.
     pedido_id (INT, NOT NULL, FOREIGN KEY): Relación con el pedido asociado.
@@ -219,15 +220,15 @@ Las vistas en bases de datos son consultas predefinidas que simplifican el acces
 
 ## Vistas Aplicadas
 
-- Listado de cómics con sus autores, editoriales y género *(Vista: `Vista_Comic_Detalles`)*
-- Historial de pedidos, con detalles de los cómics comprados, su cantidad, precio y el estado del pedido: *(Vista: `Vista_Historial_Pedidos`)*
-- Pagos realizados por cada pedido, con su método de pago: *(Vista: `Vista_Pagos_Pedidos`)*
-- Inventario actual, con detalles de las recepciones y ventas de cómics: *(Vista: `Vista_Inventario_Actual`)*
-- Reseñas de cómics por cliente, con las calificaciones y comentarios: *(Vista: `Vista_Resenas`)*
-- Ofertas activas de cómics con su descuento y fechas de vigencia: *(Vista: `Vista_Ofertas_Activas`)*
-- Información de los envíos, incluyendo el estado y el número de seguimiento: *(Vista: `Vista_Envios`)*
-- Listado de pedidos pendientes de envío: *(Vista: `PedidosPendientesDeEnvio`)*
-- Cómics más vendidos: *(Vista: `ComicsMasVendidos`)*
+- Listado de cómics con sus autores, editoriales y género *Vista: `Vista_Comic_Detalles`*
+- Historial de pedidos, con detalles de los cómics comprados, su cantidad, precio y el estado del pedido: *Vista: `Vista_Historial_Pedidos`*
+- Pagos realizados por cada pedido, con su método de pago: *Vista: `Vista_Pagos_Pedidos`*
+- Inventario actual, con detalles de las recepciones y ventas de cómics: *Vista: `Vista_Inventario_Actual`*
+- Reseñas de cómics por cliente, con las calificaciones y comentarios: *Vista: `Vista_Resenas`*
+- Ofertas activas de cómics con su descuento y fechas de vigencia: *Vista: `Vista_Ofertas_Activas`*
+- Información de los envíos, incluyendo el estado y el número de seguimiento: *Vista: `Vista_Envios`*
+- Listado de pedidos pendientes de envío: *Vista: `PedidosPendientesDeEnvio`*
+- Cómics más vendidos: *Vista: `ComicsMasVendidos`*
 
 ---
 
@@ -241,9 +242,9 @@ Las vistas en bases de datos son consultas predefinidas que simplifican el acces
 
 **Tablas que componen la Vista**:
 - *`Comic`*: Información básica de los cómics (ID, título, precio, fecha de publicación).
-- *(`Autor`)*: Nombre y apellido del autor.
-- *(`Editorial`)*: Nombre de la editorial.
-- *(`Género`)*: Género del cómic (acción, ciencia ficción, etc.).
+- *`Autor`*: Nombre y apellido del autor.
+- *`Editorial`*: Nombre de la editorial.
+- *`Género`*: Género del cómic (acción, ciencia ficción, etc.).
 
 **Ejemplo de consulta**:
 ```sql
