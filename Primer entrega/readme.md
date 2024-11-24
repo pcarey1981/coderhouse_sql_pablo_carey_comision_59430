@@ -216,39 +216,21 @@ Este enfoque permitió la inserción eficiente de múltiples registros en un sol
 # Objetos de la base de datos
 
 
-# Vistas
+# Vistas 
 
 Las vistas en bases de datos son consultas predefinidas que simplifican el acceso a información compleja. Funcionan como tablas virtuales, permitiendo a los usuarios obtener datos combinados de varias tablas sin necesidad de escribir múltiples consultas. Son útiles para organizar, proteger y optimizar las consultas, haciendo el trabajo más eficiente y fácil de gestionar.
 
-## Vistas aplicadas:
+## Vistas Implementadas
 
-•	Vista para obtener el listado de cómics con sus autores, editoriales y género:
-    Vista_Comic_Detalles
-
-•	Vista para obtener el historial de pedidos, con detalles de los cómics comprados, su cantidad, precio y el estado del pedido:
-    Vista_Historial_Pedidos
-
-•	Vista para obtener los pagos realizados por cada pedido, con su método de pago:
-    Vista_Pagos_Pedidos
-
-•	Vista para ver el inventario actual, con detalles de las recepciones y ventas de cómics:
-    Vista_Inventario_Actual
-
-•	Vista para obtener las reseñas de cómics por cliente, con las calificaciones y comentarios:
-    Vista_Resenas
-
-•	Vista para obtener las ofertas activas de cómics con su descuento y fechas de vigencia:
-    Vista_Ofertas_Activas
-
-•	Vista para obtener la información de los envíos, incluyendo el estado y el número de seguimiento:
-    Vista_Envios
-
-•	Vista para Listar Pedidos Pendientes de Envío: 
-    PedidosPendientesDeEnvio
-
-•	Vista para Consultar los Cómics Más Vendidos
-    ComicsMasVendidos
-
+1. **Vista_Comic_Detalles**: Listado de cómics con sus autores, editoriales y género
+2. **Vista_Historial_Pedidos**: Historial de pedidos con detalles de cómics comprados
+3. **Vista_Pagos_Pedidos**: Pagos realizados por cada pedido con método de pago
+4. **Vista_Inventario_Actual**: Inventario actual con detalles de recepciones y ventas
+5. **Vista_Resenas**: Reseñas de cómics por cliente con calificaciones y comentarios
+6. **Vista_Ofertas_Activas**: Ofertas activas de cómics con descuento y fechas
+7. **Vista_Envios**: Información de envíos con estado y número de seguimiento
+8. **PedidosPendientesDeEnvio**: Listado de pedidos pendientes de envío
+9. **ComicsMasVendidos**: Consulta de los cómics más vendidos
 
 ## Detalles de las Vistas
 
@@ -256,7 +238,7 @@ Las vistas en bases de datos son consultas predefinidas que simplifican el acces
 
 **Propósito**: Facilita la consulta de los detalles de los cómics sin necesidad de realizar múltiples uniones entre tablas.
 
-**Objetivo**: Permitir a los usuarios obtener de manera rápida y eficiente una lista completa de los cómics junto con información clave sobre los autores, las editoriales y los géneros a los que pertenecen. Al centralizar estos datos, se optimiza el proceso de consulta y se mejora la experiencia del usuario al interactuar con la base de datos.
+**Objetivo**: Permitir obtener de manera rápida y eficiente una lista completa de los cómics junto con información clave sobre autores, editoriales y géneros.
 
 **Tablas que componen la Vista**:
 - Comic: Información básica de cómics (ID, título, precio, fecha publicación)
