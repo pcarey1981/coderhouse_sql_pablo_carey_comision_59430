@@ -215,7 +215,6 @@ Este enfoque permitió la inserción eficiente de múltiples registros en un sol
 
 # Objetos de la base de datos
 
----
 
 # Vistas
 
