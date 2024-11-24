@@ -390,11 +390,11 @@ Son útiles para mantener consistencia en los datos y aplicar reglas de negocio 
 
 ## Triggers Aplicados
 
-- **Actualizar Stock en la Tabla Comic al Registrar un Movimiento en el Inventario**: Ajusta automáticamente el stock del cómic al insertar un registro en la tabla Inventario. *Trigger: `actualizar_stock_comic`*
-- **Validar Stock Disponible Antes de Registrar una Venta**: Evita que se registre un movimiento de venta si no hay suficiente stock disponible. *Trigger: `validar_stock_comic`*
-- **Calcular Total del Pedido en la Tabla Pedido**: Calcula automáticamente el total del pedido al insertar un registro en la tabla DetallePedido. *Trigger: `calcular_total_pedido`*
-- **Aplicar Descuento de Ofertas Automáticamente en DetallePedido**: Ajusta automáticamente el descuento al agregar un cómic en un pedido si hay una oferta vigente. *Trigger: `aplicar_descuento_oferta`*
-- **Actualizar Estado de Pedido al Confirmar Pago**: Actualiza el estado de un pedido a "Pagado" después de registrar un pago. *Trigger: `actualizar_estado_pedido`*
+- *`actualizar_stock_comic`*: Actualizar Stock en la Tabla Comic al Registrar un Movimiento en el Inventario**: Ajusta automáticamente el stock del cómic al insertar un registro en la tabla Inventario. 
+- *`validar_stock_comic`*: Validar Stock Disponible Antes de Registrar una Venta**: Evita que se registre un movimiento de venta si no hay suficiente stock disponible. 
+- *`calcular_total_pedido`*: Calcula automáticamente el total del pedido al insertar un registro en la tabla DetallePedido.
+- *`aplicar_descuento_oferta`*: Ajusta automáticamente el descuento al agregar un cómic en un pedido si hay una oferta vigente. 
+- *`actualizar_estado_pedido`*: Actualiza el estado de un pedido a "Pagado" después de registrar un pago. 
 
 ---
 
