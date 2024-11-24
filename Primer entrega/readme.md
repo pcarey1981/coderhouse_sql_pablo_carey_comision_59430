@@ -1280,7 +1280,7 @@ El procedimiento almacenado AplicarOferta recibe los siguientes parámetros:
 
 #### 1 - INSERT INTO Ofertas: Inserta un nuevo registro en la tabla Ofertas, con los valores proporcionados para el cómic, descuento, fecha de inicio y fecha de fin.
 
---
+---
 ### Ejemplo de uso:
 Aplicar un descuento del 20% al cómic con ID 1 en el rango de fechas desde el 1 de noviembre de 2024 hasta el 30 de noviembre de 2024.
 ```sql
@@ -1308,6 +1308,50 @@ SELECT * FROM Ofertas WHERE comic_id = 1 AND fecha_inicio = '2024-11-01';
 
 ---
 
+## 6. ActualizarEstadoEnvio
+
+*`Propósito`*: Permite actualizar el estado de un envío y el número de seguimiento correspondiente para un envío específico, asegurando que la información esté actualizada y sea accesible en todo momento.
+
+*`Objetivo`*: Facilitar la actualización de la información de los envíos, como el estado del envío y el número de seguimiento, sin necesidad de realizar múltiples consultas. Esto mejora la eficiencia y la gestión de los envíos en el sistema.
+
+**Tablas Involucradas**:
+
+- *`Envio`*: Contiene la información de los envíos, como el estado y el número de seguimiento.
+
+--
+
+### Descripción del Procedimiento:
+El procedimiento almacenado ActualizarEstadoEnvio recibe los siguientes parámetros:
+- p_envio_id: El ID del envío cuya información será actualizada.
+- p_estado_envio: El nuevo estado del envío (por ejemplo, "En tránsito", "Entregado", "Pendiente", etc.).
+- p_numero_seguimiento: El número de seguimiento del envío que permitirá rastrear el paquete.
+
+### Lógica Interna:
+
+#### 1 - UPDATE Envio: Actualiza los campos estado_envio y numero_seguimiento en la tabla Envio para el envío cuyo envio_id coincida con el parámetro p_envio_id.
+
+---
+### Ejemplo de uso:
+Actualizar el estado del envío con ID 1 a "En tránsito" y el número de seguimiento a "ABC123456789".
+```sql
+CALL ActualizarEstadoEnvio(
+    1,                       -- p_envio_id (ID del envío)
+    'En tránsito',           -- p_estado_envio (estado actual del envío)
+    'ABC123456789'           -- p_numero_seguimiento (número de seguimiento)
+);
+```
+#### Resultado esperado: El procedimiento actualizará el estado y el número de seguimiento del envío con ID 1. Tras ejecutar el procedimiento, la fila correspondiente en la tabla Envio tendrá los siguientes valores:
+- estado_envio = 'En tránsito'
+- numero_seguimiento = 'ABC123456789'
+
+---
+#### Validación: 
+Consulta para verificar que el estado de envío fue actualizado correctamente:
+```sql
+SELECT * FROM Envio WHERE envio_id = 1;	
+```
+
+---
 
 
 
