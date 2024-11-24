@@ -254,13 +254,13 @@ SELECT * FROM Vista_Comic_Detalles;
 ---
 ## 2. Vista_Historial_Pedidos
 
-Propósito:
+**Propósito**: 
 Facilitar la consulta de los detalles completos de cada pedido sin necesidad de realizar uniones complejas entre varias tablas.
 
-Objetivo:
+**Objetivo**: 
 Ofrecer una visión clara del historial de pedidos, incluyendo detalles de los cómics adquiridos, su cantidad, precio y el estado del pedido.
 
-Tablas que componen la Vista:
+**Tablas que componen la Vista**:
 
     Pedido: Información del pedido (ID, fecha, estado, total).
     DetallePedido: Detalles de los ítems en el pedido (ID del cómic, cantidad, precio unitario, descuento).
