@@ -208,7 +208,190 @@ INSERT INTO Autor (nombre, apellido, nacionalidad) VALUES
 ```
 Este enfoque permitió la inserción eficiente de múltiples registros en un solo paso, optimizando tiempos y reduciendo la posibilidad de errores.
 
+---
 
+### Objetos en la Base de datos
+---
+
+# Vistas 
+
+Las vistas en bases de datos son consultas predefinidas que simplifican el acceso a información compleja. Funcionan como tablas virtuales, permitiendo a los usuarios obtener datos combinados de varias tablas sin necesidad de escribir múltiples consultas. Son útiles para organizar, proteger y optimizar las consultas, haciendo el trabajo más eficiente y fácil de gestionar.
+
+## Vistas Aplicadas
+
+- **Vista_Comic_Detalles**: Listado de cómics con sus autores, editoriales y género.
+- **Vista_Historial_Pedidos**: Historial de pedidos, con detalles de los cómics comprados, su cantidad, precio y el estado del pedido.
+- **Vista_Pagos_Pedidos**: Pagos realizados por cada pedido, con su método de pago.
+- **Vista_Inventario_Actual**: Inventario actual, con detalles de las recepciones y ventas de cómics.
+- **Vista_Resenas**: Reseñas de cómics por cliente, con las calificaciones y comentarios.
+- **Vista_Ofertas_Activas**: Ofertas activas de cómics con su descuento y fechas de vigencia.
+- **Vista_Envios**: Información de los envíos, incluyendo el estado y el número de seguimiento.
+- **PedidosPendientesDeEnvio**: Listado de pedidos pendientes de envío.
+- **ComicsMasVendidos**: Cómics más vendidos.
+
+---
+
+## Descripción de las Vistas
+
+### 1. Vista_Comic_Detalles
+
+**Propósito**:  
+Facilita la consulta de los detalles de los cómics sin necesidad de realizar múltiples uniones entre tablas.
+
+**Objetivo**:  
+Permitir a los usuarios obtener rápidamente una lista completa de los cómics junto con información clave sobre los autores, las editoriales y los géneros.
+
+**Tablas que componen la Vista**:
+- **Comic**: Información básica de los cómics (ID, título, precio, fecha de publicación).
+- **Autor**: Nombre y apellido del autor.
+- **Editorial**: Nombre de la editorial.
+- **Género**: Género del cómic (acción, ciencia ficción, etc.).
+
+**Ejemplo de consulta**:
+```sql
+SELECT * FROM Vista_Comic_Detalles;
+```
+
+2. Vista_Historial_Pedidos
+
+Propósito:
+Facilitar la consulta de los detalles completos de cada pedido sin necesidad de realizar uniones complejas entre varias tablas.
+
+Objetivo:
+Ofrecer una visión clara del historial de pedidos, incluyendo detalles de los cómics adquiridos, su cantidad, precio y el estado del pedido.
+
+Tablas que componen la Vista:
+
+    Pedido: Información del pedido (ID, fecha, estado, total).
+    DetallePedido: Detalles de los ítems en el pedido (ID del cómic, cantidad, precio unitario, descuento).
+    Comic: Información sobre los cómics (ID y título).
+
+Ejemplo de consulta:
+```sql
+SELECT * FROM Vista_Historial_Pedidos;
+```
+---
+3. Vista_Pagos_Pedidos
+
+Propósito:
+Facilitar la consulta de los pagos asociados a cada pedido sin necesidad de realizar uniones complejas entre tablas.
+
+Objetivo:
+Mostrar los pagos realizados para cada pedido, incluyendo el método de pago y monto.
+
+Tablas que componen la Vista:
+
+    Pago: Información sobre los pagos (ID, fecha, monto, método de pago).
+    Pedido: Información del pedido (ID y total del pedido).
+
+Ejemplo de consulta:
+```sql
+SELECT * FROM Vista_Pagos_Pedidos;
+```
+---
+4. Vista_Inventario_Actual
+
+Propósito:
+Facilitar la gestión y el seguimiento del inventario.
+
+Objetivo:
+Proveer una visión clara del estado del inventario, mostrando la cantidad recibida, vendida y disponible de cada cómic.
+
+Tablas que componen la Vista:
+
+    Inventario: Registros de transacciones de inventario (recepciones y ventas).
+    Comic: Información básica sobre los cómics.
+
+Ejemplo de consulta:
+
+SELECT * FROM Vista_Inventario_Actual;
+
+5. Vista_Resenas
+
+Propósito:
+Facilitar el acceso a las reseñas de cómics.
+
+Objetivo:
+Mostrar las reseñas de cómics por cliente, incluyendo calificación y comentarios.
+
+Tablas que componen la Vista:
+
+    Resena: Registros de reseñas (ID, cliente_id, comic_id, calificación, comentario).
+    Cliente: Información del cliente (ID, nombre, apellido, email).
+    Comic: Información sobre los cómics (ID y título).
+
+Ejemplo de consulta:
+
+SELECT * FROM Vista_Resenas;
+
+6. Vista_Ofertas_Activas
+
+Propósito:
+Facilitar la consulta de ofertas vigentes de cómics.
+
+Objetivo:
+Mostrar las ofertas activas, con detalles del descuento y periodo de vigencia.
+
+Tablas que componen la Vista:
+
+    Ofertas: Información sobre las ofertas (ID, comic_id, descuento, fechas de inicio y fin).
+    Comic: Información sobre los cómics (ID y título).
+
+Ejemplo de consulta:
+
+SELECT * FROM Vista_Ofertas_Activas;
+
+7. Vista_Envios
+
+Propósito:
+Facilitar la consulta de los envíos sin uniones complejas.
+
+Objetivo:
+Proveer información sobre los envíos, incluyendo el estado y número de seguimiento.
+
+Tablas que componen la Vista:
+
+    Envio: Información de los envíos (ID, fecha, estado, número de seguimiento).
+    TarifaEnvio: Detalles sobre las tarifas de envío (zona, método de envío).
+
+Ejemplo de consulta:
+
+SELECT * FROM Vista_Envios;
+
+8. PedidosPendientesDeEnvio
+
+Propósito:
+Gestionar los pedidos pendientes de envío.
+
+Objetivo:
+Mostrar los pedidos que aún no han sido enviados.
+
+Tablas que componen la Vista:
+
+    Pedido: Información sobre los pedidos (ID, fecha, estado).
+    Cliente: Información del cliente (ID, nombre, apellido).
+    Envio: Información sobre los envíos (ID y estado).
+
+Ejemplo de consulta:
+
+SELECT * FROM PedidosPendientesDeEnvio;
+
+9. ComicsMasVendidos
+
+Propósito:
+Facilitar el análisis de los cómics más vendidos.
+
+Objetivo:
+Mostrar los cómics con mayor volumen de ventas.
+
+Tablas que componen la Vista:
+
+    DetallePedido: Detalles de cada transacción (comic_id, cantidad vendida).
+    Comic: Información sobre los cómics (ID, título).
+
+Ejemplo de consulta:
+
+SELECT * FROM ComicsMasVendidos;
 
 
 
