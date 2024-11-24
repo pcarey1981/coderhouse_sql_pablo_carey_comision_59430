@@ -663,8 +663,8 @@ La función CalcularStockTotal toma como parámetro el comic_id (identificador d
 #### 1.	Declara una variable total_stock de tipo INT para almacenar el resultado de la suma de los movimientos de inventario.
 --
 #### 2.	Realiza una consulta SELECT que:
-####    •Suma la cantidad de cómics en la tabla Inventario para el cómic correspondiente al comic_id dado.
-####    •Utiliza la función COALESCE para garantizar que, si no existen registros para ese cómic, se devuelva 0 en lugar de NULL.
+• #### Suma la cantidad de cómics en la tabla Inventario para el cómic correspondiente al comic_id dado.
+• #### Utiliza la función COALESCE para garantizar que, si no existen registros para ese cómic, se devuelva 0 en lugar de NULL.
 --
 #### 3.	La función devuelve el valor de total_stock, que es el stock total disponible del cómic.
 
