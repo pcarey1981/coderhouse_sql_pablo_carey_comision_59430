@@ -1418,7 +1418,7 @@ JOIN Comic c ON dp.comic_id = c.comic_id
 WHERE dp.pedido_id = 1;
 ```
 
---
+---
 
 ## 8. ActualizarStock
 
