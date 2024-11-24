@@ -251,7 +251,7 @@ Permitir a los usuarios obtener rápidamente una lista completa de los cómics j
 ```sql
 SELECT * FROM Vista_Comic_Detalles;
 ```
-
+---
 ## 2. Vista_Historial_Pedidos
 
 Propósito:
@@ -303,9 +303,10 @@ Tablas que componen la Vista:
     Comic: Información básica sobre los cómics.
 
 Ejemplo de consulta:
-
+```sql
 SELECT * FROM Vista_Inventario_Actual;
-
+```
+---
 ## 5. Vista_Resenas
 
 Propósito:
@@ -324,7 +325,7 @@ Ejemplo de consulta:
 ```sql
 SELECT * FROM Vista_Resenas;
 ```
-
+---
 ## 6. Vista_Ofertas_Activas
 
 Propósito:
@@ -339,9 +340,10 @@ Tablas que componen la Vista:
     Comic: Información sobre los cómics (ID y título).
 
 Ejemplo de consulta:
-
+```sql
 SELECT * FROM Vista_Ofertas_Activas;
-
+```
+---
 ## 7. Vista_Envios
 
 Propósito:
@@ -359,7 +361,7 @@ Ejemplo de consulta:
 ```sql
 SELECT * FROM Vista_Envios;
 ```
-
+---
 ## 8. PedidosPendientesDeEnvio
 
 Propósito:
@@ -378,7 +380,7 @@ Ejemplo de consulta:
 ```sql
 SELECT * FROM PedidosPendientesDeEnvio;
 ```
-
+---
 ## 9. ComicsMasVendidos
 
 Propósito:
