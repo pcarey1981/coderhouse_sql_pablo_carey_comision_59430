@@ -421,9 +421,8 @@ VALUES (1, 1, CURDATE(), 20, 'recepcion');
 -- Verificar el stock actualizado del cómic
 SELECT * FROM Comic WHERE comic_id = 1;
 ```
-Resultado esperado: El stock del cómic "Watchmen" aumenta de 50 a 70.
-
-
+#### Resultado esperado: El stock del cómic "Watchmen" aumenta de 50 a 70.
+---
 #### Ej.2 - Registrar una Venta de un Cómic Existente
 Restamos unidades al stock del cómic "The Dark Knight Returns" (comic_id = 2) por una venta.
 ```sql
@@ -434,9 +433,8 @@ VALUES (2, NULL, CURDATE(), -10, 'venta');
 -- Verificar el stock actualizado del cómic
 SELECT * FROM Comic WHERE comic_id = 2;
 ```
-Resultado esperado: El stock del cómic "The Dark Knight Returns" disminuye de 30 a 20.
-
-
+#### Resultado esperado: El stock del cómic "The Dark Knight Returns" disminuye de 30 a 20.
+---
 #### Ej.3 - Intentar Registrar una Venta Mayor al Stock Disponible
 Probamos un caso en el que intentamos vender más unidades de las disponibles para "Sandman" (comic_id = 3).
 ```sql
@@ -480,14 +478,31 @@ Intentar registrar una venta de 60 unidades para "The Dark Knight Returns" (comi
 INSERT INTO Inventario (comic_id, proveedor_id, fecha_movimiento, cantidad, tipo_movimiento)
 VALUES (2, NULL, CURDATE(), -60, 'venta');
 ```
-Resultado esperado: El trigger evita el registro del movimiento y genera el siguiente error: Stock insuficiente para realizar la venta.
+#### Resultado esperado: El trigger evita el registro del movimiento y genera el siguiente error: Stock insuficiente para realizar la venta.
+---
+#### Ej.3 - Venta para un Cómic que No Existe
+Intentar registrar una venta para un comic_id inexistente, como 999.
+```sql
+-- Intentar registrar una venta para un cómic inexistente
+INSERT INTO Inventario (comic_id, proveedor_id, fecha_movimiento, cantidad, tipo_movimiento)
+VALUES (999, NULL, CURDATE(), -10, 'venta');
+```
+#### Resultado esperado: La operación falla con un error de clave foránea, ya que el comic_id = 999 no existe en la tabla Comic.
 
+---
 
+## 3. calcular_total_pedido
 
+*`Propósito`*: • Automatizar el cálculo del total del pedido al agregar productos a su detalle.• Garantizar que la tabla Pedido refleje siempre el valor actualizado del pedido, incluyendo el impacto de los descuentos y la tarifa de envío.
 
+*`Objetivo`*: •	Simplificar la gestión de los totales de los pedidos evitando cálculos manuales. Mantener la consistencia y precisión en los registros de la tabla Pedido.
 
+**Tablas que interactuan con el trigger**:
 
+- *`DetallePedido`*: Almacena los detalles de los productos (cómics) incluidos en un pedido, con sus precios, cantidades y posibles descuentos.
+- *`Pedido`*: Registra la información general del pedido, incluyendo el total calculado en tiempo real por este trigger.
 
+### Ejemplos:
 
 
 
