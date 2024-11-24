@@ -1,142 +1,103 @@
--- Tabla Autor
-CREATE TABLE Autor (
-    autor_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    nombre VARCHAR(100) NOT NULL,
-    apellido VARCHAR(100) NOT NULL,
-    nacionalidad VARCHAR(100)
-);
+--Actualizar Stock en la Tabla Comic al Registrar un Movimiento en el Inventario
+--Este trigger ajusta automáticamente el stock del cómic al insertar un registro en la tabla Inventario.
+DELIMITER $$
 
--- Tabla Editorial
-CREATE TABLE Editorial (
-    editorial_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    nombre VARCHAR(100) NOT NULL,
-    pais VARCHAR(100),
-    telefono VARCHAR(15)
-);
+CREATE TRIGGER actualizar_stock_comic
+AFTER INSERT ON Inventario
+FOR EACH ROW
+BEGIN
+    IF NEW.tipo_movimiento = 'recepcion' THEN
+        UPDATE Comic
+        SET stock = stock + NEW.cantidad
+        WHERE comic_id = NEW.comic_id;
+    ELSEIF NEW.tipo_movimiento = 'venta' THEN
+        -- Asegurarse de restar la cantidad, incluso si es negativa
+        UPDATE Comic
+        SET stock = stock - ABS(NEW.cantidad)
+        WHERE comic_id = NEW.comic_id;
+    END IF;
+END$$
 
--- Tabla Genero
-CREATE TABLE Genero (
-    genero_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    nombre VARCHAR(100) NOT NULL
-);
+DELIMITER ;
 
--- Tabla Cliente
-CREATE TABLE Cliente (
-    cliente_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    nombre VARCHAR(100) NOT NULL,
-    apellido VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    direccion VARCHAR(255) NOT NULL,
-    telefono VARCHAR(15)
-);
 
--- Tabla Comic
-CREATE TABLE Comic (
-    comic_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    titulo VARCHAR(255) NOT NULL,
-    autor_id INT NOT NULL,
-    editorial_id INT NOT NULL,
-    genero_id INT NOT NULL,
-    precio DECIMAL(10, 2) NOT NULL,
-    fecha_publicacion DATE NOT NULL,
-    descripcion TEXT,
-    stock INT NOT NULL CHECK (stock >= 0),
-    FOREIGN KEY (autor_id) REFERENCES Autor(autor_id),
-    FOREIGN KEY (editorial_id) REFERENCES Editorial(editorial_id),
-    FOREIGN KEY (genero_id) REFERENCES Genero(genero_id)
-);
+--Validar Stock Disponible Antes de Registrar una Venta
+--Evita que se registre un movimiento de venta si no hay suficiente stock disponible.
+DELIMITER $$
 
--- Tabla Pedido 
-CREATE TABLE Pedido (
-    pedido_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    cliente_id INT NOT NULL,
-    fecha_pedido DATE NOT NULL,
-    estado VARCHAR(50) NOT NULL,
-    total DECIMAL(10, 2) NOT NULL, -- El total ya incluirá el costo de envío y el descuento
-    tarifa_envio DECIMAL(10, 2) NOT NULL, -- Se añade la columna tarifa_envio para especificar el costo de envío
-    FOREIGN KEY (cliente_id) REFERENCES Cliente(cliente_id)
-);
+CREATE TRIGGER validar_stock_comic 
+BEFORE INSERT ON Inventario
+FOR EACH ROW
+BEGIN
+    IF NEW.tipo_movimiento = 'venta' THEN
+        -- Verifica si el stock es suficiente
+        IF (SELECT stock FROM Comic WHERE comic_id = NEW.comic_id) < NEW.cantidad THEN
+            SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Stock insuficiente para realizar la venta.';
+        END IF;
+    END IF;
+END$$
 
--- Tabla Pago 
-CREATE TABLE Pago (
-    pago_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    pedido_id INT NOT NULL,
-    fecha_pago DATE NOT NULL,
-    monto DECIMAL(10, 2) NOT NULL, -- El monto ahora reflejará el total incluyendo envío y descuento
-    metodo_pago VARCHAR(50) NOT NULL,
-    FOREIGN KEY (pedido_id) REFERENCES Pedido(pedido_id)
-);
+DELIMITER ;
 
--- Tabla DetallePedido 
-CREATE TABLE DetallePedido (
-    detalle_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    pedido_id INT NOT NULL,
-    comic_id INT NOT NULL,
-    cantidad INT NOT NULL CHECK (cantidad > 0),
-    precio_unitario DECIMAL(10, 2) NOT NULL,
-    descuento DECIMAL(5, 2) DEFAULT 0, -- Nuevo campo para descuento aplicado
-    FOREIGN KEY (pedido_id) REFERENCES Pedido(pedido_id),
-    FOREIGN KEY (comic_id) REFERENCES Comic(comic_id)
-);
 
--- Tabla Proveedor
-CREATE TABLE Proveedor (
-    proveedor_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    nombre VARCHAR(100) NOT NULL,
-    telefono VARCHAR(15),
-    direccion VARCHAR(255)
-);
+--Calcular Total del Pedido en la Tabla Pedido
+--Este trigger calcula automáticamente el total del pedido al insertar un registro en la tabla DetallePedido.
+DELIMITER $$
 
--- Tabla Inventario
-CREATE TABLE Inventario (
-    inventario_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    comic_id INT NOT NULL,
-    proveedor_id INT, -- Ahora opcional, solo requerido para recepciones
-    fecha_movimiento DATE NOT NULL,
-    cantidad INT NOT NULL CHECK (cantidad <> 0), -- Cantidad positiva para recepciones, negativa para ventas
-    tipo_movimiento ENUM('recepcion', 'venta') NOT NULL, -- Define si es un ingreso o egreso de stock
-    FOREIGN KEY (comic_id) REFERENCES Comic(comic_id),
-    FOREIGN KEY (proveedor_id) REFERENCES Proveedor(proveedor_id)
-);
+CREATE TRIGGER calcular_total_pedido
+AFTER INSERT ON DetallePedido
+FOR EACH ROW
+BEGIN
+    DECLARE total_actual DECIMAL(10, 2);
+    SELECT SUM((precio_unitario * cantidad) - (precio_unitario * cantidad * (descuento / 100)))
+    INTO total_actual
+    FROM DetallePedido
+    WHERE pedido_id = NEW.pedido_id;
 
--- Tabla Resena
-CREATE TABLE Resena (
-    resena_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    comic_id INT NOT NULL,
-    cliente_id INT NOT NULL,
-    fecha_resena DATE NOT NULL,
-    calificacion INT CHECK (calificacion BETWEEN 1 AND 5),
-    comentario TEXT,
-    FOREIGN KEY (comic_id) REFERENCES Comic(comic_id),
-    FOREIGN KEY (cliente_id) REFERENCES Cliente(cliente_id)
-);
+    UPDATE Pedido
+    SET total = total_actual + tarifa_envio
+    WHERE pedido_id = NEW.pedido_id;
+END$$
 
--- Tabla Ofertas
-CREATE TABLE Ofertas (
-    oferta_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    comic_id INT NOT NULL,
-    descuento DECIMAL(5, 2) CHECK (descuento BETWEEN 0 AND 100),
-    fecha_inicio DATE NOT NULL,
-    fecha_fin DATE NOT NULL,
-    FOREIGN KEY (comic_id) REFERENCES Comic(comic_id)
-);
+DELIMITER ;	
 
--- Tabla TarifaEnvio
-CREATE TABLE TarifaEnvio (
-    tarifa_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    zona VARCHAR(100) NOT NULL,
-    costo DECIMAL(10, 2) NOT NULL,
-    metodo_envio VARCHAR(100) NOT NULL
-);
 
--- Tabla Envio
-CREATE TABLE Envio (
-    envio_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    pedido_id INT NOT NULL,
-    tarifa_id INT NOT NULL,
-    fecha_envio DATE NOT NULL,
-    estado_envio VARCHAR(50) NOT NULL,
-    numero_seguimiento VARCHAR(100),
-    FOREIGN KEY (pedido_id) REFERENCES Pedido(pedido_id),
-    FOREIGN KEY (tarifa_id) REFERENCES TarifaEnvio(tarifa_id)
-);
+--Aplicar Descuento de Ofertas Automáticamente en DetallePedido
+--Este trigger ajusta automáticamente el descuento al agregar un cómic en un pedido si hay una oferta vigente.
+DELIMITER $$
+
+CREATE TRIGGER aplicar_descuento_oferta
+BEFORE INSERT ON DetallePedido
+FOR EACH ROW
+BEGIN
+    DECLARE descuento_actual DECIMAL(5, 2) DEFAULT 0;
+    
+    SELECT descuento
+    INTO descuento_actual
+    FROM Ofertas
+    WHERE comic_id = NEW.comic_id
+      AND CURDATE() BETWEEN fecha_inicio AND fecha_fin
+    LIMIT 1;
+
+    SET NEW.descuento = IFNULL(descuento_actual, 0);
+END$$
+
+DELIMITER ;
+
+
+--Actualizar Estado de Pedido al Confirmar Pago
+--Este trigger actualiza el estado de un pedido a "Pagado" después de registrar un pago.
+DELIMITER $$
+
+CREATE TRIGGER actualizar_estado_pedido
+AFTER INSERT ON Pago
+FOR EACH ROW
+BEGIN
+    UPDATE Pedido
+    SET estado = 'Pagado'
+    WHERE pedido_id = NEW.pedido_id;
+END$$
+
+DELIMITER ;
+
