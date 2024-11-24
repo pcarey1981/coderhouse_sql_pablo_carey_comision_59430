@@ -397,34 +397,182 @@ Ejemplo de consulta:
 SELECT * FROM ComicsMasVendidos;
 ```
 
+---
+
+# Triggers
+
+Un **trigger** (disparador) es un objeto de base de datos que se ejecuta automáticamente en respuesta a eventos específicos, como inserciones, actualizaciones o eliminaciones en una tabla. Los triggers permiten automatizar procesos, garantizar la integridad de los datos y realizar tareas adicionales sin intervención manual, como auditorías, cálculos o notificaciones.
+
+Son útiles para mantener consistencia en los datos y aplicar reglas de negocio directamente en la base de datos, asegurando que ciertas acciones ocurran siempre que se cumplan determinadas condiciones.
+
+## Triggers Aplicados
+
+- **Actualizar Stock en la Tabla Comic al Registrar un Movimiento en el Inventario**: Ajusta automáticamente el stock del cómic al insertar un registro en la tabla Inventario. *(Trigger: `actualizar_stock_comic`)*
+- **Validar Stock Disponible Antes de Registrar una Venta**: Evita que se registre un movimiento de venta si no hay suficiente stock disponible. *(Trigger: `validar_stock_comic`)*
+- **Calcular Total del Pedido en la Tabla Pedido**: Calcula automáticamente el total del pedido al insertar un registro en la tabla DetallePedido. *(Trigger: `calcular_total_pedido`)*
+- **Aplicar Descuento de Ofertas Automáticamente en DetallePedido**: Ajusta automáticamente el descuento al agregar un cómic en un pedido si hay una oferta vigente. *(Trigger: `aplicar_descuento_oferta`)*
+- **Actualizar Estado de Pedido al Confirmar Pago**: Actualiza el estado de un pedido a "Pagado" después de registrar un pago. *(Trigger: `actualizar_estado_pedido`)*
+
+---
+
+## 1. `actualizar_stock_comic`
+
+### Propósito:
+Asegurar que los datos del inventario estén siempre consistentes con las operaciones realizadas.
+
+### Objetivo:
+Automatizar la actualización del campo `stock` en la tabla `Comic` según el tipo de movimiento registrado en `Inventario`. Si el movimiento es una recepción, el stock aumenta; si es una venta, el stock disminuye.
+
+### Tablas que Interactúan:
+- **Inventario**: Almacena los movimientos relacionados con los cómics, como recepciones y ventas.
+- **Comic**: Contiene el campo `stock`, que se actualiza según el movimiento registrado.
+
+### Ejemplos:
+
+#### Ej.1 - Registrar una Recepción para un Cómic Existente
+
+```sql
+-- Registrar una recepción de 20 unidades para "Watchmen"
+INSERT INTO Inventario (comic_id, proveedor_id, fecha_movimiento, cantidad, tipo_movimiento)
+VALUES (1, 1, CURDATE(), 20, 'recepcion');
+
+-- Verificar el stock actualizado del cómic
+SELECT * FROM Comic WHERE comic_id = 1;
+```
+Resultado esperado: El stock del cómic "Watchmen" aumenta de 50 a 70.
+--
+Ej.2 - Registrar una Venta de un Cómic Existente
+```sql
+-- Registrar una venta de 10 unidades de "The Dark Knight Returns"
+INSERT INTO Inventario (comic_id, proveedor_id, fecha_movimiento, cantidad, tipo_movimiento)
+VALUES (2, NULL, CURDATE(), -10, 'venta');
+
+-- Verificar el stock actualizado del cómic
+SELECT * FROM Comic WHERE comic_id = 2;
+```
+Resultado esperado: El stock del cómic "The Dark Knight Returns" disminuye de 30 a 20.
+--
+
+Ej.3 - Intentar Registrar una Venta Mayor al Stock Disponible
+```sql
+-- Intentar registrar una venta de 50 unidades para "Sandman"
+INSERT INTO Inventario (comic_id, proveedor_id, fecha_movimiento, cantidad, tipo_movimiento)
+VALUES (3, NULL, CURDATE(), -50, 'venta');
+```
+Resultado esperado: La operación falla debido a que el trigger no permitirá que el stock del cómic sea negativo.
 
 
-- **<span style="color: #008000">Vista_Comic_Detalles</span>
-Listado de cómics con sus autores, editoriales y género.
+2. validar_stock_comic
 
-- **<span style="color: #008000">Vista_Historial_Pedidos</span>
-Historial de pedidos, con detalles de los cómics comprados, su cantidad, precio y el estado del pedido.
+Propósito:
 
-# **<span style="color: #008000">Vista_Pagos_Pedidos</span>
-Pagos realizados por cada pedido, con su método de pago.
+-Garantizar la integridad de los datos al evitar movimientos de ventas que excedan el stock disponible.
+Objetivo:
 
-# **<span style="color: #008000">Vista_Inventario_Actual</span>
-Inventario actual, con detalles de las recepciones y ventas de cómics.
+-Validar que el stock de un cómic sea suficiente antes de registrar una venta en la tabla Inventario. Detener cualquier inserción que resulte en stock negativo.
 
-# **<span style="color: #008000">Vista_Resenas</span>
-Reseñas de cómics por cliente, con las calificaciones y comentarios.
+Tablas que Interactúan:
 
-# **<span style="color: #008000">Vista_Ofertas_Activas</span>
-Ofertas activas de cómics con su descuento y fechas de vigencia.
+    Inventario: Registra los movimientos de inventario, ya sea una recepción o una venta.
+    Comic: Almacena los datos del cómic, incluido el stock actual.
 
-# **<span style="color: #008000">Vista_Envios</span>
-Información de los envíos, incluyendo el estado y el número de seguimiento.
+Ejemplos:
 
-# **<span style="color: #008000">PedidosPendientesDeEnvio</span>
-Listado de pedidos pendientes de envío.
+Ej.1 - Venta con Stock Suficiente
+```sql
+-- Intentar registrar una venta válida
+INSERT INTO Inventario (comic_id, proveedor_id, fecha_movimiento, cantidad, tipo_movimiento)
+VALUES (1, NULL, CURDATE(), -10, 'venta');
 
-# **<span style="color: #008000">ComicsMasVendidos</span>
-Cómics más vendidos.
+-- Verificar que el movimiento se registre y que el stock se actualice correctamente
+SELECT comic_id, stock FROM Comic WHERE comic_id = 1;
+```
+Resultado esperado: El stock del cómic "Watchmen" disminuye de 50 a 40.
+
+
+Ej.2 - Venta con Stock Insuficiente
+```sql
+-- Intentar registrar una venta inválida
+INSERT INTO Inventario (comic_id, proveedor_id, fecha_movimiento, cantidad, tipo_movimiento)
+VALUES (2, NULL, CURDATE(), -60, 'venta');
+
+Resultado esperado: El trigger evita el registro del movimiento y genera el error: Stock insuficiente para realizar la venta.
+Ej.3 - Venta para un Cómic que No Existe
+
+-- Intentar registrar una venta para un cómic inexistente
+INSERT INTO Inventario (comic_id, proveedor_id, fecha_movimiento, cantidad, tipo_movimiento)
+VALUES (999, NULL, CURDATE(), -10, 'venta');
+
+Resultado esperado: La operación falla con un error de clave foránea, ya que el comic_id = 999 no existe en la tabla Comic.
+3. calcular_total_pedido
+Propósito:
+
+Automatizar el cálculo del total del pedido al agregar productos a su detalle.
+Objetivo:
+
+Mantener la consistencia y precisión en los registros de la tabla Pedido.
+Tablas que Interactúan:
+
+    DetallePedido: Almacena los detalles de los productos (cómics) incluidos en un pedido.
+    Pedido: Registra la información general del pedido, incluyendo el total calculado por este trigger.
+
+Ejemplos:
+Ej.1 - Insertar un Nuevo Detalle de Pedido sin Descuento
+
+-- Insertar un nuevo detalle en el pedido con ID 1
+INSERT INTO DetallePedido (pedido_id, comic_id, cantidad, precio_unitario, descuento) 
+VALUES (1, 1, 1, 1500.00, 0);
+
+Resultado esperado: El total del pedido se recalcula a 1650.00, incluyendo la tarifa de envío.
+Ej.2 - Insertar un Nuevo Detalle de Pedido con Descuento
+
+-- Insertar un nuevo detalle en el pedido con ID 3
+INSERT INTO DetallePedido (pedido_id, comic_id, cantidad, precio_unitario, descuento) 
+VALUES (3, 5, 1, 1000.00, 50);
+
+Resultado esperado: El total del pedido se recalcula a 750.00, aplicando el descuento.
+Ej.3 - Insertar Detalles para un Nuevo Pedido
+
+-- Insertar un detalle en un nuevo pedido con ID 5
+INSERT INTO DetallePedido (pedido_id, comic_id, cantidad, precio_unitario, descuento) 
+VALUES (5, 4, 1, 1200.00, 0);
+
+Resultado esperado: El total del pedido se recalcula a 1300.00.
+4. aplicar_descuento_oferta
+Propósito:
+
+Automatizar la aplicación de descuentos cuando un cómic tiene una oferta vigente.
+Objetivo:
+
+Aplicar descuentos de manera eficiente cuando un cómic con una oferta activa es agregado a un pedido.
+Tablas que Interactúan:
+
+    DetallePedido: Almacena los detalles de los productos dentro de cada pedido.
+    Ofertas: Contiene información sobre las ofertas vigentes.
+
+Ejemplos:
+Ej.1 - Agregar un Cómic con Oferta Vigente
+
+-- Agregar un cómic con oferta vigente (10% de descuento)
+INSERT INTO DetallePedido (pedido_id, comic_id, cantidad, precio_unitario, descuento)
+VALUES (6, 1, 1, 1500.00, 0);
+
+Resultado esperado: El descuento del 10% se aplica automáticamente.
+Ej.2 - Agregar un Cómic con Oferta Vigente (15% de descuento)
+
+-- Agregar un cómic con oferta vigente (15% de descuento)
+INSERT INTO DetallePedido (pedido_id, comic_id, cantidad, precio_unitario, descuento)
+VALUES (7, 2, 2, 1800.00, 0);
+
+Resultado esperado: El descuento del 15% se aplica automáticamente.
+Ej.3 - Agregar un Cómic con Oferta No Activa
+
+-- Agregar un cómic con oferta no activa
+INSERT INTO DetallePedido (pedido_id, comic_id, cantidad, precio_unitario, descuento)
+VALUES (8, 3, 1, 2000.00, 0);
+
+Resultado esperado: El descuento permanece en 0.00, ya que la oferta no está activa.
+
 
 
 
