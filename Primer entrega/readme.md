@@ -274,8 +274,8 @@ SELECT * FROM Vista_Historial_Pedidos;
 
 **Tablas que componen la Vista**:
 
-    Pago: Información sobre los pagos (ID, fecha, monto, método de pago).
-    Pedido: Información del pedido (ID y total del pedido).
+- *`Pago`*: Información sobre los pagos (ID, fecha, monto, método de pago).
+- *`Pedido`*: Información del pedido (ID y total del pedido).
 
 Ejemplo de consulta:
 ```sql
@@ -290,8 +290,8 @@ SELECT * FROM Vista_Pagos_Pedidos;
 
 **Tablas que componen la Vista**:
 
-    Inventario: Registros de transacciones de inventario (recepciones y ventas).
-    Comic: Información básica sobre los cómics.
+- *`Inventario`*: Registros de transacciones de inventario (recepciones y ventas).
+- *`Comic`*: Información básica sobre los cómics.
 
 Ejemplo de consulta:
 ```sql
@@ -306,9 +306,9 @@ SELECT * FROM Vista_Inventario_Actual;
 
 **Tablas que componen la Vista**:
 
-    Resena: Registros de reseñas (ID, cliente_id, comic_id, calificación, comentario).
-    Cliente: Información del cliente (ID, nombre, apellido, email).
-    Comic: Información sobre los cómics (ID y título).
+- *`Resena`*: Registros de reseñas (ID, cliente_id, comic_id, calificación, comentario).
+- *`Cliente`*: Información del cliente (ID, nombre, apellido, email).
+- *`Comic`*: Información sobre los cómics (ID y título).
 
 Ejemplo de consulta:
 ```sql
@@ -323,8 +323,8 @@ SELECT * FROM Vista_Resenas;
 
 **Tablas que componen la Vista**:
 
-    Ofertas: Información sobre las ofertas (ID, comic_id, descuento, fechas de inicio y fin).
-    Comic: Información sobre los cómics (ID y título).
+- *`Ofertas`*: Información sobre las ofertas (ID, comic_id, descuento, fechas de inicio y fin).
+- *`Comic`*: Información sobre los cómics (ID y título).
 
 Ejemplo de consulta:
 ```sql
@@ -339,8 +339,8 @@ SELECT * FROM Vista_Ofertas_Activas;
 
 **Tablas que componen la Vista**:
 
-    Envio: Información de los envíos (ID, fecha, estado, número de seguimiento).
-    TarifaEnvio: Detalles sobre las tarifas de envío (zona, método de envío).
+- *`Envio`*: Información de los envíos (ID, fecha, estado, número de seguimiento).
+- *`TarifaEnvio`*: Detalles sobre las tarifas de envío (zona, método de envío).
 
 Ejemplo de consulta:
 ```sql
@@ -355,8 +355,8 @@ SELECT * FROM Vista_Envios;
 
 **Tablas que componen la Vista**:
 
-    Pedido: Información sobre los pedidos (ID, fecha, estado).
-    Cliente: Información del cliente (ID, nombre, apellido).
+- *`Pedido`*: Información sobre los pedidos (ID, fecha, estado).
+- *`Cliente`*: Información del cliente (ID, nombre, apellido).
     Envio: Información sobre los envíos (ID y estado).
 
 Ejemplo de consulta:
@@ -372,8 +372,8 @@ SELECT * FROM PedidosPendientesDeEnvio;
 
 **Tablas que componen la Vista**:
 
-    DetallePedido: Detalles de cada transacción (comic_id, cantidad vendida).
-    Comic: Información sobre los cómics (ID, título).
+- *`DetallePedido`*: Detalles de cada transacción (comic_id, cantidad vendida).
+- *`Comic`*: Información sobre los cómics (ID, título).
 
 Ejemplo de consulta:
 ```sql
