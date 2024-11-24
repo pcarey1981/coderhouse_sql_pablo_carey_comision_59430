@@ -415,7 +415,7 @@ Son útiles para mantener consistencia en los datos y aplicar reglas de negocio 
 
 ---
 
-## 1. `actualizar_stock_comic`
+## 1. actualizar_stock_comic
 
 ### Propósito:
 Asegurar que los datos del inventario estén siempre consistentes con las operaciones realizadas.
