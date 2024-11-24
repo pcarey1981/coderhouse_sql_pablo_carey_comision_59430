@@ -630,9 +630,43 @@ SELECT * FROM Pedido;
 
 ![imagen](https://github.com/user-attachments/assets/f3376710-7b05-4667-804b-d438a1caa8f3)
 
+---
 
+# Funciones
 
+Las funciones definidas por el usuario se utilizan para realizar operaciones específicas dentro de una base de datos. Estas funciones permiten encapsular lógica compleja en un solo bloque, lo que facilita la reutilización del código y la simplificación de consultas.
 
+## Funciones aplicadas
+
+- *`CalcularStockTotal`*: Función para Calcular Stock Total de un Cómic
+- *`CalcularTotalPedido`*: Función para Calcular Total de un Pedido
+- *`CalificacionPromedio`*: Función para Obtener Calificación Promedio de un Cómic
+- *`ObtenerDescuento`*: Función para Determinar si un Cómic Está en Oferta
+- *`CalcularCostoEnvio`*: Función para Calcular el Costo de Envío
+- *`VerificarStock`*: Función para Verificar Disponibilidad de Stock para un Pedido
+
+---
+
+## 1. CalcularStockTotal
+
+*`Propósito`*: Calcula el stock total disponible de un cómic, considerando tanto las recepciones como las ventas registradas en la tabla Inventario.
+
+*`Objetivo`*: Devolver el total de stock disponible de un cómic en función de los movimientos de inventario (ya sea recepción o venta) registrados en la tabla Inventario.
+
+**Tablas Involucradas**:
+
+- *`Inventario`*: La tabla que almacena los movimientos de inventario, con las cantidades recibidas o vendidas de un cómic.
+
+### Descripción de la Función:
+La función CalcularStockTotal toma como parámetro el comic_id (identificador del cómic) y realiza lo siguiente:
+
+1.	Declara una variable total_stock de tipo INT para almacenar el resultado de la suma de los movimientos de inventario.
+
+2.	Realiza una consulta SELECT que:
+•	Suma la cantidad de cómics en la tabla Inventario para el cómic correspondiente al comic_id dado.
+•	Utiliza la función COALESCE para garantizar que, si no existen registros para ese cómic, se devuelva 0 en lugar de NULL.
+
+3.	La función devuelve el valor de total_stock, que es el stock total disponible del cómic.
 
 
 
