@@ -1326,7 +1326,7 @@ SELECT * FROM Ofertas WHERE comic_id = 1 AND fecha_inicio = '2024-11-01';
 
 - *`Envio`*: Contiene la información de los envíos, como el estado y el número de seguimiento.
 
---
+---
 
 ### Descripción del Procedimiento:
 El procedimiento almacenado ActualizarEstadoEnvio recibe los siguientes parámetros:
@@ -1361,6 +1361,99 @@ SELECT * FROM Envio WHERE envio_id = 1;
 ```
 
 ---
+
+## 7. ObtenerDetallePedido
+
+*`Propósito`*: Permite obtener los detalles completos de un pedido, incluyendo los cómics asociados y sus respectivas cantidades, precios unitarios y descuentos, calculando el total por cómic en el proceso.
+
+*`Objetivo`*: FFacilitar la consulta de los detalles de un pedido específico y de los cómics asociados al mismo, proporcionando información detallada sobre las cantidades, precios y descuentos aplicados para cada cómic dentro del pedido.
+
+**Tablas Involucradas**:
+
+- *`DetallePedido`*: Contiene los detalles de los cómics incluidos en cada pedido.
+- *`Comic`*: Contiene los datos de los cómics, como el título, que se unen con los detalles del pedido.
+
+---
+
+### Descripción del Procedimiento:
+El procedimiento almacenado ObtenerDetallePedido recibe el siguiente parámetro:
+- p_pedido_id: El ID del pedido para el cual se desean obtener los detalles.
+
+### Lógica Interna:
+
+#### 1 - Se hace una consulta a la tabla DetallePedido para obtener la información detallada del pedido.
+
+#### 2 - Se realiza una unión con la tabla Comic para obtener el título de cada cómic asociado al pedido.
+
+#### 3 - Para cada cómic, se calcula el total por cómic restando el descuento del precio total (cantidad * precio_unitario - descuento).
+---
+
+### Ejemplo de uso:
+Obtener los detalles del pedido con ID 1 y calcular el total por cómic con base en la cantidad, precio unitario y descuento.
+```sql
+CALL ObtenerDetallePedido(1);
+```
+#### Resultado esperado: 
+El procedimiento devuelve una lista de detalles para el pedido con ID 1, incluyendo:
+- detalle_id: El identificador de cada detalle del pedido.
+- titulo: El título del cómic.
+- cantidad: La cantidad de ese cómic en el pedido.
+- precio_unitario: El precio unitario del cómic.
+- descuento: El descuento aplicado al cómic en ese pedido.
+- total_por_comic: El total por cómic, calculado como (cantidad * precio_unitario - descuento).
+
+---
+#### Validación: 
+Consulta para verificar que los detalles del pedido fueron obtenidos correctamente:
+```sql
+SELECT 
+    dp.detalle_id,
+    c.titulo,
+    dp.cantidad,
+    dp.precio_unitario,
+    dp.descuento,
+    (dp.cantidad * dp.precio_unitario - dp.descuento) AS total_por_comic
+FROM DetallePedido dp
+JOIN Comic c ON dp.comic_id = c.comic_id
+WHERE dp.pedido_id = 1;
+```
+
+--
+
+## 8. ActualizarStock
+
+*`Propósito`*: Permite automatizar la reducción del stock de cómics al registrar una venta. Al registrar una venta en el pedido, el procedimiento actualiza el inventario, disminuyendo la cantidad de cómics vendidos
+
+*`Objetivo`*:Facilitar la actualización del stock en la base de datos de manera automática al registrar una venta, asegurando que el inventario refleje de manera precisa las ventas realizadas.
+
+**Tablas Involucradas**:
+
+- *`DetallePedido`*: Contiene los detalles de los cómics incluidos en cada pedido.
+- *`Inventario`*: Se actualiza para reflejar la reducción del stock al registrar la venta de los cómics.
+- *`Inventario`*: Aunque no se actualiza directamente en este procedimiento, la reducción del stock se realiza en la tabla Inventario.
+  
+---
+
+### Descripción del Procedimiento:
+El procedimiento almacenado ActualizarStock recibe el siguiente parámetro:
+- pedido: El ID del pedido cuya venta se está registrando, y para el cual se actualizará el stock de los cómics vendidos.
+
+---
+
+### Ejemplo de uso:
+Actualizar el stock para el pedido con ID 1 y registrar la venta de los cómics asociados:
+```sql
+CALL ActualizarStock(1);
+```
+#### Resultado esperado: 
+El procedimiento actualizará el inventario, reduciendo el stock de los cómics según las cantidades de cada detalle del pedido con ID 1. Esto se reflejará en la tabla Inventario, con un movimiento de tipo 'venta'.
+
+---
+#### Validación: 
+Consulta para verificar que los movimientos de stock fueron registrados correctamente:
+```sql
+SELECT * FROM Inventario WHERE tipo_movimiento = 'venta';
+```
 
 
 
