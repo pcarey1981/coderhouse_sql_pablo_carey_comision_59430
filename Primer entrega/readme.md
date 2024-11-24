@@ -471,7 +471,7 @@ VALUES (1, NULL, CURDATE(), -10, 'venta');
 -- Verificar que el movimiento se registre y que el stock se actualice correctamente
 SELECT comic_id, stock FROM Comic WHERE comic_id = 1;
 ```
-Resultado esperado: El movimiento se registra, y el stock del cómic "Watchmen" disminuye de 50 a 40.
+#### Resultado esperado: El movimiento se registra, y el stock del cómic "Watchmen" disminuye de 50 a 40.
 ---
 #### Ej.2 - Venta con Stock Insuficiente
 Intentar registrar una venta de 60 unidades para "The Dark Knight Returns" (comic_id = 2), que tiene un stock actual de 30.
