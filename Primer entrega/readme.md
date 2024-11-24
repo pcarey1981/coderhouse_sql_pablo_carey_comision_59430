@@ -404,7 +404,7 @@ Son útiles para mantener consistencia en los datos y aplicar reglas de negocio 
 
 *`Objetivo`*: Automatizar la actualización del campo stock en la tabla Comic según el tipo de movimiento registrado en Inventario. Si el movimiento es una recepción, el stock aumenta; si es una venta, el stock disminuye. Esto elimina la necesidad de realizar actualizaciones manuales, minimizando errores y ahorrando tiempo en la gestión del inventario.
 
-**Tablas que interactuan cone trigger**:
+**Tablas que interactuan con el trigger**:
 
 - *`Inventario`*: Esta tabla almacena los movimientos relacionados con los cómics, como recepciones y ventas. Al insertar un nuevo registro en esta tabla, el trigger se activa.
 - *`Comic`*: Contiene el campo stock que representa la cantidad disponible de cada cómic. El trigger actualiza este campo según el movimiento registrado.
@@ -450,6 +450,36 @@ Resultado esperado: La operación falla debido a que el trigger no permitirá qu
 
 ## 2 - validar_stock_comic
 
+*`Propósito`*: 
+•	Garantizar la integridad de los datos en la tabla Comic al evitar movimientos de ventas que excedan el stock disponible.
+•	Prevenir errores operativos o pérdidas de información al intentar registrar ventas imposibles de cumplir.
+
+*`Objetivo`*:
+•	Validar que el stock de un cómic sea suficiente antes de registrar una venta en la tabla Inventario.
+•	Detener cualquier inserción que resulte en stock negativo, mejorando la gestión y confiabilidad del inventario.
+
+**Tablas que interactuan con el trigger**:
+
+- *`Inventario`*: Registra los movimientos de inventario, ya sea una recepción o una venta. Contiene la cantidad y tipo de movimiento (recepcion o venta).
+- *`Comic`*: Almacena los datos básicos del cómic, incluido el stock actual, que se consulta para verificar si la venta es posible.
+
+### Ejemplos:
+
+#### Ej.1 - Venta con Stock Suficiente
+Registrar una venta de 10 unidades para "Watchmen" (comic_id = 1), que tiene un stock actual de 50.
+```sql
+-- Intentar registrar una venta válida
+INSERT INTO Inventario (comic_id, proveedor_id, fecha_movimiento, cantidad, tipo_movimiento)
+VALUES (1, NULL, CURDATE(), -10, 'venta');
+
+-- Verificar que el movimiento se registre y que el stock se actualice correctamente
+SELECT comic_id, stock FROM Comic WHERE comic_id = 1;
+```
+Resultado esperado: El movimiento se registra, y el stock del cómic "Watchmen" disminuye de 50 a 40.
+
+
+#### Ej.2 - Venta con Stock Insuficiente
+Intentar registrar una venta de 60 unidades para "The Dark Knight Returns" (comic_id = 2), que tiene un stock actual de 30.
 
 
 
