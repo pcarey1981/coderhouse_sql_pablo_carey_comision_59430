@@ -511,7 +511,7 @@ VALUES (999, NULL, CURDATE(), -10, 'venta');
 INSERT INTO DetallePedido (pedido_id, comic_id, cantidad, precio_unitario, descuento) 
 VALUES (1, 1, 1, 1500.00, 0);
 ```
-#### Cálculo del total:
+### Cálculo del total:
 #### •	Total del pedido = (1500 * 1) - (1500 * 1 * 0%) + Tarifa de Envío
 #### •	Total del pedido = 1500 + 150 = 1650.00 (Este valor ya está insertado en la tabla Pedido).
 ---
@@ -522,7 +522,7 @@ VALUES (1, 1, 1, 1500.00, 0);
 INSERT INTO DetallePedido (pedido_id, comic_id, cantidad, precio_unitario, descuento) 
 VALUES (3, 5, 1, 1000.00, 50);
 ```
-#### Cálculo del total:
+### Cálculo del total:
 #### •	Total del pedido = (1000 * 1) - (1000 * 1 * 50%) = 1000 - 500 = 500
 #### •	Total del pedido con tarifa de envío = 500 + 250 (Tarifa de Envío) = 750.00 (Este valor se debe actualizar en la tabla Pedido).
 ---
@@ -533,7 +533,7 @@ VALUES (3, 5, 1, 1000.00, 50);
 INSERT INTO DetallePedido (pedido_id, comic_id, cantidad, precio_unitario, descuento) 
 VALUES (5, 4, 1, 1200.00, 0);
 ```
-#### Cálculo del total: 
+### Cálculo del total: 
 #### Total del pedido = (1200 * 1) - (1200 * 1 * 0%) + Tarifa de Envío = 1200 + 100 = 1300.00 (El total debe ser actualizado en la tabla Pedido para el pedido con ID 5).
 
 
