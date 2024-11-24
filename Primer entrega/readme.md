@@ -842,7 +842,7 @@ La función ObtenerDescuento recibe dos parámetros:
 •	comic_id: El identificador del cómic.
 •	fecha: La fecha en la que se quiere verificar si el cómic tiene una oferta activa.
 
-#### La función realiza los siguientes pasos:
+### La función realiza los siguientes pasos:
 
 #### 1. Declara una variable descuento de tipo DECIMAL(5, 2) para almacenar el descuento de la oferta.
 
@@ -874,11 +874,84 @@ END$$
 
 DELIMITER ;
 ```
+### Explicación de la Función:
+- BETWEEN fecha_inicio AND fecha_fin: Esto asegura que la fecha proporcionada esté dentro del rango de fechas en el que la oferta es válida.
+- COALESCE(descuento, 0): Si no se encuentra una oferta activa para el cómic, COALESCE devuelve 0 en lugar de NULL, indicando que no hay descuento disponible.
+---
+### Ejemplo de uso:
 
+#### Consultar si un cómic tiene una oferta activa en una fecha específica
+Supongamos que tienes un cómic con comic_id = 3 y quieres verificar si tiene una oferta activa en la fecha '2024-11-23'.
+```sql
+-- Consultar el descuento activo para el cómic con id 3 en la fecha '2024-11-23'
+SELECT ObtenerDescuento(3, '2024-11-23') AS descuento_activo;
+```
 
+---
 
+## 5 - CalcularCostoEnvio
 
+*`Propósito`*: Calcular el costo de envío en función de la zona de destino y el método de envío elegido. Esta función es útil para determinar el costo que se debe agregar al total de un pedido en función de los parámetros de envío.
 
+*`Objetivo`*: Permitir al sistema o a los usuarios obtener el costo de envío específico basado en la zona de destino del pedido y el método de envío seleccionado.
+
+**Tablas Involucradas**:
+
+- *`TarifaEnvio`*: Esta tabla almacena las tarifas de envío, que dependen de la zona de destino (zona) y el método de envío (metodo_envio). La tabla también debe contener el campo costo para reflejar el precio de cada tarifa.
+  
+---
+
+### Descripción de la Función:
+La función CalcularCostoEnvio recibe dos parámetros:
+- zona: La zona de destino del envío (por ejemplo, "Capital Federal").
+- metodo: El método de envío elegido (por ejemplo, "Estandar").
+
+### La función realiza los siguientes pasos:
+
+#### 1. Declara una variable costo de tipo DECIMAL(10, 2) para almacenar el costo de envío.
+
+#### 2.	Realiza una consulta SELECT que:
+- Obtiene el costo de la tabla TarifaEnvio para la zona y el método de envío proporcionados.
+  
+#### 3. La función devuelve el valor de costo. Si no se encuentra una tarifa de envío correspondiente, se devuelve 0 usando la función COALESCE.
+```sql
+DELIMITER $$
+
+CREATE FUNCTION CalcularCostoEnvio(zona VARCHAR(100), metodo VARCHAR(100))
+RETURNS DECIMAL(10, 2)
+DETERMINISTIC
+BEGIN
+    DECLARE costo DECIMAL(10, 2);
+    
+    -- Obtener el costo de envío según la zona y el método de envío
+    SELECT costo
+    INTO costo
+    FROM TarifaEnvio
+    WHERE zona = zona
+      AND metodo_envio = metodo
+    LIMIT 1;
+
+    -- Si no se encuentra la tarifa de envío, devuelve 0
+    RETURN COALESCE(costo, 0);
+END$$
+
+DELIMITER ;
+```
+### Explicación de la Función:
+- SELECT costo INTO costo: Realiza una consulta para obtener el costo de envío correspondiente a la zona y metodo_envio.
+- COALESCE(costo, 0): Si no se encuentra una tarifa correspondiente, devuelve 0 en lugar de NULL.
+
+---
+### Ejemplo de uso:
+
+#### Consultar el costo de envío para una zona y método específicos
+Supongamos que quieres saber el costo de envío para la zona 'Capital Federal' y el método de envío 'Estandar'.
+```sql
+-- Consultar el costo de envío para la zona 'Capital Federal' con el método 'Estandar'
+SELECT CalcularCostoEnvio('Capital Federal', 'Estandar') AS costo_envio;
+```
+
+---
 
 
 
