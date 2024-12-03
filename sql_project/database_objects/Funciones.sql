@@ -1,142 +1,146 @@
--- Tabla Autor
-CREATE TABLE Autor (
-    autor_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    nombre VARCHAR(100) NOT NULL,
-    apellido VARCHAR(100) NOT NULL,
-    nacionalidad VARCHAR(100)
-);
 
--- Tabla Editorial
-CREATE TABLE Editorial (
-    editorial_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    nombre VARCHAR(100) NOT NULL,
-    pais VARCHAR(100),
-    telefono VARCHAR(15)
-);
+--Calcular Stock Total de un Cómic
+--Devuelve el stock actual de un cómic considerando los movimientos en el inventario.
+DELIMITER $$
+CREATE FUNCTION CalcularStockTotal(comic INT)
+RETURNS INT
+DETERMINISTIC
+BEGIN
+    DECLARE total_stock INT;
+    SELECT COALESCE(SUM(cantidad), 0)
+    INTO total_stock
+    FROM Inventario
+    WHERE comic_id = comic;
+    RETURN total_stock;
+END$$
+DELIMITER ;
 
--- Tabla Genero
-CREATE TABLE Genero (
-    genero_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    nombre VARCHAR(100) NOT NULL
-);
+-- Supongamos que quieres calcular el stock de un cómic con ID 1
+SELECT CalcularStockTotal(1) AS stock_total;
 
--- Tabla Cliente
-CREATE TABLE Cliente (
-    cliente_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    nombre VARCHAR(100) NOT NULL,
-    apellido VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    direccion VARCHAR(255) NOT NULL,
-    telefono VARCHAR(15)
-);
 
--- Tabla Comic
-CREATE TABLE Comic (
-    comic_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    titulo VARCHAR(255) NOT NULL,
-    autor_id INT NOT NULL,
-    editorial_id INT NOT NULL,
-    genero_id INT NOT NULL,
-    precio DECIMAL(10, 2) NOT NULL,
-    fecha_publicacion DATE NOT NULL,
-    descripcion TEXT,
-    stock INT NOT NULL CHECK (stock >= 0),
-    FOREIGN KEY (autor_id) REFERENCES Autor(autor_id),
-    FOREIGN KEY (editorial_id) REFERENCES Editorial(editorial_id),
-    FOREIGN KEY (genero_id) REFERENCES Genero(genero_id)
-);
+--Calcular Total de un Pedido
+--Calcula el total de un pedido basado en los detalles de los cómics comprados, aplicando descuentos si existen.
+DELIMITER $$
+CREATE FUNCTION CalcularTotalPedido(pedido INT)
+RETURNS DECIMAL(10, 2)
+DETERMINISTIC
+BEGIN
+    DECLARE total DECIMAL(10, 2);
+    SELECT SUM((precio_unitario - (precio_unitario * (descuento / 100))) * cantidad)
+    INTO total
+    FROM DetallePedido
+    WHERE pedido_id = pedido;
+    RETURN total;
+END$$
+DELIMITER ;
 
--- Tabla Pedido 
-CREATE TABLE Pedido (
-    pedido_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    cliente_id INT NOT NULL,
-    fecha_pedido DATE NOT NULL,
-    estado VARCHAR(50) NOT NULL,
-    total DECIMAL(10, 2) NOT NULL, -- El total ya incluirá el costo de envío y el descuento
-    tarifa_envio DECIMAL(10, 2) NOT NULL, -- Se añade la columna tarifa_envio para especificar el costo de envío
-    FOREIGN KEY (cliente_id) REFERENCES Cliente(cliente_id)
-);
+-- Supongamos que quieres calcular el total del pedido con ID 1
+SELECT CalcularTotalPedido(1) AS total_pedido;
 
--- Tabla Pago 
-CREATE TABLE Pago (
-    pago_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    pedido_id INT NOT NULL,
-    fecha_pago DATE NOT NULL,
-    monto DECIMAL(10, 2) NOT NULL, -- El monto ahora reflejará el total incluyendo envío y descuento
-    metodo_pago VARCHAR(50) NOT NULL,
-    FOREIGN KEY (pedido_id) REFERENCES Pedido(pedido_id)
-);
 
--- Tabla DetallePedido 
-CREATE TABLE DetallePedido (
-    detalle_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    pedido_id INT NOT NULL,
-    comic_id INT NOT NULL,
-    cantidad INT NOT NULL CHECK (cantidad > 0),
-    precio_unitario DECIMAL(10, 2) NOT NULL,
-    descuento DECIMAL(5, 2) DEFAULT 0, -- Nuevo campo para descuento aplicado
-    FOREIGN KEY (pedido_id) REFERENCES Pedido(pedido_id),
-    FOREIGN KEY (comic_id) REFERENCES Comic(comic_id)
-);
+--Obtener Calificación Promedio de un Cómic
+--Devuelve la calificación promedio de un cómic basándose en las reseñas.
+DELIMITER $$
+CREATE FUNCTION CalificacionPromedio(comic INT)
+RETURNS DECIMAL(3, 2)
+DETERMINISTIC
+BEGIN
+    DECLARE promedio DECIMAL(3, 2);
+    SELECT AVG(calificacion)
+    INTO promedio
+    FROM Resena
+    WHERE comic_id = comic;
+    RETURN COALESCE(promedio, 0); -- Devuelve 0 si no hay reseñas.
+END$$
+DELIMITER ;
 
--- Tabla Proveedor
-CREATE TABLE Proveedor (
-    proveedor_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    nombre VARCHAR(100) NOT NULL,
-    telefono VARCHAR(15),
-    direccion VARCHAR(255)
-);
+-- Supongamos que quieres saber la calificación promedio del cómic con ID 2
+SELECT CalificacionPromedio(2) AS calificacion_promedio;
 
--- Tabla Inventario
-CREATE TABLE Inventario (
-    inventario_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    comic_id INT NOT NULL,
-    proveedor_id INT, -- Ahora opcional, solo requerido para recepciones
-    fecha_movimiento DATE NOT NULL,
-    cantidad INT NOT NULL CHECK (cantidad <> 0), -- Cantidad positiva para recepciones, negativa para ventas
-    tipo_movimiento ENUM('recepcion', 'venta') NOT NULL, -- Define si es un ingreso o egreso de stock
-    FOREIGN KEY (comic_id) REFERENCES Comic(comic_id),
-    FOREIGN KEY (proveedor_id) REFERENCES Proveedor(proveedor_id)
-);
 
--- Tabla Resena
-CREATE TABLE Resena (
-    resena_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    comic_id INT NOT NULL,
-    cliente_id INT NOT NULL,
-    fecha_resena DATE NOT NULL,
-    calificacion INT CHECK (calificacion BETWEEN 1 AND 5),
-    comentario TEXT,
-    FOREIGN KEY (comic_id) REFERENCES Comic(comic_id),
-    FOREIGN KEY (cliente_id) REFERENCES Cliente(cliente_id)
-);
+--Determinar si un Cómic Está en Oferta
+--Verifica si un cómic tiene una oferta activa y devuelve el porcentaje de descuento.
+DELIMITER $$
+CREATE FUNCTION ObtenerDescuento(comic INT, fecha DATE)
+RETURNS DECIMAL(5, 2)
+DETERMINISTIC
+BEGIN
+    DECLARE descuento DECIMAL(5, 2);
+    SELECT descuento
+    INTO descuento
+    FROM Ofertas
+    WHERE comic_id = comic
+      AND fecha BETWEEN fecha_inicio AND fecha_fin
+    LIMIT 1;
+    RETURN COALESCE(descuento, 0); -- Devuelve 0 si no hay oferta activa.
+END$$
+DELIMITER ;
 
--- Tabla Ofertas
-CREATE TABLE Ofertas (
-    oferta_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    comic_id INT NOT NULL,
-    descuento DECIMAL(5, 2) CHECK (descuento BETWEEN 0 AND 100),
-    fecha_inicio DATE NOT NULL,
-    fecha_fin DATE NOT NULL,
-    FOREIGN KEY (comic_id) REFERENCES Comic(comic_id)
-);
+-- Supongamos que quieres saber el descuento del cómic con ID 3 para la fecha '2024-11-23'
+SELECT ObtenerDescuento(3, '2024-11-23') AS descuento_activo;
 
--- Tabla TarifaEnvio
-CREATE TABLE TarifaEnvio (
-    tarifa_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    zona VARCHAR(100) NOT NULL,
-    costo DECIMAL(10, 2) NOT NULL,
-    metodo_envio VARCHAR(100) NOT NULL
-);
 
--- Tabla Envio
-CREATE TABLE Envio (
-    envio_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    pedido_id INT NOT NULL,
-    tarifa_id INT NOT NULL,
-    fecha_envio DATE NOT NULL,
-    estado_envio VARCHAR(50) NOT NULL,
-    numero_seguimiento VARCHAR(100),
-    FOREIGN KEY (pedido_id) REFERENCES Pedido(pedido_id),
-    FOREIGN KEY (tarifa_id) REFERENCES TarifaEnvio(tarifa_id)
-);
+--Calcular el Costo de Envío
+--Devuelve el costo de envío según la zona y el método de envío.
+DELIMITER $$
+CREATE FUNCTION CalcularCostoEnvio(zona VARCHAR(100), metodo VARCHAR(100))
+RETURNS DECIMAL(10, 2)
+DETERMINISTIC
+BEGIN
+    DECLARE costo DECIMAL(10, 2);
+    SELECT costo
+    INTO costo
+    FROM TarifaEnvio
+    WHERE zona = zona AND metodo_envio = metodo
+    LIMIT 1;
+    RETURN COALESCE(costo, 0); -- Devuelve 0 si no se encuentra tarifa.
+END$$
+DELIMITER ;
+
+-- Supongamos que quieres saber el costo de envío para la zona 'Capital Federal' con el método 'Estandar'
+SELECT CalcularCostoEnvio('Capital Federal', 'Estandar') AS costo_envio;
+
+
+--Verificar Disponibilidad de Stock para un Pedido
+--Comprueba si existe suficiente stock para todos los cómics en un pedido antes de procesarlo.
+DELIMITER $$
+CREATE FUNCTION VerificarStock(pedido INT)
+RETURNS BOOLEAN
+DETERMINISTIC
+BEGIN
+    DECLARE stock_suficiente BOOLEAN;
+    SET stock_suficiente = TRUE;
+
+    IF EXISTS (
+        SELECT 1
+        FROM DetallePedido dp
+        JOIN Comic c ON dp.comic_id = c.comic_id
+        WHERE dp.pedido_id = pedido
+          AND dp.cantidad > CalcularStockTotal(dp.comic_id)
+    ) THEN
+        SET stock_suficiente = FALSE;
+    END IF;
+
+    RETURN stock_suficiente;
+END$$
+DELIMITER ;
+
+-- Supongamos que quieres verificar el stock para el pedido con ID 1
+SELECT VerificarStock(1) AS stock_suficiente; -- Devuelve 1 (TRUE) o 0 (FALSE)
+
+
+--Generar Número de Seguimiento para Envío
+--Crea un número de seguimiento único para un pedido.
+DELIMITER $$
+CREATE FUNCTION GenerarNumeroSeguimiento(pedido INT)
+RETURNS VARCHAR(100)
+DETERMINISTIC
+BEGIN
+    RETURN CONCAT('ENV-', pedido, '-', UNIX_TIMESTAMP());
+END$$
+DELIMITER ;
+
+-- Supongamos que quieres generar el número de seguimiento para el pedido con ID 1
+SELECT GenerarNumeroSeguimiento(1) AS numero_seguimiento;
+

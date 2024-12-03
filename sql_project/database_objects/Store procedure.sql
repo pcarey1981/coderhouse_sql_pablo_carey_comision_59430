@@ -1,142 +1,164 @@
--- Tabla Autor
-CREATE TABLE Autor (
-    autor_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    nombre VARCHAR(100) NOT NULL,
-    apellido VARCHAR(100) NOT NULL,
-    nacionalidad VARCHAR(100)
-);
 
--- Tabla Editorial
-CREATE TABLE Editorial (
-    editorial_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    nombre VARCHAR(100) NOT NULL,
-    pais VARCHAR(100),
-    telefono VARCHAR(15)
-);
+--Registrar un nuevo cliente
+DELIMITER //
+CREATE PROCEDURE RegistrarCliente (
+    IN p_nombre VARCHAR(100),
+    IN p_apellido VARCHAR(100),
+    IN p_email VARCHAR(100),
+    IN p_direccion VARCHAR(255),
+    IN p_telefono VARCHAR(15)
+)
+BEGIN
+    INSERT INTO Cliente (nombre, apellido, email, direccion, telefono)
+    VALUES (p_nombre, p_apellido, p_email, p_direccion, p_telefono);
+END //
+DELIMITER ;
 
--- Tabla Genero
-CREATE TABLE Genero (
-    genero_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    nombre VARCHAR(100) NOT NULL
-);
 
--- Tabla Cliente
-CREATE TABLE Cliente (
-    cliente_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    nombre VARCHAR(100) NOT NULL,
-    apellido VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    direccion VARCHAR(255) NOT NULL,
-    telefono VARCHAR(15)
-);
+--Registrar un nuevo pedido
+DELIMITER //
+CREATE PROCEDURE RegistrarPedido (
+    IN p_cliente_id INT,
+    IN p_estado VARCHAR(50),
+    IN p_total DECIMAL(10, 2),
+    IN p_tarifa_envio DECIMAL(10, 2)
+)
+BEGIN
+    INSERT INTO Pedido (cliente_id, fecha_pedido, estado, total, tarifa_envio)
+    VALUES (p_cliente_id, CURDATE(), p_estado, p_total, p_tarifa_envio);
+END //
+DELIMITER ;
 
--- Tabla Comic
-CREATE TABLE Comic (
-    comic_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    titulo VARCHAR(255) NOT NULL,
-    autor_id INT NOT NULL,
-    editorial_id INT NOT NULL,
-    genero_id INT NOT NULL,
-    precio DECIMAL(10, 2) NOT NULL,
-    fecha_publicacion DATE NOT NULL,
-    descripcion TEXT,
-    stock INT NOT NULL CHECK (stock >= 0),
-    FOREIGN KEY (autor_id) REFERENCES Autor(autor_id),
-    FOREIGN KEY (editorial_id) REFERENCES Editorial(editorial_id),
-    FOREIGN KEY (genero_id) REFERENCES Genero(genero_id)
-);
 
--- Tabla Pedido 
-CREATE TABLE Pedido (
-    pedido_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    cliente_id INT NOT NULL,
-    fecha_pedido DATE NOT NULL,
-    estado VARCHAR(50) NOT NULL,
-    total DECIMAL(10, 2) NOT NULL, -- El total ya incluirá el costo de envío y el descuento
-    tarifa_envio DECIMAL(10, 2) NOT NULL, -- Se añade la columna tarifa_envio para especificar el costo de envío
-    FOREIGN KEY (cliente_id) REFERENCES Cliente(cliente_id)
-);
+--Registrar un pago para un pedido
+DELIMITER //
+CREATE PROCEDURE RegistrarPago (
+    IN p_pedido_id INT,
+    IN p_monto DECIMAL(10, 2),
+    IN p_metodo_pago VARCHAR(50)
+)
+BEGIN
+    INSERT INTO Pago (pedido_id, fecha_pago, monto, metodo_pago)
+    VALUES (p_pedido_id, CURDATE(), p_monto, p_metodo_pago);
+END //
+DELIMITER ;
 
--- Tabla Pago 
-CREATE TABLE Pago (
-    pago_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    pedido_id INT NOT NULL,
-    fecha_pago DATE NOT NULL,
-    monto DECIMAL(10, 2) NOT NULL, -- El monto ahora reflejará el total incluyendo envío y descuento
-    metodo_pago VARCHAR(50) NOT NULL,
-    FOREIGN KEY (pedido_id) REFERENCES Pedido(pedido_id)
-);
 
--- Tabla DetallePedido 
-CREATE TABLE DetallePedido (
-    detalle_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    pedido_id INT NOT NULL,
-    comic_id INT NOT NULL,
-    cantidad INT NOT NULL CHECK (cantidad > 0),
-    precio_unitario DECIMAL(10, 2) NOT NULL,
-    descuento DECIMAL(5, 2) DEFAULT 0, -- Nuevo campo para descuento aplicado
-    FOREIGN KEY (pedido_id) REFERENCES Pedido(pedido_id),
-    FOREIGN KEY (comic_id) REFERENCES Comic(comic_id)
-);
+--Registrar una recepción de cómics (movimiento de inventario)
+DELIMITER //
+CREATE PROCEDURE RegistrarRecepcion (
+    IN p_comic_id INT,
+    IN p_proveedor_id INT,
+    IN p_cantidad INT
+)
+BEGIN
+    -- Aumentar el stock de cómics
+    INSERT INTO Inventario (comic_id, proveedor_id, fecha_movimiento, cantidad, tipo_movimiento)
+    VALUES (p_comic_id, p_proveedor_id, CURDATE(), p_cantidad, 'recepcion');
+    
+    -- Actualizar el stock en la tabla Comic
+    UPDATE Comic
+    SET stock = stock + p_cantidad
+    WHERE comic_id = p_comic_id;
+END //
+DELIMITER ;
 
--- Tabla Proveedor
-CREATE TABLE Proveedor (
-    proveedor_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    nombre VARCHAR(100) NOT NULL,
-    telefono VARCHAR(15),
-    direccion VARCHAR(255)
-);
 
--- Tabla Inventario
-CREATE TABLE Inventario (
-    inventario_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    comic_id INT NOT NULL,
-    proveedor_id INT, -- Ahora opcional, solo requerido para recepciones
-    fecha_movimiento DATE NOT NULL,
-    cantidad INT NOT NULL CHECK (cantidad <> 0), -- Cantidad positiva para recepciones, negativa para ventas
-    tipo_movimiento ENUM('recepcion', 'venta') NOT NULL, -- Define si es un ingreso o egreso de stock
-    FOREIGN KEY (comic_id) REFERENCES Comic(comic_id),
-    FOREIGN KEY (proveedor_id) REFERENCES Proveedor(proveedor_id)
-);
+--Registrar una venta de cómics (movimiento de inventario) Lo elimine
+DELIMITER //
+CREATE PROCEDURE RegistrarVenta (
+    IN p_comic_id INT,
+    IN p_cantidad INT,
+    IN p_pedido_id INT
+)
+BEGIN
+    -- Disminuir el stock de cómics
+    INSERT INTO Inventario (comic_id, pedido_id, fecha_movimiento, cantidad, tipo_movimiento)
+    VALUES (p_comic_id, p_pedido_id, CURDATE(), -p_cantidad, 'venta');
+    
+    -- Actualizar el stock en la tabla Comic
+    UPDATE Comic
+    SET stock = stock - p_cantidad
+    WHERE comic_id = p_comic_id;
+END //
+DELIMITER ;
 
--- Tabla Resena
-CREATE TABLE Resena (
-    resena_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    comic_id INT NOT NULL,
-    cliente_id INT NOT NULL,
-    fecha_resena DATE NOT NULL,
-    calificacion INT CHECK (calificacion BETWEEN 1 AND 5),
-    comentario TEXT,
-    FOREIGN KEY (comic_id) REFERENCES Comic(comic_id),
-    FOREIGN KEY (cliente_id) REFERENCES Cliente(cliente_id)
-);
 
--- Tabla Ofertas
-CREATE TABLE Ofertas (
-    oferta_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    comic_id INT NOT NULL,
-    descuento DECIMAL(5, 2) CHECK (descuento BETWEEN 0 AND 100),
-    fecha_inicio DATE NOT NULL,
-    fecha_fin DATE NOT NULL,
-    FOREIGN KEY (comic_id) REFERENCES Comic(comic_id)
-);
+--Aplicar un descuento a un cómic en una oferta
+DELIMITER //
+CREATE PROCEDURE AplicarOferta (
+    IN p_comic_id INT,
+    IN p_descuento DECIMAL(5, 2),
+    IN p_fecha_inicio DATE,
+    IN p_fecha_fin DATE
+)
+BEGIN
+    INSERT INTO Ofertas (comic_id, descuento, fecha_inicio, fecha_fin)
+    VALUES (p_comic_id, p_descuento, p_fecha_inicio, p_fecha_fin);
+END //
+DELIMITER ;
 
--- Tabla TarifaEnvio
-CREATE TABLE TarifaEnvio (
-    tarifa_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    zona VARCHAR(100) NOT NULL,
-    costo DECIMAL(10, 2) NOT NULL,
-    metodo_envio VARCHAR(100) NOT NULL
-);
 
--- Tabla Envio
-CREATE TABLE Envio (
-    envio_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    pedido_id INT NOT NULL,
-    tarifa_id INT NOT NULL,
-    fecha_envio DATE NOT NULL,
-    estado_envio VARCHAR(50) NOT NULL,
-    numero_seguimiento VARCHAR(100),
-    FOREIGN KEY (pedido_id) REFERENCES Pedido(pedido_id),
-    FOREIGN KEY (tarifa_id) REFERENCES TarifaEnvio(tarifa_id)
-);
+--Actualizar estado de envío
+DELIMITER //
+CREATE PROCEDURE ActualizarEstadoEnvio (
+    IN p_envio_id INT,
+    IN p_estado_envio VARCHAR(50),
+    IN p_numero_seguimiento VARCHAR(100)
+)
+BEGIN
+    UPDATE Envio
+    SET estado_envio = p_estado_envio, numero_seguimiento = p_numero_seguimiento
+    WHERE envio_id = p_envio_id;
+END //
+DELIMITER ;
+
+
+--Obtener detalles del pedido con los cómics asociados
+DELIMITER //
+CREATE PROCEDURE ObtenerDetallePedido (
+    IN p_pedido_id INT
+)
+BEGIN
+    SELECT 
+        dp.detalle_id,
+        c.titulo,
+        dp.cantidad,
+        dp.precio_unitario,
+        dp.descuento,
+        (dp.cantidad * dp.precio_unitario - dp.descuento) AS total_por_comic
+    FROM DetallePedido dp
+    JOIN Comic c ON dp.comic_id = c.comic_id
+    WHERE dp.pedido_id = p_pedido_id;
+END //
+DELIMITER ;
+
+
+--Procedimiento para Actualizar el Stock al Registrar una Venta
+DELIMITER //
+CREATE PROCEDURE ActualizarStock(pedido INT)
+BEGIN
+    DECLARE done INT DEFAULT 0;
+    DECLARE comic_id INT;
+    DECLARE cantidad INT;
+    DECLARE cur CURSOR FOR 
+        SELECT comic_id, cantidad 
+        FROM DetallePedido 
+        WHERE pedido_id = pedido;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+
+    OPEN cur;
+    read_loop: LOOP
+        FETCH cur INTO comic_id, cantidad;
+        IF done THEN
+            LEAVE read_loop;
+        END IF;
+        -- Registrar el movimiento de stock como venta
+        INSERT INTO Inventario (comic_id, cantidad, tipo_movimiento, fecha_movimiento)
+        VALUES (comic_id, -cantidad, 'venta', CURDATE());
+    END LOOP;
+    CLOSE cur;
+END //
+DELIMITER ;
+
+

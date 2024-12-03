@@ -1,3 +1,5 @@
+USE tierra_uno_comic
+
 -- Tabla Autor
 CREATE TABLE Autor (
     autor_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,

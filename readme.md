@@ -178,7 +178,7 @@ Tabla *`Envío`*
 ---
 
 
-# Inserción de Datos en la Base de Datos `tierra_uno_comics`
+# Inserción de Datos en la Base de Datos 
 
 Para garantizar una gestión eficiente de la información en la base de datos `tierra_uno_comics`, se llevó a cabo un proceso de inserción de datos mediante consultas SQL `INSERT INTO` utilizando MySQL Workbench. Este enfoque sistemático permitió cargar información en las tablas relacionadas, asegurando la consistencia y disponibilidad de los datos para la administración de ventas, inventarios, pedidos, y más.
 

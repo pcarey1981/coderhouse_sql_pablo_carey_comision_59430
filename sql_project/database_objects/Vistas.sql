@@ -1,142 +1,169 @@
--- Tabla Autor
-CREATE TABLE Autor (
-    autor_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    nombre VARCHAR(100) NOT NULL,
-    apellido VARCHAR(100) NOT NULL,
-    nacionalidad VARCHAR(100)
-);
 
--- Tabla Editorial
-CREATE TABLE Editorial (
-    editorial_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    nombre VARCHAR(100) NOT NULL,
-    pais VARCHAR(100),
-    telefono VARCHAR(15)
-);
+-- Vista para obtener el listado de cómics con sus autores, editoriales y género:
+CREATE VIEW Vista_Comic_Detalles AS
+SELECT
+    c.comic_id,
+    c.titulo,
+    c.precio,
+    c.fecha_publicacion,
+    a.nombre AS autor_nombre,
+    a.apellido AS autor_apellido,
+    e.nombre AS editorial_nombre,
+    g.nombre AS genero_nombre
+FROM
+    Comic c
+JOIN Autor a ON c.autor_id = a.autor_id
+JOIN Editorial e ON c.editorial_id = e.editorial_id
+JOIN Genero g ON c.genero_id = g.genero_id;
 
--- Tabla Genero
-CREATE TABLE Genero (
-    genero_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    nombre VARCHAR(100) NOT NULL
-);
+-- Consultar los detalles de los cómics con sus autores, editoriales y género:
+SELECT * FROM Vista_Comic_Detalles;
 
--- Tabla Cliente
-CREATE TABLE Cliente (
-    cliente_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    nombre VARCHAR(100) NOT NULL,
-    apellido VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    direccion VARCHAR(255) NOT NULL,
-    telefono VARCHAR(15)
-);
 
--- Tabla Comic
-CREATE TABLE Comic (
-    comic_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    titulo VARCHAR(255) NOT NULL,
-    autor_id INT NOT NULL,
-    editorial_id INT NOT NULL,
-    genero_id INT NOT NULL,
-    precio DECIMAL(10, 2) NOT NULL,
-    fecha_publicacion DATE NOT NULL,
-    descripcion TEXT,
-    stock INT NOT NULL CHECK (stock >= 0),
-    FOREIGN KEY (autor_id) REFERENCES Autor(autor_id),
-    FOREIGN KEY (editorial_id) REFERENCES Editorial(editorial_id),
-    FOREIGN KEY (genero_id) REFERENCES Genero(genero_id)
-);
+-- Vista para obtener el historial de pedidos, con detalles de los cómics comprados, su cantidad, precio y el estado del pedido:
+CREATE VIEW Vista_Historial_Pedidos AS
+SELECT
+    p.pedido_id,
+    p.fecha_pedido,
+    p.estado AS estado_pedido,
+    p.total,
+    dp.comic_id,
+    c.titulo AS comic_titulo,
+    dp.cantidad,
+    dp.precio_unitario,
+    dp.descuento,
+    (dp.cantidad * dp.precio_unitario - dp.descuento) AS total_comic
+FROM
+    Pedido p
+JOIN DetallePedido dp ON p.pedido_id = dp.pedido_id
+JOIN Comic c ON dp.comic_id = c.comic_id;
 
--- Tabla Pedido 
-CREATE TABLE Pedido (
-    pedido_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    cliente_id INT NOT NULL,
-    fecha_pedido DATE NOT NULL,
-    estado VARCHAR(50) NOT NULL,
-    total DECIMAL(10, 2) NOT NULL, -- El total ya incluirá el costo de envío y el descuento
-    tarifa_envio DECIMAL(10, 2) NOT NULL, -- Se añade la columna tarifa_envio para especificar el costo de envío
-    FOREIGN KEY (cliente_id) REFERENCES Cliente(cliente_id)
-);
+--Consultar el historial de pedidos, con detalles de los cómics comprados, su cantidad, precio y el estado del pedido:
+SELECT * FROM Vista_Historial_Pedidos;
 
--- Tabla Pago 
-CREATE TABLE Pago (
-    pago_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    pedido_id INT NOT NULL,
-    fecha_pago DATE NOT NULL,
-    monto DECIMAL(10, 2) NOT NULL, -- El monto ahora reflejará el total incluyendo envío y descuento
-    metodo_pago VARCHAR(50) NOT NULL,
-    FOREIGN KEY (pedido_id) REFERENCES Pedido(pedido_id)
-);
 
--- Tabla DetallePedido 
-CREATE TABLE DetallePedido (
-    detalle_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    pedido_id INT NOT NULL,
-    comic_id INT NOT NULL,
-    cantidad INT NOT NULL CHECK (cantidad > 0),
-    precio_unitario DECIMAL(10, 2) NOT NULL,
-    descuento DECIMAL(5, 2) DEFAULT 0, -- Nuevo campo para descuento aplicado
-    FOREIGN KEY (pedido_id) REFERENCES Pedido(pedido_id),
-    FOREIGN KEY (comic_id) REFERENCES Comic(comic_id)
-);
+--Vista para obtener los pagos realizados por cada pedido, con su método de pago:
+CREATE VIEW Vista_Pagos_Pedidos AS
+SELECT
+    pa.pago_id,
+    pa.fecha_pago,
+    pa.monto,
+    pa.metodo_pago,
+    p.pedido_id,
+    p.total AS total_pedido
+FROM
+    Pago pa
+JOIN Pedido p ON pa.pedido_id = p.pedido_id;
 
--- Tabla Proveedor
-CREATE TABLE Proveedor (
-    proveedor_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    nombre VARCHAR(100) NOT NULL,
-    telefono VARCHAR(15),
-    direccion VARCHAR(255)
-);
+--Consultar los pagos realizados por cada pedido, con su método de pago:
+SELECT * FROM Vista_Pagos_Pedidos;
 
--- Tabla Inventario
-CREATE TABLE Inventario (
-    inventario_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    comic_id INT NOT NULL,
-    proveedor_id INT, -- Ahora opcional, solo requerido para recepciones
-    fecha_movimiento DATE NOT NULL,
-    cantidad INT NOT NULL CHECK (cantidad <> 0), -- Cantidad positiva para recepciones, negativa para ventas
-    tipo_movimiento ENUM('recepcion', 'venta') NOT NULL, -- Define si es un ingreso o egreso de stock
-    FOREIGN KEY (comic_id) REFERENCES Comic(comic_id),
-    FOREIGN KEY (proveedor_id) REFERENCES Proveedor(proveedor_id)
-);
 
--- Tabla Resena
-CREATE TABLE Resena (
-    resena_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    comic_id INT NOT NULL,
-    cliente_id INT NOT NULL,
-    fecha_resena DATE NOT NULL,
-    calificacion INT CHECK (calificacion BETWEEN 1 AND 5),
-    comentario TEXT,
-    FOREIGN KEY (comic_id) REFERENCES Comic(comic_id),
-    FOREIGN KEY (cliente_id) REFERENCES Cliente(cliente_id)
-);
+--Vista para ver el inventario actual, con detalles de las recepciones y ventas de cómics:
+CREATE VIEW Vista_Inventario_Actual AS
+SELECT
+    i.comic_id,
+    c.titulo,
+    SUM(CASE WHEN i.tipo_movimiento = 'recepcion' THEN i.cantidad ELSE 0 END) AS cantidad_recepcion,
+    SUM(CASE WHEN i.tipo_movimiento = 'venta' THEN i.cantidad ELSE 0 END) AS cantidad_venta,
+    (SUM(CASE WHEN i.tipo_movimiento = 'recepcion' THEN i.cantidad ELSE 0 END) - 
+     SUM(CASE WHEN i.tipo_movimiento = 'venta' THEN i.cantidad ELSE 0 END)) AS cantidad_disponible
+FROM
+    Inventario i
+JOIN Comic c ON i.comic_id = c.comic_id
+GROUP BY
+    i.comic_id, c.titulo;
 
--- Tabla Ofertas
-CREATE TABLE Ofertas (
-    oferta_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    comic_id INT NOT NULL,
-    descuento DECIMAL(5, 2) CHECK (descuento BETWEEN 0 AND 100),
-    fecha_inicio DATE NOT NULL,
-    fecha_fin DATE NOT NULL,
-    FOREIGN KEY (comic_id) REFERENCES Comic(comic_id)
-);
+--Consultar el inventario actual, con detalles de las recepciones y ventas de cómics:
+SELECT * FROM Vista_Inventario_Actual;
 
--- Tabla TarifaEnvio
-CREATE TABLE TarifaEnvio (
-    tarifa_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    zona VARCHAR(100) NOT NULL,
-    costo DECIMAL(10, 2) NOT NULL,
-    metodo_envio VARCHAR(100) NOT NULL
-);
 
--- Tabla Envio
-CREATE TABLE Envio (
-    envio_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    pedido_id INT NOT NULL,
-    tarifa_id INT NOT NULL,
-    fecha_envio DATE NOT NULL,
-    estado_envio VARCHAR(50) NOT NULL,
-    numero_seguimiento VARCHAR(100),
-    FOREIGN KEY (pedido_id) REFERENCES Pedido(pedido_id),
-    FOREIGN KEY (tarifa_id) REFERENCES TarifaEnvio(tarifa_id)
-);
+--Vista para obtener las reseñas de cómics por cliente, con las calificaciones y comentarios:
+CREATE VIEW Vista_Resenas AS
+SELECT
+    r.resena_id,
+    c.nombre AS cliente_nombre,
+    c.apellido AS cliente_apellido,
+    c.email AS cliente_email,
+    r.calificacion,
+    r.comentario,
+    co.titulo AS comic_titulo
+FROM
+    Resena r
+JOIN Cliente c ON r.cliente_id = c.cliente_id
+JOIN Comic co ON r.comic_id = co.comic_id;
+
+--Consultar las reseñas de cómics por cliente, con las calificaciones y comentarios:
+SELECT * FROM Vista_Resenas;
+
+
+--Vista para obtener las ofertas activas de cómics con su descuento y fechas de vigencia:
+CREATE VIEW Vista_Ofertas_Activas AS
+SELECT
+    o.oferta_id,
+    c.titulo AS comic_titulo,
+    o.descuento,
+    o.fecha_inicio,
+    o.fecha_fin
+FROM
+    Ofertas o
+JOIN Comic c ON o.comic_id = c.comic_id
+WHERE
+    CURDATE() BETWEEN o.fecha_inicio AND o.fecha_fin;
+
+--Consultar las ofertas activas de cómics con su descuento y fechas de vigencia:
+SELECT * FROM Vista_Ofertas_Activas;
+
+
+--Vista para obtener la información de los envíos, incluyendo el estado y el número de seguimiento:
+CREATE VIEW Vista_Envios AS
+SELECT
+    e.envio_id,
+    e.fecha_envio,
+    e.estado_envio,
+    e.numero_seguimiento,
+    t.zona AS zona_envio,
+    t.metodo_envio
+FROM
+    Envio e
+JOIN TarifaEnvio t ON e.tarifa_id = t.tarifa_id;
+
+--Consultar la información de los envíos, incluyendo el estado y el número de seguimiento:
+SELECT * FROM Vista_Envios;
+
+
+--Vista para Listar Pedidos Pendientes de Envío
+Filtra los pedidos que aún no tienen un registro en la tabla Envio.
+
+CREATE VIEW PedidosPendientesDeEnvio AS
+SELECT 
+    p.pedido_id,
+    p.fecha_pedido,
+    p.estado,
+    c.nombre AS cliente_nombre,
+    c.apellido AS cliente_apellido
+FROM Pedido p
+JOIN Cliente c ON p.cliente_id = c.cliente_id
+LEFT JOIN Envio e ON p.pedido_id = e.pedido_id
+WHERE e.pedido_id IS NULL
+ORDER BY p.fecha_pedido;
+
+--Para ver los resultados de la vista PedidosPendientesDeEnvio:
+SELECT * FROM PedidosPendientesDeEnvio;
+
+
+--Vista para Consultar los Cómics Más Vendidos
+CREATE VIEW ComicsMasVendidos AS
+SELECT 
+    c.comic_id,
+    c.titulo,
+    SUM(dp.cantidad) AS total_vendido
+FROM DetallePedido dp
+JOIN Comic c ON dp.comic_id = c.comic_id
+GROUP BY c.comic_id, c.titulo
+ORDER BY total_vendido DESC;
+
+--Para ver los resultados de la vista ComicsMasVendidos:
+SELECT * FROM ComicsMasVendidos;
+
+
