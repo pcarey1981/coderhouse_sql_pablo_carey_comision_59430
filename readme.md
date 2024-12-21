@@ -1,4 +1,5 @@
 ![Captura](https://github.com/user-attachments/assets/08d7453c-4bb8-4014-997c-f05ed6dd9ed5)
+![Batman](https://github.com/user-attachments/assets/6f60c76b-f538-4230-b8a6-fb5020c78da7)
 
 # Proyecto: Tierra Uno Comics
 
