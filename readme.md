@@ -1501,6 +1501,33 @@ Anderson Michel TORRES (Administrador)
 ```sql
 GRANT ALL PRIVILEGES ON *.* TO 'anderson'@'%' WITH GRANT OPTION;
 ```
+Hugo González (Solo Lectura)
+```sql
+GRANT SELECT ON tierra_uno_comic.Cliente TO 'hugo'@'%';
+GRANT SELECT ON tierra_uno_comic.Pedido TO 'hugo'@'%';
+GRANT SELECT ON tierra_uno_comic.Resena TO 'hugo'@'%';
+GRANT SELECT ON tierra_uno_comic.Comic TO 'hugo'@'%';
+GRANT SELECT ON tierra_uno_comic.DetallePedido TO 'hugo'@'%';
+```
+Nicolás Maugeri (Lectura y Escritura Limitada)
+```sql
+GRANT SELECT, INSERT, UPDATE ON tierra_uno_comic.Resena TO 'nicolas'@'%';
+GRANT SELECT, INSERT, UPDATE ON tierra_uno_comic.DetallePedido TO 'nicolas'@'%';
+GRANT SELECT, INSERT, UPDATE ON tierra_uno_comic.Inventario TO 'nicolas'@'%';
+```
+### Paso 3: Aplicar los cambios
+```sql
+FLUSH PRIVILEGES;
+```
+
+
+
+
+
+
+
+
+
 
 ![Cierre](https://github.com/user-attachments/assets/2703a4d1-c76a-458e-80a6-2188d88a387d)
 
