@@ -1,6 +1,9 @@
 
 ![Batman](https://github.com/user-attachments/assets/6f60c76b-f538-4230-b8a6-fb5020c78da7)
 
+![Batman2](https://github.com/user-attachments/assets/80315e63-3295-44cd-962e-80f8c0f511f5)
+
+
 # Proyecto: Tierra Uno Comic
 
 **Alumno:** Pablo José Carey  
