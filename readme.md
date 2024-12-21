@@ -1496,9 +1496,11 @@ CREATE USER 'anderson'@'%' IDENTIFIED BY 'Anderson';
 CREATE USER 'hugo'@'%' IDENTIFIED BY 'Hugo';
 CREATE USER 'nicolas'@'%' IDENTIFIED BY 'Nicolas';
 ```
-
-
-
+### Paso 2: Asignar privilegios
+Anderson Michel TORRES (Administrador)
+```sql
+GRANT ALL PRIVILEGES ON *.* TO 'anderson'@'%' WITH GRANT OPTION;
+```
 
 ![Cierre](https://github.com/user-attachments/assets/2703a4d1-c76a-458e-80a6-2188d88a387d)
 
