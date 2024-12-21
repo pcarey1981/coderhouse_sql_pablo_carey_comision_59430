@@ -1575,11 +1575,11 @@ En MySQL Workbench, la opción "Export to Self-Contained File" permite exportar 
 
 ![Procedimiento](https://github.com/user-attachments/assets/39ad7b74-7f43-4bcb-b410-3bd00d51ab87) 
 
-El archivo generado es autocontenido, lo que significa que incluye todas las instrucciones SQL necesarias para reconstruir la base de datos en otro servidor sin necesidad de otros archivos adicionales.
+- El archivo generado es autocontenido, lo que significa que incluye todas las instrucciones SQL necesarias para reconstruir la base de datos en otro servidor sin necesidad de otros archivos adicionales.
 
-Este tipo de archivo es útil para migrar bases de datos entre diferentes servidores MySQL.
+- Este tipo de archivo es útil para migrar bases de datos entre diferentes servidores MySQL.
 
-Además, se puede restaurar fácilmente la base de datos ejecutando el archivo SQL en otro entorno o servidor.
+- Además, se puede restaurar fácilmente la base de datos ejecutando el archivo SQL en otro entorno o servidor.
 
 
 
