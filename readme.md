@@ -1,6 +1,3 @@
-
-![Batman](https://github.com/user-attachments/assets/6f60c76b-f538-4230-b8a6-fb5020c78da7)
-
 ![Batman2](https://github.com/user-attachments/assets/e2b3689a-eb30-4bf8-a30f-3df5519e947c)
 
 
