@@ -1474,7 +1474,7 @@ SELECT * FROM Inventario WHERE tipo_movimiento = 'venta';
 
 # ¡Muchas gracias por haber llegado hasta acá!
 
-![Superman](https://github.com/user-attachments/assets/55425251-1492-45f8-9469-8b29bf91a290)
 
+                  ![Superman](https://github.com/user-attachments/assets/405528c2-4b34-4f67-a749-6fb159e586dd)
 
 
