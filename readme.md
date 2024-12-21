@@ -1522,7 +1522,7 @@ FLUSH PRIVILEGES;
 
 ---
 
-Cómo Consultar los Usuarios y sus Permisos en MySQL
+# Cómo Consultar los Usuarios y sus Permisos en MySQL
 
 Para auditar la seguridad, es fundamental conocer los permisos asignados a cada usuario. Los privilegios están almacenados en las tablas del sistema, como mysql.user y mysql.db. 
 ```sql
