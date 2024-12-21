@@ -1520,7 +1520,39 @@ GRANT SELECT, INSERT, UPDATE ON tierra_uno_comic.Inventario TO 'nicolas'@'%';
 FLUSH PRIVILEGES;
 ```
 
+---
 
+Cómo Consultar los Usuarios y sus Permisos en MySQL
+
+Para auditar la seguridad, es fundamental conocer los permisos asignados a cada usuario. Los privilegios están almacenados en las tablas del sistema, como mysql.user y mysql.db. 
+```sql
+SELECT 
+    user AS 'Usuario',
+    host AS 'Host',
+    authentication_string AS 'Contraseña',
+    Select_priv AS 'SELECT',
+    Insert_priv AS 'INSERT',
+    Update_priv AS 'UPDATE',
+    Delete_priv AS 'DELETE',
+    Create_priv AS 'CREATE',
+    Drop_priv AS 'DROP',
+    Grant_priv AS 'GRANT',
+    Index_priv AS 'INDEX',
+    Alter_priv AS 'ALTER',
+    References_priv AS 'REFERENCES',
+    Create_tmp_table_priv AS 'CREATE_TMP_TABLE',
+    Lock_tables_priv AS 'LOCK_TABLES',
+    Create_view_priv AS 'CREATE_VIEW',
+    Show_view_priv AS 'SHOW_VIEW',
+    Create_routine_priv AS 'CREATE_ROUTINE',
+    Alter_routine_priv AS 'ALTER_ROUTINE',
+    Execute_priv AS 'EXECUTE',
+    Event_priv AS 'EVENT',
+    Trigger_priv AS 'TRIGGER'
+FROM 
+    mysql.user;
+```
+## Esta consulta proporciona una visión clara de los permisos asignados a los usuarios, lo que permite realizar auditorías de seguridad para garantizar que cada usuario tenga solo los privilegios necesarios.
 
 
 
