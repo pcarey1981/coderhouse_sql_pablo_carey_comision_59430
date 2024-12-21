@@ -1552,7 +1552,7 @@ SELECT
 FROM 
     mysql.user;
 ```
-## Esta consulta proporciona una visión clara de los permisos asignados a los usuarios, lo que permite realizar auditorías de seguridad para garantizar que cada usuario tenga solo los privilegios necesarios.
+#### Esta consulta proporciona una visión clara de los permisos asignados a los usuarios, lo que permite realizar auditorías de seguridad para garantizar que cada usuario tenga solo los privilegios necesarios.
 
 
 
