@@ -1456,6 +1456,46 @@ Consulta para verificar que los movimientos de stock fueron registrados correcta
 SELECT * FROM Inventario WHERE tipo_movimiento = 'venta';
 ```
 
+---
+
+# Gestión de Roles, Usuarios y Privilegios en MySQL
+
+La gestión de usuarios y privilegios en una base de datos es fundamental para asegurar un acceso controlado y seguro a la información. Mediante la asignación de roles y permisos específicos, es posible regular qué acciones pueden realizar los diferentes usuarios dentro de la base de datos, según sus responsabilidades dentro de la organización.
+
+Este enfoque asegura que cada persona tenga acceso solo a los datos necesarios para su labor, protegiendo la integridad y confidencialidad de la información. La implementación de un modelo de roles y privilegios facilita la administración y seguridad del sistema.
+
+## Definición de Roles y Privilegios
+
+### Anderson Michel TORRES (Administrador de Base de Datos)
+- **Rol:** Administrador.
+- **Descripción:** Responsable de la gestión completa de la base de datos.
+- **Privilegios:** 
+  - Acceso total a todas las tablas y bases de datos.
+  - Capacidad para gestionar usuarios y asignar privilegios (GRANT, REVOKE).
+  - Permisos: `SELECT`, `INSERT`, `UPDATE`, `DELETE`, y más.
+
+### Hugo González (Usuario de Solo Lectura)
+- **Rol:** Usuario con privilegios limitados.
+- **Descripción:** Acceso a datos almacenados sin capacidad de modificación.
+- **Privilegios:** 
+  - Permiso solo para `SELECT` en tablas como `Cliente`, `Pedido`, `Reseña`, `Cómic`, y `DetallePedido`.
+
+### Nicolás Maugeri (Usuario con Permisos de Escritura Limitados)
+- **Rol:** Usuario con permisos restringidos.
+- **Descripción:** Modificaciones permitidas en áreas específicas de la base de datos.
+- **Privilegios:** 
+  - `INSERT`, `UPDATE`, y `SELECT` en tablas `Reseña`, `DetallePedido`, e `Inventario`.
+
+---
+
+## Creación de Usuarios y Asignación de Privilegios
+
+### Paso 1: Crear los usuarios
+```sql
+CREATE USER 'anderson'@'%' IDENTIFIED BY 'Anderson';
+CREATE USER 'hugo'@'%' IDENTIFIED BY 'Hugo';
+CREATE USER 'nicolas'@'%' IDENTIFIED BY 'Nicolas';
+```
 
 
 
