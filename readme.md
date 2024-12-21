@@ -1472,7 +1472,6 @@ SELECT * FROM Inventario WHERE tipo_movimiento = 'venta';
 
 
 
-
-![Gruñon](https://github.com/user-attachments/assets/6a342b46-0b2f-4123-b73a-20b05775a75d)
 # ¡Muchas gracias por haber llegado hasta acá! 
+![Gruñon](https://github.com/user-attachments/assets/6a342b46-0b2f-4123-b73a-20b05775a75d)
 
