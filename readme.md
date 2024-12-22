@@ -1,6 +1,7 @@
-![Captura](https://github.com/user-attachments/assets/08d7453c-4bb8-4014-997c-f05ed6dd9ed5)
+![Batman2](https://github.com/user-attachments/assets/e2b3689a-eb30-4bf8-a30f-3df5519e947c)
 
-# Proyecto: Tierra Uno Comics
+
+# Proyecto: Tierra Uno Comic
 
 **Alumno:** Pablo José Carey  
 **Curso:** SQL  
@@ -1455,6 +1456,123 @@ Consulta para verificar que los movimientos de stock fueron registrados correcta
 SELECT * FROM Inventario WHERE tipo_movimiento = 'venta';
 ```
 
+---
+
+# Gestión de Roles, Usuarios y Privilegios en MySQL
+
+La gestión de usuarios y privilegios en una base de datos es fundamental para asegurar un acceso controlado y seguro a la información. Mediante la asignación de roles y permisos específicos, es posible regular qué acciones pueden realizar los diferentes usuarios dentro de la base de datos, según sus responsabilidades dentro de la organización.
+
+Este enfoque asegura que cada persona tenga acceso solo a los datos necesarios para su labor, protegiendo la integridad y confidencialidad de la información. La implementación de un modelo de roles y privilegios facilita la administración y seguridad del sistema.
+
+## Definición de Roles y Privilegios
+
+### Anderson Michel TORRES (Administrador de Base de Datos)
+- **Rol:** Administrador.
+- **Descripción:** Responsable de la gestión completa de la base de datos.
+- **Privilegios:** 
+  - Acceso total a todas las tablas y bases de datos.
+  - Capacidad para gestionar usuarios y asignar privilegios (GRANT, REVOKE).
+  - Permisos: `SELECT`, `INSERT`, `UPDATE`, `DELETE`, y más.
+
+### Hugo González (Usuario de Solo Lectura)
+- **Rol:** Usuario con privilegios limitados.
+- **Descripción:** Acceso a datos almacenados sin capacidad de modificación.
+- **Privilegios:** 
+  - Permiso solo para `SELECT` en tablas como `Cliente`, `Pedido`, `Reseña`, `Cómic`, y `DetallePedido`.
+
+### Nicolás Maugeri (Usuario con Permisos de Escritura Limitados)
+- **Rol:** Usuario con permisos restringidos.
+- **Descripción:** Modificaciones permitidas en áreas específicas de la base de datos.
+- **Privilegios:** 
+  - `INSERT`, `UPDATE`, y `SELECT` en tablas `Reseña`, `DetallePedido`, e `Inventario`.
+
+---
+
+## Creación de Usuarios y Asignación de Privilegios
+
+### Paso 1: Crear los usuarios
+```sql
+CREATE USER 'anderson'@'%' IDENTIFIED BY 'Anderson';
+CREATE USER 'hugo'@'%' IDENTIFIED BY 'Hugo';
+CREATE USER 'nicolas'@'%' IDENTIFIED BY 'Nicolas';
+```
+### Paso 2: Asignar privilegios
+Anderson Michel TORRES (Administrador)
+```sql
+GRANT ALL PRIVILEGES ON *.* TO 'anderson'@'%' WITH GRANT OPTION;
+```
+Hugo González (Solo Lectura)
+```sql
+GRANT SELECT ON tierra_uno_comic.Cliente TO 'hugo'@'%';
+GRANT SELECT ON tierra_uno_comic.Pedido TO 'hugo'@'%';
+GRANT SELECT ON tierra_uno_comic.Resena TO 'hugo'@'%';
+GRANT SELECT ON tierra_uno_comic.Comic TO 'hugo'@'%';
+GRANT SELECT ON tierra_uno_comic.DetallePedido TO 'hugo'@'%';
+```
+Nicolás Maugeri (Lectura y Escritura Limitada)
+```sql
+GRANT SELECT, INSERT, UPDATE ON tierra_uno_comic.Resena TO 'nicolas'@'%';
+GRANT SELECT, INSERT, UPDATE ON tierra_uno_comic.DetallePedido TO 'nicolas'@'%';
+GRANT SELECT, INSERT, UPDATE ON tierra_uno_comic.Inventario TO 'nicolas'@'%';
+```
+### Paso 3: Aplicar los cambios
+```sql
+FLUSH PRIVILEGES;
+```
+
+---
+
+# Cómo Consultar los Usuarios y sus Permisos en MySQL
+
+Para auditar la seguridad, es fundamental conocer los permisos asignados a cada usuario. Los privilegios están almacenados en las tablas del sistema, como mysql.user y mysql.db. 
+```sql
+SELECT 
+    user AS 'Usuario',
+    host AS 'Host',
+    authentication_string AS 'Contraseña',
+    Select_priv AS 'SELECT',
+    Insert_priv AS 'INSERT',
+    Update_priv AS 'UPDATE',
+    Delete_priv AS 'DELETE',
+    Create_priv AS 'CREATE',
+    Drop_priv AS 'DROP',
+    Grant_priv AS 'GRANT',
+    Index_priv AS 'INDEX',
+    Alter_priv AS 'ALTER',
+    References_priv AS 'REFERENCES',
+    Create_tmp_table_priv AS 'CREATE_TMP_TABLE',
+    Lock_tables_priv AS 'LOCK_TABLES',
+    Create_view_priv AS 'CREATE_VIEW',
+    Show_view_priv AS 'SHOW_VIEW',
+    Create_routine_priv AS 'CREATE_ROUTINE',
+    Alter_routine_priv AS 'ALTER_ROUTINE',
+    Execute_priv AS 'EXECUTE',
+    Event_priv AS 'EVENT',
+    Trigger_priv AS 'TRIGGER'
+FROM 
+    mysql.user;
+```
+#### Esta consulta proporciona una visión clara de los permisos asignados a los usuarios, lo que permite realizar auditorías de seguridad para garantizar que cada usuario tenga solo los privilegios necesarios.
+
+---
+
+# Backup
+
+Backup o copia de seguridad es una acción que consiste en hacer una copia de los datos de un sistema (en este caso, una base de datos) para poder recuperarlos en caso de pérdida, corrupción o daño. El objetivo principal de un backup es asegurar que la información crítica esté protegida y disponible, incluso si algo sale mal con el sistema original. Los backups son fundamentales para garantizar la continuidad del negocio, evitando la pérdida irreversible de datos importantes.
+
+## Realizar un Backup en MySQL Workbench con "Export to Self-Contained File"
+
+En MySQL Workbench, la opción "Export to Self-Contained File" permite exportar una base de datos completa a un archivo SQL autocontenido. Este archivo contiene todas las instrucciones necesarias para recrear la estructura y los datos de la base de datos en otro servidor o restaurarla más tarde.
+
+![Procedimiento](https://github.com/user-attachments/assets/8973be43-8308-4356-a1fd-09448fbe77af)
+
+![Procedimiento](https://github.com/user-attachments/assets/39ad7b74-7f43-4bcb-b410-3bd00d51ab87) 
+
+- El archivo generado es autocontenido, lo que significa que incluye todas las instrucciones SQL necesarias para reconstruir la base de datos en otro servidor sin necesidad de otros archivos adicionales.
+
+- Este tipo de archivo es útil para migrar bases de datos entre diferentes servidores MySQL.
+
+- Además, se puede restaurar fácilmente la base de datos ejecutando el archivo SQL en otro entorno o servidor.
 
 
 
@@ -1471,12 +1589,9 @@ SELECT * FROM Inventario WHERE tipo_movimiento = 'venta';
 
 
 
-
-
-# ¡Muchas gracias por haber llegado hasta acá! 
+![Cierre](https://github.com/user-attachments/assets/2703a4d1-c76a-458e-80a6-2188d88a387d)
 
 
 
-![1f44b-1f3fb](https://github.com/user-attachments/assets/fd0981ee-c142-41dd-a632-096c378880a9)
 
 
