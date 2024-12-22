@@ -1560,13 +1560,6 @@ FROM
 
 Backup o copia de seguridad es una acción que consiste en hacer una copia de los datos de un sistema (en este caso, una base de datos) para poder recuperarlos en caso de pérdida, corrupción o daño. El objetivo principal de un backup es asegurar que la información crítica esté protegida y disponible, incluso si algo sale mal con el sistema original. Los backups son fundamentales para garantizar la continuidad del negocio, evitando la pérdida irreversible de datos importantes.
 
-## Backup en MySQL: El Uso de DUMP
-
-En MySQL, una de las formas más comunes de hacer un backup es mediante el comando mysqldump, que genera un archivo de volcado (dump) de la base de datos. Este archivo contiene todas las instrucciones necesarias para recrear la base de datos original, como las definiciones de las tablas, los índices, las relaciones entre ellas y los datos almacenados.
-
-## ¿Qué es un archivo Dump?
-Un archivo dump es un archivo autocontenido que contiene los comandos SQL necesarios para crear las estructuras y datos de una base de datos. Este archivo puede ser exportado desde una base de datos MySQL y utilizado para restaurar la base de datos en otro servidor o sistema.
-
 ## Realizar un Backup en MySQL Workbench con "Export to Self-Contained File"
 
 En MySQL Workbench, la opción "Export to Self-Contained File" permite exportar una base de datos completa a un archivo SQL autocontenido. Este archivo contiene todas las instrucciones necesarias para recrear la estructura y los datos de la base de datos en otro servidor o restaurarla más tarde.
