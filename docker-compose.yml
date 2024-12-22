@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 version: '3.1'
 
 services:
@@ -10,3 +11,17 @@ services:
       - "3306:3306"   # Exponer el puerto 3306 de MySQL
     volumes:
       - ./sql_project:/sql_project
+=======
+version: '3.1'
+
+services:
+  mysql:
+    image: mysql: lastest        
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: tierra_uno_comic         
+    ports:
+      - "3306:3306"   # Exponer el puerto 3306 de MySQL
+    volumes:
+      - ./sql_project:/sql_project
+>>>>>>> d5f0911fdbb57dab793f492958b80ef2dcea02c5
