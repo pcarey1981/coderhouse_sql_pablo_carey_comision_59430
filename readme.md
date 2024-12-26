@@ -1574,6 +1574,24 @@ En MySQL Workbench, la opción "Export to Self-Contained File" permite exportar 
 
 - Además, se puede restaurar fácilmente la base de datos ejecutando el archivo SQL en otro entorno o servidor.
 
+---
+
+## Herramientas utilizadas
+
+Este repositorio contiene el trabajo práctico realizado utilizando diversas herramientas clave que facilitaron el desarrollo y gestión del proyecto.
+
+- **MySQL**: Se utilizó como sistema de gestión de bases de datos para almacenar y gestionar la información de manera eficiente.
+  
+- **MySQL Workbench**: Herramienta utilizada para la administración de la base de datos y la creación de consultas SQL. Permitió visualizar y manipular los datos de manera sencilla.
+
+- **GitHub**: Se utilizó para el control de versiones y la colaboración en equipo. GitHub facilitó el almacenamiento seguro y la gestión del código fuente a lo largo del proyecto.
+
+- **Draw.io**: Se empleó para crear diagramas que representaran gráficamente la estructura de la base de datos, ayudando a visualizar y comprender su diseño.
+
+## Descripción del Proyecto
+
+[Incluir una breve descripción del proyecto, su objetivo y cómo se relacionan las herramientas mencionadas con el desarrollo del trabajo práctico.]
+
 
 
 
