@@ -1576,7 +1576,7 @@ En MySQL Workbench, la opción "Export to Self-Contained File" permite exportar 
 
 ---
 
-## Herramientas utilizadas
+# Herramientas utilizadas
 
 Este repositorio contiene el trabajo práctico realizado utilizando diversas herramientas clave que facilitaron el desarrollo y gestión del proyecto.
 
@@ -1588,28 +1588,17 @@ Este repositorio contiene el trabajo práctico realizado utilizando diversas her
 
 - **Draw.io**: Se empleó para crear diagramas que representaran gráficamente la estructura de la base de datos, ayudando a visualizar y comprender su diseño.
 
-## Descripción del Proyecto
+---
 
-[Incluir una breve descripción del proyecto, su objetivo y cómo se relacionan las herramientas mencionadas con el desarrollo del trabajo práctico.]
+# Conclusión
 
+La implementación de una base de datos relacional adaptada a las necesidades específicas de **Tierra Uno Cómic** no solo resolverá los desafíos actuales que enfrenta la tienda, sino que también proporcionará una plataforma sólida y flexible que permitirá una toma de decisiones más informada y eficiente. Con la creación de esta base de datos, se optimizarán diversos procesos internos, como la gestión de inventarios, el seguimiento de ventas, la fidelización de clientes y el análisis de tendencias. Esto, a su vez, facilitará la identificación de áreas de mejora y permitirá a la tienda anticiparse a cambios en la demanda.
 
+Al contar con un sistema centralizado para almacenar y gestionar datos clave, **Tierra Uno Cómic** podrá generar reportes y análisis detallados que proporcionarán una visión clara de las operaciones y el comportamiento de los clientes. Esto no solo optimiza la gestión operativa diaria, sino que también ofrece la capacidad de realizar ajustes rápidos y precisos en la estrategia comercial, lo que es esencial para mantenerse competitivo en un mercado dinámico y en constante evolución.
 
+Además, al tener una base de datos diseñada para responder de manera flexible a las demandas cambiantes del mercado, **Tierra Uno Cómic** podrá adaptar sus operaciones de manera proactiva. Esto permitirá mejorar la experiencia del cliente y mantener una oferta acorde a sus necesidades, mientras se responden eficazmente a las condiciones fluctuantes del mercado, como la disponibilidad de productos, las preferencias de los consumidores y las tendencias emergentes en el mundo del cómic.
 
-
-
-
-
-
-
-
-
-
-
-
+---
 
 ![Cierre](https://github.com/user-attachments/assets/2703a4d1-c76a-458e-80a6-2188d88a387d)
-
-
-
-
 
